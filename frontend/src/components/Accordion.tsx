@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState } from "react";
 
 type AccordionItem = {
   title: string;
@@ -19,7 +19,7 @@ const Accordion: React.FC<AccordionProps> = ({ items }) => {
   return (
     <div className="flex flex-col p-2">
       {items.map((item, index) => (
-        <div key={index} className="my-1 bg-amber-500 border-2 border-amber-800 rounded-md">
+        <div key={index} className="my-1 bg-amber-500 rounded-md">
           <button
             className="text-left flex items-center font-bold justify-between w-full p-2"
             onClick={() => toggle(index)}
@@ -29,8 +29,8 @@ const Accordion: React.FC<AccordionProps> = ({ items }) => {
           </button>
           {openIndex === index && (
             <div className="text-sm">
-                <div className="w-full border-t-2 border-amber-800"></div>
-                <p className="p-2 text-justify">{item.content}</p>
+              <div className="w-full border-t-2 border-amber-800"></div>
+              <p className="p-2 text-justify">{item.content}</p>
             </div>
           )}
         </div>

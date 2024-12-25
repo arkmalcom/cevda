@@ -3,7 +3,7 @@ export default {
   content: ["./src/**/*.{ts,tsx,html}"],
   theme: {
     fontFamily: {
-      title: ["Pirata One", "serif"]
+      title: ["Pirata One", "serif"],
     },
     extend: {},
   },

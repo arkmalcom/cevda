@@ -1,4 +1,4 @@
-import React from 'react';
+import React from "react";
 
 // Define the interface for the grid item
 interface GridItem {

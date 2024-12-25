@@ -7,13 +7,9 @@ const Navigation: React.FC = () => {
   const toggleMenu = () => setIsMenuOpen(!isMenuOpen);
 
   return (
-    <nav className="flex flex-row bg-amber-500 p-4 text-white text-center justify-center items-center h-16 shadow-md border-b-2 border-amber-800 z-10">
-      <img
-        src={logo}
-        alt="nav-logo"
-        className="w-12 h-12 inline-block"
-      />
-      <h1 className="uppercase mx-auto text-base font-title">
+    <nav className="flex flex-row bg-amber-500 p-4 text-blue-8 text-center justify-center items-center h-16 shadow-md z-10">
+      <img src={logo} alt="nav-logo" className="w-12 h-12 inline-block" />
+      <h1 className="uppercase mx-auto text-lg font-title">
         Centro Educativo Villa de Ángeles
       </h1>
       <button
@@ -36,17 +32,11 @@ const Navigation: React.FC = () => {
             <i className="fas fa-times"></i>
           </button>
         </div>
-        <a href="#home" className="text-white text-xl">
-          Home
+        <a href="#inicio" className="text-white text-xl">
+          Inicio
         </a>
         <a href="#about" className="text-white text-xl">
-          About
-        </a>
-        <a href="#services" className="text-white text-xl">
-          Services
-        </a>
-        <a href="#contact" className="text-white text-xl">
-          Contact
+          Admisión
         </a>
       </div>
     </nav>
