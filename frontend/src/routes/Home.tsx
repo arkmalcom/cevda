@@ -45,7 +45,7 @@ const Home = () => {
             </h1>
             <GridComponent items={gridItems} />
           </div>
-          <div>
+          <div className="p-2">
             <h1 className="text-3xl font-bold text-center text-blue-800">
               Requisitos de Admision
             </h1>
