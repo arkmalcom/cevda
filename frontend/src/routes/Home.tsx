@@ -80,11 +80,6 @@ const Home = () => {
           </ul>
         </div>
       </div>
-      <div className="fixed bottom-24 lg:right-10 right-6">
-        <a href="#">
-          <i className="fab fa-whatsapp text-4xl text-green-500"></i>
-        </a>
-      </div>
     </>
   );
 };
