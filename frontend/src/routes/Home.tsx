@@ -1,7 +1,5 @@
-import Navigation from "../components/Navigation";
 import Carousel from "../components/Carousel";
 import Accordion from "../components/Accordion";
-import Footer from "../components/Footer";
 import GridComponent from "../components/Grid";
 
 import pic1 from "../assets/pic1.jpg";

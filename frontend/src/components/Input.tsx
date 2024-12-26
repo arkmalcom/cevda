@@ -25,15 +25,14 @@ const Input: React.FC<InputProps> = ({
   as = "input",
   className = "",
 }) => {
-  const commonClasses = "mt-2 p-1 block lg:w-36 w-26 rounded-sm border-blue-800 shadow-sm focus:ring-blue-800 focus:border-blue-800 text-xs";
+  const commonClasses =
+    "mt-2 p-1 block lg:w-36 w-26 rounded-sm border-blue-800 shadow-sm focus:ring-blue-800 focus:border-blue-800 text-xs";
   const [dob, setDob] = useState(new Date());
   return (
     <div className="flex flex-col">
       <label
         htmlFor={id}
-        className={`block text-sm  ${
-          label ? "text-blue-800" : "invisible"
-        }`}
+        className={`block text-sm  ${label ? "text-blue-800" : "invisible"}`}
       >
         {label || "Placeholder"}{" "}
         {required && <span className="text-red-500">*</span>}
@@ -80,13 +79,12 @@ const Input: React.FC<InputProps> = ({
 
       {as === "date" && (
         <DatePicker
-            showIcon
-            selected={dob}
-            onChange={(date) => setDob(date as Date)}
+          showIcon
+          selected={dob}
+          onChange={(date) => setDob(date as Date)}
           dateFormat="dd/MM/yyyy"
           className={`${commonClasses} ${className}`}
           placeholderText={placeholder}
-          
         />
       )}
       {subtext && <p className="text-xs text-gray-500">{subtext}</p>}

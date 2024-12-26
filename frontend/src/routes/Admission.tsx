@@ -35,11 +35,13 @@ const Admission = () => {
       </h1>
       <div className="p-3 text-center max-lg:text-sm text-blue-800 space-y-2">
         <p>
-            Es un placer para nosotros que nos consideren como pilar en la educación de sus hijos.
+          Es un placer para nosotros que nos consideren como pilar en la
+          educación de sus hijos.
         </p>
         <p>
-            Como primer paso, pueden llenar el formulario a continuación y nos pondremos en contacto con ustedes
-            para enviarles información de una manera mas detallada y contestar sus preguntas.
+          Como primer paso, pueden llenar el formulario a continuación y nos
+          pondremos en contacto con ustedes para enviarles información de una
+          manera mas detallada y contestar sus preguntas.
         </p>
       </div>
       <form
@@ -58,8 +60,16 @@ const Admission = () => {
                 subtext: "Nombres",
                 required: true,
               },
-              { id: "firstSurname", subtext: "Primer Apellido", required: true },
-              { id: "secondSurname", subtext: "Segundo Apellido", required: true },
+              {
+                id: "firstSurname",
+                subtext: "Primer Apellido",
+                required: true,
+              },
+              {
+                id: "secondSurname",
+                subtext: "Segundo Apellido",
+                required: true,
+              },
             ]}
           />
         </div>
@@ -76,15 +86,27 @@ const Admission = () => {
           />
         </div>
         <div>
-          <Input id="dob" label="Fecha de nacimiento" as="date" placeholder="Seleccione una fecha" required />
+          <Input
+            id="dob"
+            label="Fecha de nacimiento"
+            as="date"
+            placeholder="Seleccione una fecha"
+            required
+          />
         </div>
         <div>
-          <Input id="entering-year" label="Año entrante" as="select" required options={[
-            { value: "2024-2025", label: "2024-2025" },
-            { value: "2025-2026", label: "2025-2026" },
-            { value: "2026-2027", label: "2026-2027" },
-            { value: "2027-2028", label: "2027-2028" }
-          ]} />
+          <Input
+            id="entering-year"
+            label="Año entrante"
+            as="select"
+            required
+            options={[
+              { value: "2024-2025", label: "2024-2025" },
+              { value: "2025-2026", label: "2025-2026" },
+              { value: "2026-2027", label: "2026-2027" },
+              { value: "2027-2028", label: "2027-2028" },
+            ]}
+          />
         </div>
         <div>
           <InputGroup
@@ -97,7 +119,14 @@ const Admission = () => {
               },
               { id: "city", subtext: "Ciudad" },
               { id: "postalCode", subtext: "Código postal" },
-              { id: "country", subtext: "País", required: true, as: "select", options: countryOptions, placeholder: "DO" },
+              {
+                id: "country",
+                subtext: "País",
+                required: true,
+                as: "select",
+                options: countryOptions,
+                placeholder: "DO",
+              },
             ]}
           />
         </div>
@@ -105,12 +134,18 @@ const Admission = () => {
           Información del representante
         </h2>
         <div>
-            <Input id="relationToStudent" label="Relación con el estudiante" as="select" options={[
-                { value: "mother", label: "Madre" },
-                { value: "father", label: "Padre" },
-                { value: "guardian", label: "Guardián Legal" },
-                { value: "other", label: "Otro" }
-            ]} required />
+          <Input
+            id="relationToStudent"
+            label="Relación con el estudiante"
+            as="select"
+            options={[
+              { value: "mother", label: "Madre" },
+              { value: "father", label: "Padre" },
+              { value: "guardian", label: "Guardián Legal" },
+              { value: "other", label: "Otro" },
+            ]}
+            required
+          />
         </div>
         <div>
           <InputGroup
@@ -149,18 +184,25 @@ const Admission = () => {
               },
               { id: "city", subtext: "Ciudad" },
               { id: "postalCode", subtext: "Código postal" },
-              { id: "country", subtext: "País", required: true, as: "select", options: countryOptions, placeholder: "DO" },
+              {
+                id: "country",
+                subtext: "País",
+                required: true,
+                as: "select",
+                options: countryOptions,
+                placeholder: "DO",
+              },
             ]}
           />
         </div>
         <div>
-            <Input id="homePhone" label="Teléfono de casa" />
+          <Input id="homePhone" label="Teléfono de casa" />
         </div>
         <div>
-            <Input id="mobilePhone" label="Teléfono celular" required />
+          <Input id="mobilePhone" label="Teléfono celular" required />
         </div>
         <div>
-            <Input id="email" label="Correo electrónico" />
+          <Input id="email" label="Correo electrónico" />
         </div>
         <button
           type="submit"
