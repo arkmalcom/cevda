@@ -38,6 +38,9 @@ const Navigation: React.FC = () => {
         <a href="#about" className="text-white text-xl">
           Admisión
         </a>
+        <a href="#about" className="text-white text-xl">
+          Infotep
+        </a>
       </div>
     </nav>
   );

@@ -30,10 +30,10 @@ const Admission = () => {
 
   return (
     <div className="flex flex-col items-center lg:w-1/2 mx-auto mt-8 mb-16">
-      <h1 className="text-3xl font-bold text-blue-800 mb-4">
+      <h1 className="lg:text-3xl text-2xl font-bold text-blue-800 mb-4">
         Formulario de Pre-inscripción
       </h1>
-      <div className="p-3 text-center text-blue-800 space-y-2">
+      <div className="p-3 text-center max-lg:text-sm text-blue-800 space-y-2">
         <p>
             Es un placer para nosotros que nos consideren como pilar en la educación de sus hijos.
         </p>

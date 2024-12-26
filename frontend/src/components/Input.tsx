@@ -25,13 +25,13 @@ const Input: React.FC<InputProps> = ({
   as = "input",
   className = "",
 }) => {
-  const commonClasses = "mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:ring-blue-500 focus:border-blue-500";
+  const commonClasses = "mt-2 p-1 block lg:w-36 w-26 rounded-sm border-blue-800 shadow-sm focus:ring-blue-800 focus:border-blue-800 text-xs";
   const [dob, setDob] = useState(new Date());
   return (
     <div className="flex flex-col">
       <label
         htmlFor={id}
-        className={`block text-sm font-medium ${
+        className={`block text-sm  ${
           label ? "text-blue-800" : "invisible"
         }`}
       >
@@ -54,12 +54,12 @@ const Input: React.FC<InputProps> = ({
         <select
           id={id}
           name={id}
-          className={`${commonClasses} ${className}`}
+          className={`${commonClasses} ${className} w-36`}
           required={required}
           defaultValue={placeholder}
         >
           <option value="" disabled>
-            {placeholder || "Seleccione una opción"}
+            Seleccione una opción
           </option>
           {options?.map((option, index) => (
             <option key={index} value={option.value}>
