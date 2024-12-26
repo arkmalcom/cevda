@@ -32,52 +32,54 @@ const Home = () => {
   return (
     <>
       <div className="flex flex-col lg:w-1/2 items-center lg:justify-center lg:mx-auto">
-        <div className="my-4 w-full">
-          <Carousel images={[pic1, pic2, pic1]} />
-        </div>
-        <div className="my-4 w-full">
-          <Accordion items={accordionItems} />
-        </div>
-        <div className="w-full p-2">
-          <h1 className="text-3xl font-bold text-center text-blue-800">
-            Oferta academica
-          </h1>
-          <GridComponent items={gridItems} />
-        </div>
-        <div className="w-full p-2">
-          <h1 className="text-3xl font-bold text-center text-blue-800">
-            Requisitos de Admision
-          </h1>
-          <ul className="my-4 list-disc list-inside">
-            <li>Fotocopia de Acta de nacimiento</li>
-            <li>Copia de la cédula o pasaporte de ambos padres.</li>
-            <li>4 fotos 2x2 (recientes)</li>
-            <li>Certificado médico</li>
-            <li>Copia de seguro médico</li>
-            <li>Llenar formulario de ingreso</li>
-            <li>Firmar carta de comrpomiso de pago</li>
-            <li>
-              Si presenta algún problema de salud; presentar copia de su
-              historial
-            </li>
-            <li>Uso correcto del uniforme (párvulos en adelante)</li>
-            <li>Evaluación oftalmológica (preprimario en adelante)</li>
-          </ul>
-          <p className="my-4">
-            Si el/la estudiante había estado en un centro educativo
-            anteriormente:
-          </p>
-          <ul className="list-disc list-inside">
-            <li>Llenar formulario de referencia (colegio de precedencia)</li>
-            <li>Carta de saldo</li>
-            <li>Carta de buena conducta</li>
-            <li>Historial académico SIGERD</li>
-            <li>Récord de notas</li>
-            <li>
-              Niños de primaria deben aplicar evaluación (costo no reembolsable
-              de $200)
-            </li>
-          </ul>
+        <div className="w-full space-y-2">
+          <div>
+            <Carousel images={[pic1, pic2, pic1]} />
+          </div>
+          <div>
+            <Accordion items={accordionItems} />
+          </div>
+          <div>
+            <h1 className="text-3xl font-bold text-center text-blue-800">
+              Oferta academica
+            </h1>
+            <GridComponent items={gridItems} />
+          </div>
+          <div>
+            <h1 className="text-3xl font-bold text-center text-blue-800">
+              Requisitos de Admision
+            </h1>
+            <ul className="my-4 list-disc list-inside">
+              <li>Fotocopia de Acta de nacimiento</li>
+              <li>Copia de la cédula o pasaporte de ambos padres.</li>
+              <li>4 fotos 2x2 (recientes)</li>
+              <li>Certificado médico</li>
+              <li>Copia de seguro médico</li>
+              <li>Llenar formulario de ingreso</li>
+              <li>Firmar carta de comrpomiso de pago</li>
+              <li>
+                Si presenta algún problema de salud; presentar copia de su
+                historial
+              </li>
+              <li>Uso correcto del uniforme (párvulos en adelante)</li>
+              <li>Evaluación oftalmológica (preprimario en adelante)</li>
+            </ul>
+            <p className="my-4">
+              Si el/la estudiante había estado en un centro educativo
+              anteriormente:
+            </p>
+            <ul className="list-disc list-inside">
+              <li>Llenar formulario de referencia (colegio de precedencia)</li>
+              <li>Carta de saldo</li>
+              <li>Carta de buena conducta</li>
+              <li>Historial académico SIGERD</li>
+              <li>Récord de notas</li>
+              <li>
+                Niños de primaria deben aplicar evaluación (costo no
+                reembolsable de $200)
+              </li>
+            </ul>
+          </div>
         </div>
       </div>
     </>

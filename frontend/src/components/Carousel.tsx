@@ -1,19 +1,17 @@
 import React, { useState, useEffect } from "react";
 
 interface CarouselProps {
-  images: string[]; // Array of image paths
+  images: string[];
 }
 
 const Carousel: React.FC<CarouselProps> = ({ images }) => {
   const [currentIndex, setCurrentIndex] = useState(0);
 
-  // Change image on a timer
   useEffect(() => {
     const intervalId = setInterval(() => {
       setCurrentIndex((prevIndex) => (prevIndex + 1) % images.length);
-    }, 3000); // Change image every 3 seconds
+    }, 3000);
 
-    // Clear the interval on component unmount
     return () => clearInterval(intervalId);
   }, [images.length]);
 
@@ -59,11 +57,11 @@ const Carousel: React.FC<CarouselProps> = ({ images }) => {
         &#10095;
       </button>
 
-      <div className="flex justify-center mt-4 space-x-2">
+      <div className="flex justify-center space-x-2">
         {images.map((_, index) => (
           <button
             key={index}
-            className={`w-3 h-3 rounded-full ${
+            className={`w-3 h-3 my-4 rounded-full ${
               index === currentIndex ? "bg-black" : "bg-gray-400"
             }`}
             onClick={() => handleIndicatorClick(index)}
