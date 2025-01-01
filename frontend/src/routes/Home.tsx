@@ -31,7 +31,7 @@ const Home = () => {
 
   return (
     <>
-      <div className="flex flex-col lg:w-1/2 items-center lg:justify-center lg:mx-auto">
+      <div className="flex flex-col items-center lg:justify-center lg:mx-auto">
         <div className="w-full space-y-2">
           <div>
             <Carousel images={[pic1, pic2, pic1]} />

@@ -29,7 +29,7 @@ const Admission = () => {
   };
 
   return (
-    <div className="flex flex-col items-center lg:w-1/2 mx-auto">
+    <div className="flex flex-col items-center mx-auto lg:w-5/6">
       <h1 className="lg:text-3xl text-2xl font-bold text-blue-800 mb-4">
         Formulario de Pre-inscripción
       </h1>
