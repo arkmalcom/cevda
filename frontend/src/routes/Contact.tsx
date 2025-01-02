@@ -1,4 +1,5 @@
 import React from 'react';
+import { EMAIL_ADDRESS, FULL_ADDRESS, PHONE_NUMBER } from '../utils/Constants';
 
 const Contact: React.FC = () => {
     return (
@@ -14,9 +15,9 @@ const Contact: React.FC = () => {
             </div>
             <div className="flex flex-col p-1">
                 <div className="flex-1 lg:pr-5 justify-center my-auto text-center">
-                    <p className="font-bold">Calle 1ra, etc. etc.</p>
-                    <p>Tel: (809) 555-5555</p>
-                    <p>Email: info@cevda.com</p>
+                    <p className="font-bold">{FULL_ADDRESS}</p>
+                    <p>Tel: {PHONE_NUMBER}</p>
+                    <p>Email: {EMAIL_ADDRESS}</p>
                 </div>
                 <hr className="my-1" /> 
                 <div className="flex-1 lg:w-1/2 mx-auto">

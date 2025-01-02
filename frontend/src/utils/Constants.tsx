@@ -106,4 +106,8 @@ const countryOptions = [
   { value: "YE", label: "Yemen" },
 ];
 
+export const FULL_ADDRESS = "Calle 1ra #2, Tropical del Este, Sto. Dgo. Este, Rep. Dom.";
+export const PHONE_NUMBER = "(849) 886-8485"
+export const EMAIL_ADDRESS = "centrovilladeangeles@gmail.com"
+
 export default countryOptions;
