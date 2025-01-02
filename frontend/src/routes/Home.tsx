@@ -36,12 +36,6 @@ const Home = () => {
     },
   ];
 
-  const [isServicesOpen, setServicesOpen] = useState(false);
-
-  const toggleServices = () => {
-    setServicesOpen(!isServicesOpen);
-  };
-
   const gridItems = [
     { title: "Nivel inicial", description: "Aca va algo" },
     { title: "Nivel primario", description: "Aca va otra cosa" },
@@ -69,7 +63,7 @@ const Home = () => {
             Nuestros Servicios
           </h1>
           <div className="bg-blue-500 flex flex-col items-center p-1">
-            <div className="flex flex-col lg:flex-row">
+            <div className="flex flex-col md:flex-row">
               <div className="items-center">
                 <div className="relative flex items-center justify-center group">
                   <img

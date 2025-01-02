@@ -56,7 +56,7 @@ const Carousel: React.FC<CarouselProps> = ({ images }) => {
   };
 
   return (
-    <div className="relative w-full max-w-2xl mx-auto overflow-hidden">
+    <div className="relative w-full mx-auto overflow-hidden">
       <div
         className={`flex transition-transform ${
           isTransitioning ? "duration-500 ease-in-out" : "duration-0"
@@ -67,8 +67,8 @@ const Carousel: React.FC<CarouselProps> = ({ images }) => {
         {extendedImages.map((image, index) => (
           <div
             key={index}
-            className="min-w-full h-96 bg-cover bg-center"
-            style={{ backgroundImage: `url(${image})` }}
+            className="min-w-full h-96 lg:h-[768px] bg-cover"
+            style={{ backgroundImage: `url(${image})`, backgroundPosition: "40% 30%" }}
           ></div>
         ))}
       </div>
