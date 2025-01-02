@@ -102,7 +102,7 @@ const Home = () => {
                 </div>
               </div>
             </div>
-          <div className="p-2">
+          <div className="p-2 text-justify lg:w-1/2 mx-auto">
             <h1 className="text-3xl font-bold text-center text-blue-800">
               Requisitos de Admision
             </h1>
@@ -136,8 +136,8 @@ const Home = () => {
               </li>
             </ul>
           </div>
-          <div className="max-lg:text-sm">
-            <h1 className="text-blue-800 font-bold space-y-2 text-base lg:text-xl">Contacto</h1>
+          <div className="max-lg:text-sm mx-auto lg:w-1/2 p-2">
+            <h1 className="text-blue-800 font-bold space-y-2 text-3xl text-center my-4">Contacto</h1>
             <p>{FULL_ADDRESS}</p>
             <p>Tel: {PHONE_NUMBER}</p>
             <p>Correo: {EMAIL_ADDRESS}</p>
