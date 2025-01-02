@@ -1,5 +1,3 @@
-import { useState } from "react";
-
 import Carousel from "../components/Carousel";
 import Accordion from "../components/Accordion";
 import GridComponent from "../components/Grid";
