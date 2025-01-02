@@ -7,7 +7,6 @@ import Contact from "./routes/Contact";
 import Home from "./routes/Home";
 import Infotep from "./routes/Infotep";
 
-
 function App() {
   return (
     <Router>

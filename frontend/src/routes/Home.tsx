@@ -17,7 +17,6 @@ import carousel4 from "../assets/carousel/carousel4.jpg";
 import carousel5 from "../assets/carousel/carousel5.jpg";
 import robotica from "../assets/services/robotica.jpg";
 
-
 const Home = () => {
   const accordionItems = [
     {
@@ -38,7 +37,7 @@ const Home = () => {
   ];
 
   const [isServicesOpen, setServicesOpen] = useState(false);
-  
+
   const toggleServices = () => {
     setServicesOpen(!isServicesOpen);
   };
@@ -51,9 +50,11 @@ const Home = () => {
   return (
     <>
       <div className="flex flex-col items-center lg:justify-center lg:mx-auto">
-        <div className="w-full space-y-2">
+        <div className="w-full space-y-6">
           <div>
-            <Carousel images={[carousel1, carousel2, carousel3, carousel4, carousel5]} />
+            <Carousel
+              images={[carousel1, carousel2, carousel3, carousel4, carousel5]}
+            />
           </div>
           <div>
             <Accordion items={accordionItems} />
@@ -63,45 +64,91 @@ const Home = () => {
               Oferta academica
             </h1>
             <GridComponent items={gridItems} />
-            <div className="flex flex-col p-2">
-                <div className="my-1 rounded-md bg-blue-200">
-                  <button
-                    className="text-left flex items-center font-bold justify-between w-full p-2"
-                    onClick={toggleServices}
-                  >
-                    <span className="text-blue-800">Nuestros Servicios</span>
-                    <i
-                      className={`fas ${
-                        isServicesOpen ? "fa-caret-up" : "fa-caret-down"
-                      } p-2 transition-transform`}
-                    ></i>
-                  </button>
-                    {isServicesOpen && (
-                      <div className="text-sm">
-                        <div className="w-full border-t-2 border-amber-500"></div>
-                        <div className="flex lg:flex-row max-lg:space-y-4 flex-col p-2 justify-center items-center text-center lg:justify-between">
-                          <div>
-                            <h1 className="text-xl p-2">Programación y Robótica</h1>
-                            <img src={robotica} alt="Robotica" className="h-64 rounded-md border-2 border-amber-500 shadow-md" />
-                          </div>
-                          <div>
-                            <h1 className="text-xl p-2">Ballet</h1>
-                            <img src={ballet} alt="Ballet" className="h-64 rounded-md border-2 border-amber-500 shadow-md" />
-                          </div>
-                          <div>
-                            <h1 className="text-xl p-2">Flauta</h1>
-                            <img src={flauta} alt="flauta" className="h-64 rounded-md border-2 border-amber-500 shadow-md" />
-                          </div>
-                          <div>
-                            <h1 className="text-xl p-2">Estimulación Temprana</h1>
-                            <img src={estimTemprana} alt="estimulación temprana" className="h-64 rounded-md border-2 border-amber-500 shadow-md" />
-                          </div>
-                        </div>
-                      </div>
-                    )}
+          </div>
+          <h1 className="text-center text-3xl text-blue-800 font-bold p-2">
+            Nuestros Servicios
+          </h1>
+          <div className="bg-blue-500 flex flex-col items-center p-1">
+            <div className="flex flex-col lg:flex-row">
+              <div className="items-center">
+                <div className="relative flex items-center justify-center group">
+                  <img
+                    src={robotica}
+                    alt="robotica"
+                    className="w-96 lg:h-96 h-36 max-lg:object-top object-cover opacity-35 group-hover:opacity-75 transition-opacity duration-300"
+                  />
+                  <div className="absolute flex flex-col items-center justify-center text-center border-2 border-amber-200 bg-amber-500 rounded-full w-16 h-16 opacity-100 group-hover:opacity-100 transition-opacity duration-300">
+                    <i className="fas fa-robot text-blue-800"></i>
+                  </div>
+                  <div className="absolute top-1/2 mt-8 flex flex-col items-center justify-center group-hover:opacity-100 transition-opacity duration-300">
+                    <p className="text-white font-bold">Robótica</p>
+                  </div>
+                </div>
+              </div>
+              <div className="flex flex-col lg:flex-row items-center">
+                <div className="relative flex items-center justify-center group">
+                  <img
+                    src={estimTemprana}
+                    alt="estimulacion temprana"
+                    className="w-96 lg:h-96 h-36 max-lg:object-top object-cover opacity-35 group-hover:opacity-50 transition-opacity duration-300"
+                  />
+                  <div className="absolute flex flex-col items-center justify-center text-center border-2 border-amber-200 bg-amber-500 rounded-full w-16 h-16 opacity-100 group-hover:opacity-100 transition-opacity duration-300">
+                    <i className="fas fa-baby text-blue-800"></i>
+                  </div>
+                  <div className="absolute top-1/2 mt-8 flex flex-col items-center justify-center group-hover:opacity-100 transition-opacity duration-300">
+                    <p className="text-white font-bold">
+                      Estimulación Temprana
+                    </p>
+                  </div>
+                </div>
+              </div>
+              <div className="flex flex-col lg:flex-row items-center">
+                <div className="relative flex items-center justify-center group">
+                  <img
+                    src={ballet}
+                    alt="ballet"
+                    className="w-96 lg:h-96 h-36 max-lg:object-top object-cover opacity-35 group-hover:opacity-75 transition-opacity duration-300"
+                  />
+                  <div className="absolute flex flex-col items-center justify-center text-center border-2 border-amber-200 bg-amber-500 rounded-full w-16 h-16 opacity-100 group-hover:opacity-100 transition-opacity duration-300">
+                    <i className="fas fa-shoe-prints text-blue-800"></i>
+                  </div>
+                  <div className="absolute top-1/2 mt-8 flex flex-col items-center justify-center group-hover:opacity-100 transition-opacity duration-300">
+                    <p className="text-white font-bold">Ballet</p>
+                  </div>
+                </div>
+              </div>
+              <div className="flex flex-col lg:flex-row items-center">
+                <div className="relative flex items-center justify-center group">
+                  <img
+                    src={flauta}
+                    alt="flauta"
+                    className="w-96 lg:h-96 h-36 max-lg:object-top object-cover opacity-35 group-hover:opacity-75 transition-opacity duration-300"
+                  />
+                  <div className="absolute flex flex-col items-center justify-center text-center border-2 border-amber-200 bg-amber-500 rounded-full w-16 h-16 opacity-100 group-hover:opacity-100 transition-opacity duration-300">
+                    <i className="fas fa-music text-blue-800"></i>
+                  </div>
+                  <div className="absolute top-1/2 mt-8 flex flex-col items-center justify-center group-hover:opacity-100 transition-opacity duration-300">
+                    <p className="text-white font-bold">Flauta</p>
+                  </div>
+                </div>
+              </div>
+              <div className="flex flex-col lg:flex-row items-center">
+                <div className="relative flex items-center justify-center group">
+                  <img
+                    src={informatica}
+                    alt="informatica"
+                    className="w-96 lg:h-96 h-36 max-lg:object-top object-cover opacity-35 group-hover:opacity-75 transition-opacity duration-300"
+                  />
+                  <div className="absolute flex flex-col items-center justify-center text-center border-2 border-amber-200 bg-amber-500 rounded-full w-16 h-16 opacity-100 group-hover:opacity-100 transition-opacity duration-300">
+                    <i className="fas fa-laptop text-blue-800"></i>
+                  </div>
+                  <div className="absolute top-1/2 mt-8 flex flex-col items-center justify-center group-hover:opacity-100 transition-opacity duration-300">
+                    <p className="text-white font-bold">Informatica</p>
+                  </div>
                 </div>
               </div>
             </div>
+          </div>
           <div className="p-2 text-justify lg:w-1/2 mx-auto">
             <h1 className="text-3xl font-bold text-center text-blue-800">
               Requisitos de Admision
@@ -131,13 +178,13 @@ const Home = () => {
               <li>Carta de buena conducta</li>
               <li>Historial académico SIGERD</li>
               <li>Récord de notas</li>
-              <li>
-                Niños de primaria deben aplicar evaluación
-              </li>
+              <li>Niños de primaria deben aplicar evaluación</li>
             </ul>
           </div>
           <div className="max-lg:text-sm mx-auto lg:w-1/2 p-2">
-            <h1 className="text-blue-800 font-bold space-y-2 text-3xl text-center my-4">Contacto</h1>
+            <h1 className="text-blue-800 font-bold space-y-2 text-3xl text-center my-4">
+              Contacto
+            </h1>
             <p>{FULL_ADDRESS}</p>
             <p>Tel: {PHONE_NUMBER}</p>
             <p>Correo: {EMAIL_ADDRESS}</p>

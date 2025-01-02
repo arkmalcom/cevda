@@ -9,11 +9,7 @@ const Carousel: React.FC<CarouselProps> = ({ images }) => {
   const [isTransitioning, setIsTransitioning] = useState(false);
   const [autoScroll, setAutoScroll] = useState(true);
 
-  const extendedImages = [
-    images[images.length - 1],
-    ...images,
-    images[0],
-  ];
+  const extendedImages = [images[images.length - 1], ...images, images[0]];
 
   useEffect(() => {
     if (autoScroll) {

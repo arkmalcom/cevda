@@ -17,7 +17,7 @@ const Navigation: React.FC = () => {
           </h1>
         </div>
         <div className="flex items-center w-full justify-end">
-            <button
+          <button
             className="lg:hidden text-white text-2xl ml-auto"
             onClick={toggleMenu}
           >
@@ -55,13 +55,25 @@ const Navigation: React.FC = () => {
           <Link to="/" className="text-white text-xl" onClick={toggleMenu}>
             Inicio
           </Link>
-          <Link to="/admision" className="text-white text-xl" onClick={toggleMenu}>
+          <Link
+            to="/admision"
+            className="text-white text-xl"
+            onClick={toggleMenu}
+          >
             Admisión
           </Link>
-          <Link to="/infotep" className="text-white text-xl" onClick={toggleMenu}>
+          <Link
+            to="/infotep"
+            className="text-white text-xl"
+            onClick={toggleMenu}
+          >
             Infotep
           </Link>
-          <Link to="/contacto" className="text-white text-xl" onClick={toggleMenu}>
+          <Link
+            to="/contacto"
+            className="text-white text-xl"
+            onClick={toggleMenu}
+          >
             Contacto
           </Link>
         </div>
