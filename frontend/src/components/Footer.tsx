@@ -8,7 +8,7 @@ const Footer: React.FC = () => {
   const currentYear = getCurrentYear();
 
   return (
-    <div className="pt-12">
+    <div className="pt-10">
       <footer className="flex fixed bottom-0 p-2  bg-amber-500 text-white w-full items-center">
         <div className="lg:block hidden text-xs w-1/4">
           <p>&copy; {currentYear} Centro Educativo Villa de Angeles</p>

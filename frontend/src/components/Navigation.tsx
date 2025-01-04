@@ -8,7 +8,7 @@ const Navigation: React.FC = () => {
   const toggleMenu = () => setIsMenuOpen(!isMenuOpen);
 
   return (
-    <div className="pb-4">
+    <div>
       <nav className="flex flex-row bg-amber-500 p-4 text-blue-8 h-16 shadow-md z-10">
         <div className="flex flex-row items-center space-x-1 lg:w-96">
           <img src={logo} alt="nav-logo" className="w-12 h-12 inline-block" />
@@ -29,6 +29,9 @@ const Navigation: React.FC = () => {
             </Link>
             <Link to="/admision" className="text-white text-xl">
               Admisión
+            </Link>
+            <Link to="/caracteristicas" className="text-white text-xl">
+              Características
             </Link>
             <Link to="/infotep" className="text-white text-xl">
               Infotep
@@ -61,6 +64,13 @@ const Navigation: React.FC = () => {
             onClick={toggleMenu}
           >
             Admisión
+          </Link>
+          <Link
+            to="/caracteristicas"
+            className="text-white text-xl"
+            onClick={toggleMenu}
+          >
+            Características
           </Link>
           <Link
             to="/infotep"

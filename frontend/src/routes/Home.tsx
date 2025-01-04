@@ -1,3 +1,4 @@
+import Card from "../components/Card";
 import Carousel from "../components/Carousel";
 import Accordion from "../components/Accordion";
 import GridComponent from "../components/Grid";
@@ -14,6 +15,7 @@ import carousel3 from "../assets/carousel/carousel3.jpg";
 import carousel4 from "../assets/carousel/carousel4.jpg";
 import carousel5 from "../assets/carousel/carousel5.jpg";
 import robotica from "../assets/services/robotica.jpg";
+import welcomeBg from "../assets/welcome_bg.jpg";
 
 const Home = () => {
   const accordionItems = [
@@ -34,10 +36,19 @@ const Home = () => {
     },
   ];
 
-  const gridItems = [
-    { title: "Nivel inicial", description: "Aca va algo" },
-    { title: "Nivel primario", description: "Aca va otra cosa" },
-  ];
+  const nivelInicialContent = `
+  En el Centro Educativo Villa de Ángeles, nuestro servicio de preescolar está diseñado para ser el inicio ideal en la formación de sus pequeños. 
+  Contamos con maestras especializadas que trabajan con pasión y dedicación para fomentar la creatividad, la curiosidad y el amor por el aprendizaje desde una edad temprana. 
+  Nuestro enfoque integral promueve el desarrollo físico, emocional y social de los niños, en un ambiente seguro, estimulante y lleno de actividades que potencian sus habilidades y refuerzan su confianza. 
+  Aquí, cada niño es único, y nuestro compromiso es acompañarlos en sus primeros pasos hacia un futuro brillante.
+  `;
+
+  const nivelPrimarioContent = `
+  En el Centro Educativo Villa de Ángeles, nuestro servicio de preescolar está diseñado para ser el inicio ideal en la formación de sus pequeños. 
+  Contamos con maestras especializadas que trabajan con pasión y dedicación para fomentar la creatividad, la curiosidad y el amor por el aprendizaje desde una edad temprana. 
+  Nuestro enfoque integral promueve el desarrollo físico, emocional y social de los niños, en un ambiente seguro, estimulante y lleno de actividades que potencian sus habilidades y refuerzan su confianza. 
+  Aquí, cada niño es único, y nuestro compromiso es acompañarlos en sus primeros pasos hacia un futuro brillante.
+  `;
 
   return (
     <>
@@ -48,6 +59,35 @@ const Home = () => {
               images={[carousel1, carousel2, carousel3, carousel4, carousel5]}
             />
           </div>
+          <div
+            className="h-auto bg-contain flex flex-col space-y-2"
+            style={{ backgroundImage: `url(${welcomeBg})` }}
+          >
+            <div className="p-2 bg-amber-500 h-full bg-opacity-70 rounded-md p-2 space-y-3">
+              <h1 className="font-title text-xl text-blue-800">
+                Centro Educativo Villa de Ángeles
+              </h1>
+              <p className="text-justify max-lg:text-xs text-white font-welcome">
+                Bienvenidos al Centro Educativo Villa de Ángeles, un espacio
+                dedicado al aprendizaje y al desarrollo integral de sus hijos.
+              </p>
+              <p className="text-justify max-lg:text-xs text-white font-welcome">
+                Somos un colegio comprometido con la excelencia educativa,
+                ofreciendo servicios desde el nivel inicial hasta el nivel
+                primario, complementados con clases extracurriculares diseñadas
+                para potenciar las habilidades de nuestros estudiantes. Además,
+                contamos con un sistema de seminternado que garantiza un
+                ambiente seguro y enriquecedor. Nuestro enfoque intensivo está
+                en brindar una educación de calidad y un cuidado excepcional,
+                priorizando siempre el bienestar y el crecimiento de nuestros
+                alumnos.
+              </p>
+              <p className="text-justify max-lg:text-xs text-white font-welcome">
+                {" "}
+                ¡Gracias por confiar en nosotros!
+              </p>
+            </div>
+          </div>
           <div>
             <Accordion items={accordionItems} />
           </div>
@@ -55,12 +95,23 @@ const Home = () => {
             <h1 className="text-3xl font-bold text-center text-blue-800">
               Oferta academica
             </h1>
-            <GridComponent items={gridItems} />
+            <div className="flex max-lg:flex-col max-lg:space-y-4 justify-evenly p-2">
+              <Card
+                title="Nivel inicial"
+                subtext="2 a 5 años"
+                content={nivelInicialContent}
+              />
+              <Card
+                title="Nivel inicial"
+                subtext="6 a 10 años"
+                content={nivelPrimarioContent}
+              />
+            </div>
           </div>
           <h1 className="text-center text-3xl text-blue-800 font-bold p-2">
             Nuestros Servicios
           </h1>
-          <div className="bg-blue-500 flex flex-col items-center p-1">
+          <div className="bg-blue-500 flex flex-col items-center">
             <div className="flex flex-col md:flex-row">
               <div className="items-center">
                 <div className="relative flex items-center justify-center group">
@@ -102,7 +153,7 @@ const Home = () => {
                     className="w-96 lg:h-96 h-36 max-lg:object-top object-cover opacity-35 group-hover:opacity-75 transition-opacity duration-300"
                   />
                   <div className="absolute flex flex-col items-center justify-center text-center border-2 border-amber-200 bg-amber-500 rounded-full w-16 h-16 opacity-100 group-hover:opacity-100 transition-opacity duration-300">
-                    <i className="fas fa-shoe-prints text-blue-800"></i>
+                    <i className="fas fa-child-dress text-blue-800 text-lg"></i>
                   </div>
                   <div className="absolute top-1/2 mt-8 flex flex-col items-center justify-center group-hover:opacity-100 transition-opacity duration-300">
                     <p className="text-white font-bold">Ballet</p>

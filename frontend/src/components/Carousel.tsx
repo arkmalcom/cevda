@@ -68,7 +68,10 @@ const Carousel: React.FC<CarouselProps> = ({ images }) => {
           <div
             key={index}
             className="min-w-full h-96 lg:h-[768px] bg-cover"
-            style={{ backgroundImage: `url(${image})`, backgroundPosition: "40% 30%" }}
+            style={{
+              backgroundImage: `url(${image})`,
+              backgroundPosition: "40% 30%",
+            }}
           ></div>
         ))}
       </div>

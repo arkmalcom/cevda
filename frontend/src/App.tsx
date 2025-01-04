@@ -3,6 +3,7 @@ import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
 import Layout from "./components/Layout";
 
 import Admission from "./routes/Admission";
+import Characteristics from "./routes/Characteristics";
 import Contact from "./routes/Contact";
 import Home from "./routes/Home";
 import Infotep from "./routes/Infotep";
@@ -16,6 +17,7 @@ function App() {
           <Route path="/admision" element={<Admission />} />
           <Route path="/contacto" element={<Contact />} />
           <Route path="/infotep" element={<Infotep />} />
+          <Route path="/caracteristicas" element={<Characteristics />} />
         </Route>
       </Routes>
     </Router>

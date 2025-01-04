@@ -28,8 +28,9 @@ const Infotep: React.FC = () => {
         <p>
           Para inscribirte, puedes contactarnos a través de nuestro WhatsApp
           (849) 886-8485 o visitar nuestras oficinas en horario de 8:00 a. m. a
-          3:00 p. m. ¡Te esperamos!
+          3:00 p. m.
         </p>
+        <p className="pb-2">¡Te esperamos!</p>
       </div>
     </div>
   );

@@ -4,6 +4,7 @@ export default {
   theme: {
     fontFamily: {
       title: ["Pirata One", "serif"],
+      welcome: ["Geist", "serif"],
     },
     extend: {},
   },
