@@ -44,10 +44,12 @@ const Home = () => {
   `;
 
   const nivelPrimarioContent = `
-  En el Centro Educativo Villa de Ángeles, nuestro servicio de preescolar está diseñado para ser el inicio ideal en la formación de sus pequeños. 
-  Contamos con maestras especializadas que trabajan con pasión y dedicación para fomentar la creatividad, la curiosidad y el amor por el aprendizaje desde una edad temprana. 
-  Nuestro enfoque integral promueve el desarrollo físico, emocional y social de los niños, en un ambiente seguro, estimulante y lleno de actividades que potencian sus habilidades y refuerzan su confianza. 
-  Aquí, cada niño es único, y nuestro compromiso es acompañarlos en sus primeros pasos hacia un futuro brillante.
+  En el Centro Educativo Villa de Ángeles, nuestro nivel primario está diseñado para formar estudiantes preparados para los desafíos del mundo actual. 
+  Integramos la tecnología como parte esencial del aprendizaje, ofreciendo clases de Programación, 
+  Robótica e Informática que estimulan el pensamiento lógico y la creatividad. Además, 
+  fortalecemos el desarrollo integral de nuestros estudiantes con clases de inglés, 
+  para potenciar sus habilidades comunicativas, y flauta, fomentando la sensibilidad artística y musical. 
+  Todo esto en un ambiente dinámico y participativo, donde cada niño encuentra las herramientas para destacar y crecer en todas las áreas.
   `;
 
   return (
