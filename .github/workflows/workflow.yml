@@ -25,7 +25,6 @@ jobs:
       uses: astral-sh/setup-uv@v5
       with:
         enable-cache: true
-        cache-dependency-glob: "uv.lock"
 
     - name: Package Lambda function
       run: |
@@ -43,6 +42,7 @@ jobs:
         AWS_SECRET_ACCESS_KEY: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
         AWS_DEFAULT_REGION: us-east-2
       run: |
+        cd backend
         aws lambda update-function-code \
           --function-name email-handler-nonprod \
           --zip-file fileb://package.zip
