@@ -52,30 +52,30 @@ def is_valid_recaptcha(captcha_token: str) -> bool:
         return False
 
 
-def send_email(data: Dict[str, Any]) -> Dict[str, Any]:
-    """Send email using AWS SES."""
+def send_email(data: Dict[str, Any], source: str) -> Dict[str, Any]:
+    """Send email using AWS SES with dynamic fields."""
     SENDER = os.environ["SENDER_EMAIL"]
     RECIPIENT = os.environ["RECIPIENT_EMAIL"]
 
     ses = boto3.client("ses")
+
+    # Dynamically generate the message body
+    message_body = "\n".join([f"{key}: {value}" for key, value in data.items()])
 
     try:
         response = ses.send_email(
             Source=SENDER,
             Destination={"ToAddresses": [RECIPIENT]},
             Message={
-                "Subject": {"Data": f"New Contact Form Submission: {data['subject']}"},
+                "Subject": {
+                    "Data": f"Nuevo Mensaje Del Formulario De {source.title()}"
+                },
                 "Body": {
                     "Text": {
                         "Data": f"""
-New message from contact form:
+Nuevo mensaje:
 
-Name: {data["name"]}
-Phone: {data["phone"]}
-Subject: {data["subject"]}
-
-Message:
-{data["message"]}
+{message_body}
                         """
                     }
                 },
@@ -125,7 +125,9 @@ def lambda_handler(event: Dict[str, Any], context: Any) -> Dict[str, Any]:
                 "headers": DEFAULT_HEADERS,
             }
 
-        result = send_email(body)
+        email_source = body.get("source", "contacto")
+
+        result = send_email(body, email_source)
 
         result["headers"] = DEFAULT_HEADERS
         logger.info(f"Email sent successfully: {result}")
