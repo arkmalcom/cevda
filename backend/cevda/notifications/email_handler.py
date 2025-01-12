@@ -46,7 +46,7 @@ def is_valid_recaptcha(captcha_token: str) -> bool:
         return False
 
 
-def send_email(data: Dict[str, Any], source: str) -> Dict[str, Any]:
+def send_email(data: Dict[str, Any]) -> Dict[str, Any]:
     """Send email using AWS SES with dynamic fields."""
     SENDER = os.environ["SENDER_EMAIL"]
     RECIPIENT = os.environ["RECIPIENT_EMAIL"]
@@ -54,6 +54,7 @@ def send_email(data: Dict[str, Any], source: str) -> Dict[str, Any]:
     ses = boto3.client("ses")
 
     message_body = "\n".join([f"{key}: {value}" for key, value in data.items()])
+    email_source = data.pop("source", "contacto")
 
     try:
         response = ses.send_email(
@@ -61,7 +62,7 @@ def send_email(data: Dict[str, Any], source: str) -> Dict[str, Any]:
             Destination={"ToAddresses": [RECIPIENT]},
             Message={
                 "Subject": {
-                    "Data": f"Nuevo Mensaje Del Formulario De {source.title()}"
+                    "Data": f"Nuevo Mensaje Del Formulario De {email_source.title()}"
                 },
                 "Body": {
                     "Text": {
@@ -103,7 +104,7 @@ def lambda_handler(event: Dict[str, Any], context: Any) -> Dict[str, Any]:
     try:
         body = json.loads(event["body"])
         logger.info(f"Received notification email data: {body}")
-        captcha_token = body.get("captchaToken")
+        captcha_token = body.pop("captchaToken", None)
 
         if not captcha_token:
             return {
@@ -121,9 +122,7 @@ def lambda_handler(event: Dict[str, Any], context: Any) -> Dict[str, Any]:
                 "headers": DEFAULT_HEADERS,
             }
 
-        email_source = body.get("source", "contacto")
-
-        result = send_email(body, email_source)
+        result = send_email(body)
 
         result["headers"] = DEFAULT_HEADERS
         logger.info(f"Email sent successfully: {result}")
