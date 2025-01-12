@@ -17,12 +17,6 @@ DEFAULT_HEADERS = {
 }
 
 
-def validate_email_data(data: Dict[str, Any]) -> bool:
-    """Validate required fields in the email data."""
-    required_fields = ["name", "phone", "subject", "message", "captchaToken"]
-    return all(field in data and data[field] for field in required_fields)
-
-
 def is_valid_recaptcha(captcha_token: str) -> bool:
     """Validate reCAPTCHA v3 token with Google's API."""
     RECAPTCHA_SECRET_KEY = os.environ["RECAPTCHA_SECRET_KEY"]
@@ -59,7 +53,6 @@ def send_email(data: Dict[str, Any], source: str) -> Dict[str, Any]:
 
     ses = boto3.client("ses")
 
-    # Dynamically generate the message body
     message_body = "\n".join([f"{key}: {value}" for key, value in data.items()])
 
     try:
@@ -110,15 +103,18 @@ def lambda_handler(event: Dict[str, Any], context: Any) -> Dict[str, Any]:
     try:
         body = json.loads(event["body"])
         logger.info(f"Received notification email data: {body}")
+        captcha_token = body.get("captchaToken")
 
-        if not validate_email_data(body):
+        if not captcha_token:
             return {
                 "statusCode": 400,
-                "body": json.dumps({"message": "Missing required fields"}),
+                "body": json.dumps(
+                    {"message": "CAPTCHA Token is missing. Bad request."}
+                ),
                 "headers": DEFAULT_HEADERS,
             }
 
-        if not is_valid_recaptcha(body["captchaToken"]):
+        if not is_valid_recaptcha(captcha_token):
             return {
                 "statusCode": 400,
                 "body": json.dumps({"message": "Invalid reCAPTCHA token"}),
