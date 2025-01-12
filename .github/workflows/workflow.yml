@@ -36,6 +36,7 @@ jobs:
         uv export --frozen --no-dev --no-editable -o requirements.txt
         uv pip install --no-installer-metadata --no-compile-bytecode --python-platform x86_64-manylinux2014 --target packages -r requirements.txt
         cd packages
+        zip -r ../package.zip .
         cd ..
         zip -r ../package.zip cevda
 
