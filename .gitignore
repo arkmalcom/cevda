@@ -24,3 +24,6 @@ dist-ssr
 *.sw?
 
 .ruff_cache
+cevda_backend.egg-info
+requirements.txt
+packages

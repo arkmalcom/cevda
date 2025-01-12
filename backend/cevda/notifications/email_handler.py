@@ -12,8 +12,8 @@ logger.setLevel(logging.INFO)
 
 DEFAULT_HEADERS = {
     "Access-Control-Allow-Origin": "*",
-    "Access-Control-Allow-Headers": "Content-Type,Access-Control-Allow-Origin,Accept",
-    "Access-Control-Allow-Methods": "*",
+    "Access-Control-Allow-Methods": "POST, OPTIONS",
+    "Access-Control-Allow-Headers": "Content-Type, Accept",
 }
 
 
@@ -23,10 +23,12 @@ def validate_email_data(data: Dict[str, Any]) -> bool:
     return all(field in data and data[field] for field in required_fields)
 
 
-def is_valid_recaptcha(captcha_token: str, action: str) -> bool:
+def is_valid_recaptcha(captcha_token: str) -> bool:
     """Validate reCAPTCHA v3 token with Google's API."""
     RECAPTCHA_SECRET_KEY = os.environ["RECAPTCHA_SECRET_KEY"]
     RECAPTCHA_URL = "https://www.google.com/recaptcha/api/siteverify"
+
+    logger.info("Validating reCAPTCHA token...")
 
     try:
         response = requests.post(
@@ -44,7 +46,7 @@ def is_valid_recaptcha(captcha_token: str, action: str) -> bool:
             f"reCAPTCHA v3 validation result - success: {success}, score: {score}, action: {response_action}"
         )
 
-        return success and score >= 0.5 and response_action == action
+        return success and score >= 0.5
     except requests.RequestException as e:
         logger.error(f"Error validating reCAPTCHA: {e}")
         return False
@@ -101,11 +103,7 @@ def lambda_handler(event: Dict[str, Any], context: Any) -> Dict[str, Any]:
         logger.info("Received OPTIONS preflight request.")
         return {
             "statusCode": 200,
-            "headers": {
-                "Access-Control-Allow-Origin": "*",
-                "Access-Control-Allow-Methods": "POST, OPTIONS",
-                "Access-Control-Allow-Headers": "Content-Type, Accept",
-            },
+            "headers": DEFAULT_HEADERS,
             "body": "",
         }
 
@@ -120,7 +118,6 @@ def lambda_handler(event: Dict[str, Any], context: Any) -> Dict[str, Any]:
                 "headers": DEFAULT_HEADERS,
             }
 
-        # Validate reCAPTCHA token
         if not is_valid_recaptcha(body["captchaToken"]):
             return {
                 "statusCode": 400,
@@ -128,7 +125,6 @@ def lambda_handler(event: Dict[str, Any], context: Any) -> Dict[str, Any]:
                 "headers": DEFAULT_HEADERS,
             }
 
-        # Send email if CAPTCHA validation is successful
         result = send_email(body)
 
         result["headers"] = DEFAULT_HEADERS
