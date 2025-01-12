@@ -1,7 +1,46 @@
-import React from "react";
+import React, { useState } from "react";
+import { GoogleReCaptchaProvider } from "react-google-recaptcha-v3";
+import useRecaptcha from "../hooks/useRecaptcha";
+import { useSubmit } from "../hooks/useSubmit";
 import { EMAIL_ADDRESS, FULL_ADDRESS, PHONE_NUMBER } from "../utils/Constants";
 
-const Contact: React.FC = () => {
+interface FormData {
+  name: string;
+  phone: string;
+  subject: string;
+  message: string;
+}
+
+const ContactForm: React.FC = () => {
+  const [formData, setFormData] = useState<FormData>({
+    name: "",
+    phone: "",
+    subject: "",
+    message: "",
+  });
+  const { handleSubmit, isSubmitting, submitStatus } = useSubmit<FormData>();
+
+  const handleChange = (
+    e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>,
+  ) => {
+    const { name, value } = e.target;
+    setFormData((prev) => ({
+      ...prev,
+      [name]: value,
+    }));
+  };
+
+  const onSubmit = async (e: React.FormEvent) => {
+    e.preventDefault();
+    await handleSubmit({
+      url: "https://8e0w1wznmj.execute-api.us-east-2.amazonaws.com/nonprod/email-handler-nonprod",
+      formData,
+      onSuccess: () => {
+        setFormData({ name: "", phone: "", subject: "", message: "" });
+      },
+    });
+  };
+
   return (
     <div className="flex flex-col h-screen text-sm">
       <div className="flex-1">
@@ -21,13 +60,15 @@ const Contact: React.FC = () => {
         </div>
         <hr className="my-1" />
         <div className="flex-1 lg:w-1/2 mx-auto">
-          <form className="space-y-2">
+          <form onSubmit={onSubmit} className="space-y-2">
             <div>
               <label htmlFor="name">Nombre:</label>
               <input
                 type="text"
                 id="name"
                 name="name"
+                value={formData.name}
+                onChange={handleChange}
                 required
                 className="border p-2 w-full"
               />
@@ -35,9 +76,11 @@ const Contact: React.FC = () => {
             <div>
               <label htmlFor="phone">Telefono:</label>
               <input
-                type="phone"
+                type="tel"
                 id="phone"
                 name="phone"
+                value={formData.phone}
+                onChange={handleChange}
                 required
                 className="border p-2 w-full"
               />
@@ -47,6 +90,8 @@ const Contact: React.FC = () => {
               <textarea
                 id="subject"
                 name="subject"
+                value={formData.subject}
+                onChange={handleChange}
                 required
                 className="border p-2 w-full"
               ></textarea>
@@ -56,19 +101,43 @@ const Contact: React.FC = () => {
               <textarea
                 id="message"
                 name="message"
+                value={formData.message}
+                onChange={handleChange}
                 required
                 className="border p-2 w-full"
               ></textarea>
             </div>
+            {submitStatus === "success" && (
+              <div className="text-green-600 text-center">
+                ¡Mensaje enviado con éxito!
+              </div>
+            )}
+            {submitStatus === "error" && (
+              <div className="text-red-600 text-center">
+                Error al enviar el mensaje. Por favor, intente nuevamente.
+              </div>
+            )}
             <div>
-              <button type="submit" className="bg-blue-500 text-white p-2 mt-2">
-                Enviar
+              <button
+                type="submit"
+                className="bg-blue-500 text-white p-2 mt-2 w-full disabled:opacity-50 hover:bg-blue-600 transition-colors"
+                disabled={isSubmitting}
+              >
+                {isSubmitting ? "Enviando..." : "Enviar"}
               </button>
             </div>
           </form>
         </div>
       </div>
     </div>
+  );
+};
+
+const Contact: React.FC = () => {
+  return (
+    <GoogleReCaptchaProvider reCaptchaKey="6LfvhrUqAAAAAAUy-TFIYHqTNE2IQE0E7sHJ_5Nc">
+      <ContactForm />
+    </GoogleReCaptchaProvider>
   );
 };
 

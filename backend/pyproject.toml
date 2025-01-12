@@ -8,5 +8,6 @@ dependencies = []
 
 [dependency-groups]
 dev = [
+    "boto3>=1.35.97",
     "ruff>=0.9.1",
 ]
