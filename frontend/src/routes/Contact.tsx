@@ -1,6 +1,5 @@
 import React, { useState } from "react";
 import { GoogleReCaptchaProvider } from "react-google-recaptcha-v3";
-import useRecaptcha from "../hooks/useRecaptcha";
 import { useSubmit } from "../hooks/useSubmit";
 import { EMAIL_ADDRESS, FULL_ADDRESS, PHONE_NUMBER } from "../utils/Constants";
 
@@ -19,6 +18,7 @@ const ContactForm: React.FC = () => {
     message: "",
   });
   const { handleSubmit, isSubmitting, submitStatus } = useSubmit<FormData>();
+  const STAGE = import.meta.env.VITE_STAGE;
 
   const handleChange = (
     e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>,
@@ -33,7 +33,7 @@ const ContactForm: React.FC = () => {
   const onSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
     await handleSubmit({
-      url: "https://8e0w1wznmj.execute-api.us-east-2.amazonaws.com/nonprod/email-handler-nonprod",
+      url: `${import.meta.env.VITE_BASE_API_URL}/${STAGE}/email-handler-${STAGE}`,
       formData,
       onSuccess: () => {
         setFormData({ name: "", phone: "", subject: "", message: "" });
@@ -135,7 +135,7 @@ const ContactForm: React.FC = () => {
 
 const Contact: React.FC = () => {
   return (
-    <GoogleReCaptchaProvider reCaptchaKey="6LfvhrUqAAAAAAUy-TFIYHqTNE2IQE0E7sHJ_5Nc">
+    <GoogleReCaptchaProvider reCaptchaKey={import.meta.env.VITE_GOOGLE_RECAPTCHA_CLIENT}>
       <ContactForm />
     </GoogleReCaptchaProvider>
   );
