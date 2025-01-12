@@ -13,10 +13,9 @@ def validate_email_data(data: Dict[str, Any]) -> bool:
 
 def send_email(data: Dict[str, Any]) -> Dict[str, Any]:
     """Send email using AWS SES."""
-    SENDER = os.environ["SENDER_EMAIL"]  # Verified SES email
-    RECIPIENT = os.environ["RECIPIENT_EMAIL"]  # Your email address
+    SENDER = os.environ["SENDER_EMAIL"]
+    RECIPIENT = os.environ["RECIPIENT_EMAIL"]
 
-    # Create SES client
     ses = boto3.client("ses")
 
     try:
@@ -60,27 +59,23 @@ Message:
 def lambda_handler(event: Dict[str, Any], context: Any) -> Dict[str, Any]:
     """Main Lambda handler function."""
     try:
-        # Parse the incoming JSON body
         body = json.loads(event["body"])
 
-        # Validate the input
         if not validate_email_data(body):
             return {
                 "statusCode": 400,
                 "body": json.dumps({"message": "Missing required fields"}),
                 "headers": {
-                    "Access-Control-Allow-Origin": "*",  # Configure this appropriately
+                    "Access-Control-Allow-Origin": "*",
                     "Access-Control-Allow-Headers": "Content-Type",
                     "Access-Control-Allow-Methods": "POST",
                 },
             }
 
-        # Send the email
         result = send_email(body)
 
-        # Add CORS headers to the response
         result["headers"] = {
-            "Access-Control-Allow-Origin": "*",  # Configure this appropriately
+            "Access-Control-Allow-Origin": "*",
             "Access-Control-Allow-Headers": "Content-Type",
             "Access-Control-Allow-Methods": "POST",
         }
@@ -92,7 +87,7 @@ def lambda_handler(event: Dict[str, Any], context: Any) -> Dict[str, Any]:
             "statusCode": 400,
             "body": json.dumps({"message": "Invalid JSON body"}),
             "headers": {
-                "Access-Control-Allow-Origin": "*",  # Configure this appropriately
+                "Access-Control-Allow-Origin": "*",
                 "Access-Control-Allow-Headers": "Content-Type",
                 "Access-Control-Allow-Methods": "POST",
             },
