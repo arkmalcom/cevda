@@ -7,6 +7,8 @@ from typing import Dict, Any
 import boto3
 from botocore.exceptions import ClientError
 
+from cevda.notifications.constants import COLUMN_MAPPING
+
 logger = logging.getLogger(__name__)
 logger.setLevel(logging.INFO)
 
@@ -15,6 +17,11 @@ DEFAULT_HEADERS = {
     "Access-Control-Allow-Methods": "POST, OPTIONS",
     "Access-Control-Allow-Headers": "Content-Type, Accept",
 }
+
+
+def get_column_mapping(form_source: str) -> dict:
+    """Get column mapping for a given form source."""
+    return COLUMN_MAPPING.get(form_source, {})
 
 
 def is_valid_recaptcha(captcha_token: str) -> bool:
@@ -52,9 +59,13 @@ def send_email(data: Dict[str, Any]) -> Dict[str, Any]:
     RECIPIENT = os.environ["RECIPIENT_EMAIL"]
 
     ses = boto3.client("ses")
+    email_source = data.pop("formSource", "contacto")
 
-    message_body = "\n".join([f"{key}: {value}" for key, value in data.items()])
-    email_source = data.pop("source", "contacto")
+    column_mapping = get_column_mapping(email_source)
+
+    message_body = "\n".join(
+        [f"{column_mapping[key]}: {value}" for key, value in data.items()]
+    )
 
     try:
         response = ses.send_email(
