@@ -20,6 +20,7 @@ COLUMN_MAPPING = {
         "guardianCountry": "País del Representante",
         "guardianHomePhone": "Teléfono de Casa del Representante",
         "guardianMobilePhone": "Teléfono Móvil del Representante",
+        "guardianEmail": "Correo Electrónico del Representante",
     },
     "contacto": {
         "name": "Nombre",

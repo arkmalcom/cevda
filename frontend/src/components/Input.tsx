@@ -30,7 +30,7 @@ const Input: React.FC<InputProps> = ({
   disabled = false,
 }) => {
   const commonClasses =
-    "mt-2 p-1 block lg:w-36 w-26 rounded-sm border shadow-sm focus:ring focus:border text-xs";
+    "mt-2 p-1 block lg:w-52 w-26 rounded-sm border shadow-sm focus:ring focus:border text-xs";
   const disabledClasses = "bg-gray-200 text-gray-500 cursor-not-allowed";
   const [dob, setDob] = useState(new Date());
 
