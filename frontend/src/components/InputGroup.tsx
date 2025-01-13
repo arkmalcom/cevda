@@ -11,6 +11,8 @@ interface InputGroupProps {
     type?: string;
     options?: { value: string; label: string }[];
     required?: boolean;
+    onChange?: (event: React.ChangeEvent<HTMLInputElement>) => void;
+    disabled?: boolean;
   }[];
 }
 

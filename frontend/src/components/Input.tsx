@@ -12,6 +12,8 @@ interface InputProps {
   options?: { value: string; label: string }[];
   as?: "input" | "select" | "textarea" | "date";
   className?: string;
+  onChange?: (event: React.ChangeEvent<HTMLInputElement>) => void;
+  disabled?: boolean;
 }
 
 const Input: React.FC<InputProps> = ({
@@ -24,15 +26,19 @@ const Input: React.FC<InputProps> = ({
   options,
   as = "input",
   className = "",
+  onChange,
+  disabled = false,
 }) => {
   const commonClasses =
-    "mt-2 p-1 block lg:w-36 w-26 rounded-sm border-blue-800 shadow-sm focus:ring-blue-800 focus:border-blue-800 text-xs";
+    "mt-2 p-1 block lg:w-36 w-26 rounded-sm border shadow-sm focus:ring focus:border text-xs";
+  const disabledClasses = "bg-gray-200 text-gray-500 cursor-not-allowed";
   const [dob, setDob] = useState(new Date());
+
   return (
     <div className="flex flex-col">
       <label
         htmlFor={id}
-        className={`block text-sm  ${label ? "text-blue-800" : "invisible"}`}
+        className={`block text-sm ${label ? "text-blue-800" : "invisible"}`}
       >
         {label || "Placeholder"}{" "}
         {required && <span className="text-red-500">*</span>}
@@ -44,8 +50,12 @@ const Input: React.FC<InputProps> = ({
           id={id}
           name={id}
           placeholder={placeholder}
-          className={`${commonClasses} ${className}`}
+          className={`${commonClasses} ${
+            disabled ? disabledClasses : "border-blue-800"
+          } ${className}`}
           required={required}
+          onChange={onChange}
+          disabled={disabled}
         />
       )}
 
@@ -53,9 +63,12 @@ const Input: React.FC<InputProps> = ({
         <select
           id={id}
           name={id}
-          className={`${commonClasses} ${className} w-36`}
+          className={`${commonClasses} ${
+            disabled ? disabledClasses : "border-blue-800"
+          } ${className} w-36`}
           required={required}
           defaultValue={placeholder}
+          disabled={disabled}
         >
           <option value="" disabled>
             Seleccione una opción
@@ -73,7 +86,10 @@ const Input: React.FC<InputProps> = ({
           id={id}
           name={id}
           placeholder={placeholder}
-          className={`${commonClasses} ${className}`}
+          className={`${commonClasses} ${
+            disabled ? disabledClasses : "border-blue-800"
+          } ${className}`}
+          disabled={disabled}
         />
       )}
 
@@ -83,8 +99,11 @@ const Input: React.FC<InputProps> = ({
           selected={dob}
           onChange={(date) => setDob(date as Date)}
           dateFormat="dd/MM/yyyy"
-          className={`${commonClasses} ${className}`}
+          className={`${commonClasses} ${
+            disabled ? disabledClasses : "border-blue-800"
+          } ${className}`}
           placeholderText={placeholder}
+          disabled={disabled}
         />
       )}
       {subtext && <p className="text-xs text-gray-500">{subtext}</p>}

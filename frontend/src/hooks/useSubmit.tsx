@@ -4,18 +4,22 @@ import useRecaptcha from "./useRecaptcha";
 export interface SubmitOptions<T> {
   url: string;
   formData: T;
+  formSource: string;
   onSuccess?: (response: Response) => void;
   onError?: (error: unknown) => void;
 }
 
 export function useSubmit<T>() {
   const [isSubmitting, setIsSubmitting] = useState(false);
-  const [submitStatus, setSubmitStatus] = useState<"success" | "error" | null>(null);
+  const [submitStatus, setSubmitStatus] = useState<"success" | "error" | null>(
+    null,
+  );
   const { verifyRecaptcha } = useRecaptcha();
 
   const handleSubmit = async ({
     url,
     formData,
+    formSource,
     onSuccess,
     onError,
   }: SubmitOptions<T>) => {
@@ -35,7 +39,7 @@ export function useSubmit<T>() {
           "Content-Type": "application/json",
           Accept: "application/json",
         },
-        body: JSON.stringify({ ...formData, captchaToken }),
+        body: JSON.stringify({ ...formData, formSource, captchaToken }),
       });
 
       if (!response.ok) {
@@ -47,7 +51,7 @@ export function useSubmit<T>() {
     } catch (error) {
       console.error("Failed to send message:", error);
       setSubmitStatus("error");
-      onError?.(error)
+      onError?.(error);
     } finally {
       setIsSubmitting(false);
     }
