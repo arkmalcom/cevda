@@ -1,0 +1,15 @@
+{
+  "careers": {
+    "title": "Oportunidades de Empleo",
+    "description": "En el Centro Educativo Villa de Ángeles estamos comprometidos con la excelencia educativa y buscamos profesionales apasionados por la enseñanza y el desarrollo integral de nuestros estudiantes. Para el área docente, requerimos maestros(as) del nivel inicial y básica que posean formación académica en educación, experiencia comprobada, habilidades en manejo de grupos, creatividad, vocación de servicio y disposición para trabajar en equipo. En el área administrativa, buscamos colaboradores organizados, responsables y con experiencia en gestión escolar, atención al cliente o áreas relacionadas.\n\nSi compartes nuestra visión y deseas formar parte de un equipo dedicado a la formación de futuras generaciones, envíanos tu currículum actualizado y únete a nuestra misión educativa."
+  },
+  "aboutUs": {
+    "title": "Sobre Nosotros",
+    "description": "Aqui va una descripcion del instituto y todas las otras vainas."
+  },
+  "form": {
+    "successMessage": "¡Gracias por tu interés en formar parte de nuestro equipo! Tu solicitud ha sido enviada con éxito. Nos pondremos en contacto contigo a la brevedad posible.",
+    "errorMessage": "¡Lo sentimos! Ha ocurrido un error al enviar tu solicitud. Por favor, inténtalo de nuevo más tarde.",
+    "noFileSelected": "Debes seleccionar un archivo para continuar."
+  }
+}

@@ -38,6 +38,9 @@ const Navigation: React.FC = () => {
             <Link to="/infotep" className="text-white text-xl">
               Infotep
             </Link>
+            <Link to="/carreras" className="text-white text-xl">
+              {t("careers", { ns: "nav" })}
+            </Link>
             <Link to="/contacto" className="text-white text-xl">
               {t("contact", { ns: "nav" })}
             </Link>
@@ -80,6 +83,13 @@ const Navigation: React.FC = () => {
             onClick={toggleMenu}
           >
             Infotep
+          </Link>
+          <Link
+            to="/carreras"
+            className="text-white text-xl"
+            onClick={toggleMenu}
+          >
+            {t("careers", { ns: "nav" })}
           </Link>
           <Link
             to="/contacto"

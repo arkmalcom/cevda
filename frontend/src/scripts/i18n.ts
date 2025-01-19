@@ -19,6 +19,7 @@ i18n
       "features",
       "infotep",
       "contact",
+      "careers",
     ],
     defaultNS: "common",
     backend: {
