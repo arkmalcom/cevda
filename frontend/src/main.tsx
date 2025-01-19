@@ -3,6 +3,7 @@ import { createRoot } from "react-dom/client";
 import "./styles/index.css";
 import App from "./App.tsx";
 import favicon from "./assets/cevda_logo_tr.png";
+import "./scripts/i18n";
 
 const faviconLink = document.createElement("link");
 faviconLink.rel = "icon";

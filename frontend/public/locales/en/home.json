@@ -1,0 +1,17 @@
+{
+  "accordionItems": [
+    {
+      "title": "Mission",
+      "content": "The Villa de Ángeles Educational Center's mission is to educate and train successful children with academic and human excellence and full respect for their dignity, enabling them to build their unique and essential identity. We systematically guide our students to build the foundations necessary to expand in their professional and personal lives, always assuming their responsibilities with family, their social environment, the environment, and the Dominican Republic."
+    },
+    {
+      "title": "Vision",
+      "content": "Parents, executives, teachers, and other members of the educational community are strongly united as a team to fulfill their mission, instilling in children a conscious and active participation in their formation process as leaders and agents of social change."
+    },
+    {
+      "title": "Values",
+      "content": "Love: A feeling of deep affection and inclination toward a person or thing for which all good is desired. Faith: Based on knowing God and setting goals in Him. Happiness: Provided by achieving objectives. Respect: Obtaining a courteous community. Integration: Of different cultures. Creativity: Enhancing the ability to transform. Solidarity: Support for various causes where collaboration can be demonstrated."
+    }
+  ],
+  "hello": "Hello, world!"
+}

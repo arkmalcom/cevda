@@ -1,7 +1,6 @@
 import Card from "../components/Card";
 import Carousel from "../components/Carousel";
 import Accordion from "../components/Accordion";
-import GridComponent from "../components/Grid";
 
 import { EMAIL_ADDRESS, FULL_ADDRESS, PHONE_NUMBER } from "../utils/Constants";
 
@@ -17,24 +16,21 @@ import carousel5 from "../assets/carousel/carousel5.jpg";
 import robotica from "../assets/services/robotica.jpg";
 import welcomeBg from "../assets/welcome_bg.jpg";
 
+import { useEffect } from "react";
+import { AccordionItem } from "../components/Accordion";
+import { useTranslation } from "react-i18next";
+
 const Home = () => {
-  const accordionItems = [
-    {
-      title: "Misión",
-      content:
-        "El Centro Educativo Villa de Ángeles tiene como misión educar, formar niños exitosos, con excelencia académica y humana y pleno respeto a su dignidad, que les permita conformar su propia y esencial identidad. Orientamos a nuestros alumnos en forma sistemática a construir los cimientos necesarios para que se extiendan en su vida, profesional y personal, siempre asumiendo sus responsabilidades con la familia, su entorno social, el medio ambiente y con la República Dominicana.",
-    },
-    {
-      title: "Visión",
-      content:
-        "Padres de familia, directivos, maestros y demás miembros de la comunidad educativa, sólidamente unidos integrando un equipo para cumplir con su misión, inculcando en los niños una participación consiente y activa en su proceso de formación como líderes y agentes de cambio social.",
-    },
-    {
-      title: "Valores",
-      content:
-        "Amor: Sentimiento de vivo afecto e inclinación hacia una persona o cosa a la que se le desea todo lo bueno. La Fe: Basada en conocer a Dios y basar sus metas en él. Felicidad: Proporcionada por cumplir sus objetivos. Respeto: obteniendo una comunidad cortés. Integración: de las diferentes culturas. Creatividad: Potenciar las habilidades de transformar. Solidaridad: Apoyo a diferentes causas donde puede mostrar su colaboración.",
-    },
-  ];
+  const { t, i18n } = useTranslation();
+
+  useEffect(() => {
+    const loadNamespace = async () => {
+      await i18n.loadNamespaces(['home']);
+    };
+    loadNamespace();
+  }, [i18n]);
+
+  const accordionItems = t('accordionItems', { ns: 'home', returnObjects: true }) as AccordionItem[] || [];
 
   const nivelInicialContent = `
   En el Centro Educativo Villa de Ángeles, nuestro servicio de preescolar está diseñado para ser el inicio ideal en la formación de sus pequeños. 

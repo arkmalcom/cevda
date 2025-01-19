@@ -40,3 +40,4 @@ const Accordion: React.FC<AccordionProps> = ({ items }) => {
 };
 
 export default Accordion;
+export type { AccordionItem };
