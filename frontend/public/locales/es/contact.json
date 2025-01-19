@@ -1,0 +1,10 @@
+{
+  "form": {
+    "name": "Nombre:",
+    "phone": "Teléfono:",
+    "subject": "Asunto:",
+    "message": "Mensaje:"
+  },
+  "successMessage": "Mensaje enviado con éxito!",
+  "errorMessage": "¡Lo sentimos! Hubo un error al enviar el mensaje. Por favor, inténtelo de nuevo."
+}

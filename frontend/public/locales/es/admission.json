@@ -42,8 +42,6 @@
       "mobilePhone": "Teléfono celular",
       "email": "Correo Electrónico"
     },
-    "submit": "Enviar",
-    "submitting": "Enviando...",
     "successMessage": "¡Gracias por su interés! Nos pondremos en contacto con ustedes pronto.",
     "errorMessage": "¡Lo sentimos! Hubo un error al enviar el formulario. Por favor, inténtelo de nuevo."
   }

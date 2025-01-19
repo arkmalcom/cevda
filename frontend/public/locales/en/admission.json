@@ -42,8 +42,6 @@
       "mobilePhone": "Mobile Phone",
       "email": "Email"
     },
-    "submit": "Submit",
-    "submitting": "Submitting...",
     "successMessage": "Thank you for your interest! We will contact you soon.",
     "errorMessage": "Sorry! There was an error submitting the form. Please try again."
   }

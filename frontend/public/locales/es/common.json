@@ -1,5 +1,7 @@
 {
   "phone": "Tel",
   "email": "Correo",
-  "contact": "Contacto"
+  "contact": "Contacto",
+  "submit": "Enviar",
+  "submitting": "Enviando..."
 }

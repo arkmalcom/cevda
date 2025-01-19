@@ -1,0 +1,10 @@
+{
+  "form": {
+    "name": "Name:",
+    "phone": "Phone:",
+    "subject": "Subject:",
+    "message": "Message:"
+  },
+  "submit": "Submit",
+  "submitting": "Submitting..."
+}

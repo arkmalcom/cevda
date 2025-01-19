@@ -200,14 +200,14 @@ const Home = () => {
           </div>
           <div className="max-lg:text-sm mx-auto lg:w-1/2 p-2">
             <h1 className="text-blue-800 font-bold space-y-2 text-3xl text-center my-4">
-              {t("contact")}
+              {t("contact", { ns: "common" })}
             </h1>
             <p>{FULL_ADDRESS}</p>
             <p>
-              {t("phone")}: {PHONE_NUMBER}
+              {t("phone", { ns: "common" })}: {PHONE_NUMBER}
             </p>
             <p>
-              {t("email")}: {EMAIL_ADDRESS}
+              {t("email", { ns: "common" })}: {EMAIL_ADDRESS}
             </p>
           </div>
         </div>

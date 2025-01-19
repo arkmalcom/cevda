@@ -1,4 +1,5 @@
 import React, { useState } from "react";
+import { useTranslation } from "react-i18next";
 import { GoogleReCaptchaProvider } from "react-google-recaptcha-v3";
 import { useSubmit } from "../hooks/useSubmit";
 import { EMAIL_ADDRESS, FULL_ADDRESS, PHONE_NUMBER } from "../utils/Constants";
@@ -42,6 +43,8 @@ const ContactForm: React.FC = () => {
     });
   };
 
+  const { t } = useTranslation("contact");
+
   return (
     <div className="flex flex-col h-screen text-sm">
       <div className="flex-1">
@@ -56,14 +59,18 @@ const ContactForm: React.FC = () => {
       <div className="flex flex-col p-1">
         <div className="flex-1 lg:pr-5 justify-center my-auto text-center">
           <p className="font-bold">{FULL_ADDRESS}</p>
-          <p>Tel: {PHONE_NUMBER}</p>
-          <p>Email: {EMAIL_ADDRESS}</p>
+          <p>
+            {t("phone", { ns: "common" })}: {PHONE_NUMBER}
+          </p>
+          <p>
+            {t("email", { ns: "common" })}: {EMAIL_ADDRESS}
+          </p>
         </div>
         <hr className="my-1" />
         <div className="flex-1 lg:w-1/2 mx-auto">
           <form onSubmit={onSubmit} className="space-y-2">
             <div>
-              <label htmlFor="name">Nombre:</label>
+              <label htmlFor="name">{t("form.name")}</label>
               <input
                 type="text"
                 id="name"
@@ -75,7 +82,7 @@ const ContactForm: React.FC = () => {
               />
             </div>
             <div>
-              <label htmlFor="phone">Telefono:</label>
+              <label htmlFor="phone">{t("form.phone")}</label>
               <input
                 type="tel"
                 id="phone"
@@ -87,7 +94,7 @@ const ContactForm: React.FC = () => {
               />
             </div>
             <div>
-              <label htmlFor="subject">Asunto:</label>
+              <label htmlFor="subject">{t("form.subject")}</label>
               <textarea
                 id="subject"
                 name="subject"
@@ -98,7 +105,7 @@ const ContactForm: React.FC = () => {
               ></textarea>
             </div>
             <div>
-              <label htmlFor="message">Mensaje:</label>
+              <label htmlFor="message">{t("form.message")}</label>
               <textarea
                 id="message"
                 name="message"
@@ -110,12 +117,12 @@ const ContactForm: React.FC = () => {
             </div>
             {submitStatus === "success" && (
               <div className="text-green-600 text-center">
-                ¡Mensaje enviado con éxito!
+                {t("successMessage")}
               </div>
             )}
             {submitStatus === "error" && (
               <div className="text-red-600 text-center">
-                Error al enviar el mensaje. Por favor, intente nuevamente.
+                {t("errorMessage")}
               </div>
             )}
             <div>
@@ -124,7 +131,9 @@ const ContactForm: React.FC = () => {
                 className="bg-blue-500 text-white p-2 mt-2 w-full disabled:opacity-50 hover:bg-blue-600 transition-colors"
                 disabled={isSubmitting}
               >
-                {isSubmitting ? "Enviando..." : "Enviar"}
+                {isSubmitting
+                  ? t("submitting", { ns: "common" })
+                  : t("submit", { ns: "common" })}
               </button>
             </div>
           </form>

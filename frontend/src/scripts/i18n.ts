@@ -18,6 +18,7 @@ i18n
       "countries",
       "features",
       "infotep",
+      "contact",
     ],
     defaultNS: "common",
     backend: {

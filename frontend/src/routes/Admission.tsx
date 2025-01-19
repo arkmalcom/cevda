@@ -412,7 +412,9 @@ const AdmissionForm: React.FC = () => {
           className="bg-blue-500 text-white p-2 mt-2 w-full disabled:opacity-50 hover:bg-blue-600 transition-colors"
           disabled={isSubmitting}
         >
-          {isSubmitting ? t("form.submitting") : t("form.submit")}
+          {isSubmitting
+            ? t("submitting", { ns: "common" })
+            : t("submit", { ns: "common" })}
         </button>
       </form>
     </div>
