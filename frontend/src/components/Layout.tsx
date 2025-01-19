@@ -25,7 +25,7 @@ const Layout = () => {
           <i className="fab fa-whatsapp text-4xl text-green-500"></i>
         </a>
       </div>
-      <div className="fixed bottom-24 lg:left-10 left-6 flex items-center">
+      <div className="fixed top-24 lg:right-10 right-6 flex items-center">
         {i18n.language === "en" ? (
           <button
             onClick={() => changeLanguage("es")}

@@ -1,0 +1,35 @@
+{
+  "title": "Descubre los Servicios y Beneficios de Nuestro Centro Educativo",
+  "daycare": {
+    "title": "Guardería fines de semana",
+    "content": "Un espacio seguro y acogedor diseñado para cuidar a los pequeños mientras los padres atienden compromisos laborales, personales o familiares.\nLos niños participan en actividades recreativas y educativas adaptadas a su edad, fomentando su desarrollo en un ambiente lleno de atención y calidez."
+  },
+  "schedule": {
+    "title": "Abiertos de 6:00 AM a 6:00 PM",
+    "content": "Ofrecemos un horario extendido como un servicio opcional para apoyar a las familias con horarios laborales exigentes.\nLas clases regulares comienzan a las 8:00 AM, pero desde las 6:00 AM, los niños pueden disfrutar de un espacio seguro con actividades\nsupervisadas que facilitan su llegada gradual y cómoda al día escolar.\nEste servicio adicional brinda flexibilidad y tranquilidad para los padres que lo necesiten."
+  },
+  "summerCamp": {
+    "title": "Campamento de verano y de Navidad",
+    "content": "Programas especiales que combinan diversión y aprendizaje durante las vacaciones.\nLos niños disfrutan de actividades creativas, juegos, deportes y talleres que promueven habilidades sociales,\ntrabajo en equipo y descubrimiento personal, todo en un entorno seguro y dinámico."
+  },
+  "homework": {
+    "title": "Sala de tareas",
+    "content": "Un ambiente tranquilo y supervisado donde los estudiantes pueden realizar sus deberes escolares con la orientación de personal capacitado.\nEste servicio ayuda a reforzar sus conocimientos, resolver dudas y fomentar hábitos de estudio autónomos y responsables."
+  },
+  "earlyStimulation": {
+    "title": "Estimulación temprana",
+    "content": "Programas diseñados para potenciar el desarrollo integral de bebés desde los primeros días de vida.\nA través de actividades sensoriales, motoras y cognitivas, se estimula su curiosidad,\ncoordinación y conexión emocional en un entorno especialmente preparado para su edad y necesidades."
+  },
+  "extracurricularActivities": {
+    "title": "Clases extracurriculares",
+    "content": "Un abanico de opciones para que los estudiantes desarrollen sus talentos e intereses.\nMúsica, deportes, idiomas, arte y más se ofrecen como oportunidades para complementar su educación y\nfortalecer habilidades importantes como la disciplina, la creatividad y el trabajo en equipo."
+  },
+  "outdoorSpaces": {
+    "title": "Espacios al aire libre",
+    "content": "Áreas naturales diseñadas para el juego, la exploración y el aprendizaje.\nLos niños tienen la oportunidad de conectarse con la naturaleza, desarrollar habilidades motoras,\nliberar energía y fortalecer su bienestar físico y emocional en un entorno seguro y estimulante."
+  },
+  "dynamicLearning": {
+    "title": "Aprendizaje dinámico",
+    "content": "Un enfoque pedagógico innovador que combina métodos prácticos e interactivos para hacer que el aprendizaje sea significativo y atractivo.\nA través de proyectos, experiencias grupales y actividades creativas, los estudiantes desarrollan pensamiento crítico,\ncuriosidad y habilidades para la vida."
+  }
+}

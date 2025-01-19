@@ -1,0 +1,35 @@
+{
+  "title": "Discover the Services and Benefits of Our Educational Center",
+  "daycare": {
+    "title": "Weekend Daycare",
+    "content": "A safe and welcoming space designed to care for little ones while parents attend work, personal, or family commitments.\nChildren participate in age-appropriate recreational and educational activities, fostering their development in a caring and warm environment."
+  },
+  "schedule": {
+    "title": "Open from 6:00 AM to 6:00 PM",
+    "content": "We offer extended hours as an optional service to support families with demanding work schedules.\nRegular classes start at 8:00 AM, but from 6:00 AM, children can enjoy a safe space with supervised activities\nthat make their arrival at school a gradual and comfortable process.\nThis additional service provides flexibility and peace of mind for parents in need."
+  },
+  "summerCamp": {
+    "title": "Summer and Christmas Camp",
+    "content": "Special programs combining fun and learning during the holidays.\nChildren enjoy creative activities, games, sports, and workshops that promote social skills,\nteamwork, and personal discovery, all in a safe and dynamic environment."
+  },
+  "homework": {
+    "title": "Homework Room",
+    "content": "A calm and supervised environment where students can do their schoolwork with guidance from trained staff.\nThis service helps reinforce their knowledge, resolve doubts, and promote independent and responsible study habits."
+  },
+  "earlyStimulation": {
+    "title": "Early Stimulation",
+    "content": "Programs designed to enhance the holistic development of babies from the earliest days of life.\nThrough sensory, motor, and cognitive activities, we stimulate curiosity,\ncoordination, and emotional connection in a setting specially designed for their age and needs."
+  },
+  "extracurricularActivities": {
+    "title": "Extracurricular Classes",
+    "content": "A range of options for students to develop their talents and interests.\nMusic, sports, languages, art, and more are offered as opportunities to complement their education and\nstrengthen important skills like discipline, creativity, and teamwork."
+  },
+  "outdoorSpaces": {
+    "title": "Outdoor Spaces",
+    "content": "Natural areas designed for play, exploration, and learning.\nChildren have the opportunity to connect with nature, develop motor skills,\nrelease energy, and improve their physical and emotional well-being in a safe and stimulating environment."
+  },
+  "dynamicLearning": {
+    "title": "Dynamic Learning",
+    "content": "An innovative pedagogical approach that combines practical and interactive methods to make learning meaningful and engaging.\nThrough projects, group experiences, and creative activities, students develop critical thinking,\ncuriosity, and life skills."
+  }
+}
