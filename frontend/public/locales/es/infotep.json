@@ -1,12 +1,9 @@
 {
-    "description": "El Centro Educativo Villa de Ángeles tiene el agrado de ofrecer cursos gratuitos, avalados por el Instituto Nacional de Formación Técnico Profesional (INFOTEP), diseñados para adultos y disponibles durante los fines de semana. Entre las opciones destacan los programas de Auxiliar de Farmacia y Visitador a Médico, entre otros.",
-    "requirements": {
-        "title": "Requisitos de inscripción:",
-        "list": [
-            "Copia de la cédula de identidad.",
-            "Certificado de bachiller."
-        ]
-    },
-    "moreInformation": "Para inscribirte, puedes contactarnos a través de nuestro WhatsApp (849) 886-8485 o visitar nuestras oficinas en horario de 8:00 a. m. a 3:00 p. m.",
-    "closing": "¡Te esperamos!"
+  "description": "El Centro Educativo Villa de Ángeles tiene el agrado de ofrecer cursos gratuitos, avalados por el Instituto Nacional de Formación Técnico Profesional (INFOTEP), diseñados para adultos y disponibles durante los fines de semana. Entre las opciones destacan los programas de Auxiliar de Farmacia y Visitador a Médico, entre otros.",
+  "requirements": {
+    "title": "Requisitos de inscripción:",
+    "list": ["Copia de la cédula de identidad.", "Certificado de bachiller."]
+  },
+  "moreInformation": "Para inscribirte, puedes contactarnos a través de nuestro WhatsApp (849) 886-8485 o visitar nuestras oficinas en horario de 8:00 a. m. a 3:00 p. m.",
+  "closing": "¡Te esperamos!"
 }

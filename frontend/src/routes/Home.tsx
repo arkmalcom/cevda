@@ -16,25 +16,15 @@ import carousel5 from "../assets/carousel/carousel5.jpg";
 import robotica from "../assets/services/robotica.jpg";
 import welcomeBg from "../assets/welcome_bg.jpg";
 
-import { useEffect } from "react";
 import { AccordionItem } from "../components/Accordion";
 import { useTranslation } from "react-i18next";
 
 const Home = () => {
-  const { t, i18n } = useTranslation();
-
-  useEffect(() => {
-    const loadNamespace = async () => {
-      await i18n.loadNamespaces(["home"]);
-    };
-    loadNamespace();
-  }, [i18n]);
+  const { t } = useTranslation("home");
 
   const accordionItems =
     (t("accordionItems", {
-      ns: "home",
       returnObjects: true,
-      components: { br: <br /> },
     }) as AccordionItem[]) || [];
 
   return (
@@ -55,13 +45,13 @@ const Home = () => {
                 Centro Educativo Villa de Ángeles
               </h1>
               <p className="text-justify max-lg:text-xs text-white font-welcome">
-                {t("welcome.header", { ns: "home" })}
+                {t("welcome.header")}
               </p>
               <p className="text-justify max-lg:text-xs text-white font-welcome">
-                {t("welcome.content", { ns: "home" })}
+                {t("welcome.content")}
               </p>
               <p className="text-justify max-lg:text-xs text-white font-welcome">
-                {t("welcome.closing", { ns: "home" })}
+                {t("welcome.closing")}
               </p>
             </div>
           </div>
@@ -70,7 +60,7 @@ const Home = () => {
           </div>
           <div>
             <h1 className="text-3xl font-bold text-center text-blue-800">
-              {t("academicOffering.title", { ns: "home" })}
+              {t("academicOffering.title")}
             </h1>
             <div className="flex max-lg:flex-col max-lg:space-y-4 justify-evenly p-2">
               {(
@@ -89,7 +79,7 @@ const Home = () => {
             </div>
           </div>
           <h1 className="text-center text-3xl text-blue-800 font-bold p-2">
-            {t("services.title", { ns: "home" })}
+            {t("services.title")}
           </h1>
           <div className="bg-blue-500 flex flex-col items-center">
             <div className="flex flex-col md:flex-row">
@@ -97,7 +87,7 @@ const Home = () => {
                 <div className="relative flex items-center justify-center group">
                   <img
                     src={robotica}
-                    alt={t("services.robotics", { ns: "home" })}
+                    alt={t("services.robotics")}
                     className="w-96 lg:h-96 h-36 max-lg:object-top object-cover opacity-35 group-hover:opacity-75 transition-opacity duration-300"
                   />
                   <div className="absolute flex flex-col items-center justify-center text-center border-2 border-amber-200 bg-amber-500 rounded-full w-16 h-16 opacity-100 group-hover:opacity-100 transition-opacity duration-300">
@@ -105,7 +95,7 @@ const Home = () => {
                   </div>
                   <div className="absolute top-1/2 mt-8 flex flex-col items-center justify-center group-hover:opacity-100 transition-opacity duration-300">
                     <p className="text-white font-bold">
-                      {t("services.robotics", { ns: "home" })}
+                      {t("services.robotics")}
                     </p>
                   </div>
                 </div>
@@ -114,7 +104,7 @@ const Home = () => {
                 <div className="relative flex items-center justify-center group">
                   <img
                     src={estimTemprana}
-                    alt={t("services.earlyStimulation", { ns: "home" })}
+                    alt={t("services.earlyStimulation")}
                     className="w-96 lg:h-96 h-36 max-lg:object-top object-cover opacity-35 group-hover:opacity-50 transition-opacity duration-300"
                   />
                   <div className="absolute flex flex-col items-center justify-center text-center border-2 border-amber-200 bg-amber-500 rounded-full w-16 h-16 opacity-100 group-hover:opacity-100 transition-opacity duration-300">
@@ -122,7 +112,7 @@ const Home = () => {
                   </div>
                   <div className="absolute top-1/2 mt-8 flex flex-col items-center justify-center group-hover:opacity-100 transition-opacity duration-300">
                     <p className="text-white font-bold">
-                      {t("services.earlyStimulation", { ns: "home" })}
+                      {t("services.earlyStimulation")}
                     </p>
                   </div>
                 </div>
@@ -131,7 +121,7 @@ const Home = () => {
                 <div className="relative flex items-center justify-center group">
                   <img
                     src={ballet}
-                    alt={t("services.ballet", { ns: "home" })}
+                    alt={t("services.ballet")}
                     className="w-96 lg:h-96 h-36 max-lg:object-top object-cover opacity-35 group-hover:opacity-75 transition-opacity duration-300"
                   />
                   <div className="absolute flex flex-col items-center justify-center text-center border-2 border-amber-200 bg-amber-500 rounded-full w-16 h-16 opacity-100 group-hover:opacity-100 transition-opacity duration-300">
@@ -139,7 +129,7 @@ const Home = () => {
                   </div>
                   <div className="absolute top-1/2 mt-8 flex flex-col items-center justify-center group-hover:opacity-100 transition-opacity duration-300">
                     <p className="text-white font-bold">
-                      {t("services.ballet", { ns: "home" })}
+                      {t("services.ballet")}
                     </p>
                   </div>
                 </div>
@@ -148,7 +138,7 @@ const Home = () => {
                 <div className="relative flex items-center justify-center group">
                   <img
                     src={flauta}
-                    alt={t("services.flute", { ns: "home" })}
+                    alt={t("services.flute")}
                     className="w-96 lg:h-96 h-36 max-lg:object-top object-cover opacity-35 group-hover:opacity-75 transition-opacity duration-300"
                   />
                   <div className="absolute flex flex-col items-center justify-center text-center border-2 border-amber-200 bg-amber-500 rounded-full w-16 h-16 opacity-100 group-hover:opacity-100 transition-opacity duration-300">
@@ -156,7 +146,7 @@ const Home = () => {
                   </div>
                   <div className="absolute top-1/2 mt-8 flex flex-col items-center justify-center group-hover:opacity-100 transition-opacity duration-300">
                     <p className="text-white font-bold">
-                      {t("services.flute", { ns: "home" })}
+                      {t("services.flute")}
                     </p>
                   </div>
                 </div>
@@ -165,7 +155,7 @@ const Home = () => {
                 <div className="relative flex items-center justify-center group">
                   <img
                     src={informatica}
-                    alt={t("services.computerScience", { ns: "home" })}
+                    alt={t("services.computerScience")}
                     className="w-96 lg:h-96 h-36 max-lg:object-top object-cover opacity-35 group-hover:opacity-75 transition-opacity duration-300"
                   />
                   <div className="absolute flex flex-col items-center justify-center text-center border-2 border-amber-200 bg-amber-500 rounded-full w-16 h-16 opacity-100 group-hover:opacity-100 transition-opacity duration-300">
@@ -173,7 +163,7 @@ const Home = () => {
                   </div>
                   <div className="absolute top-1/2 mt-8 flex flex-col items-center justify-center group-hover:opacity-100 transition-opacity duration-300">
                     <p className="text-white font-bold">
-                      {t("services.computerScience", { ns: "home" })}
+                      {t("services.computerScience")}
                     </p>
                   </div>
                 </div>
@@ -182,7 +172,7 @@ const Home = () => {
           </div>
           <div className="p-2 text-justify lg:w-1/2 mx-auto">
             <h1 className="text-3xl font-bold text-center text-blue-800">
-              {t("admissionRequirements.title", { ns: "home" })}
+              {t("admissionRequirements.title")}
             </h1>
             <ul className="my-4 list-disc list-inside">
               {(
@@ -195,7 +185,7 @@ const Home = () => {
               ))}
             </ul>
             <p className="my-4">
-              {t("admissionRequirements.ifPreviousSchool", { ns: "home" })}
+              {t("admissionRequirements.ifPreviousSchool")}
             </p>
             <ul className="list-disc list-inside">
               {(

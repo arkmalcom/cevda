@@ -16,22 +16,18 @@ const Infotep: React.FC = () => {
       </div>
       <hr />
       <div className="space-y-4">
-        <p>
-          {t("description")}
-        </p>
+        <p>{t("description")}</p>
         <p>{t("requirements.title")}</p>
         <ul className="list-disc list-inside">
           {(
-                t("requirements.list", {
-                  returnObjects: true,
-                }) as string[]
-              ).map((item, index) => (
-                <li key={index}>{item}</li>
-              ))}
+            t("requirements.list", {
+              returnObjects: true,
+            }) as string[]
+          ).map((item, index) => (
+            <li key={index}>{item}</li>
+          ))}
         </ul>
-        <p>
-          {t("moreInformation")}
-        </p>
+        <p>{t("moreInformation")}</p>
         <p className="pb-2">{t("closing")}</p>
       </div>
     </div>
