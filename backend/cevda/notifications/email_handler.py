@@ -1,8 +1,12 @@
+import base64
 import logging
 import json
 import os
 import requests
-from typing import Dict, Any
+from typing import Any
+from email.mime.application import MIMEApplication
+from email.mime.multipart import MIMEMultipart
+from email.mime.text import MIMEText
 
 import boto3
 from botocore.exceptions import ClientError
@@ -53,13 +57,16 @@ def is_valid_recaptcha(captcha_token: str) -> bool:
         return False
 
 
-def send_email(data: Dict[str, Any]) -> Dict[str, Any]:
+def send_email(data: dict) -> dict:
     """Send email using AWS SES with dynamic fields."""
     SENDER = os.environ["SENDER_EMAIL"]
     RECIPIENT = os.environ["RECIPIENT_EMAIL"]
 
     ses = boto3.client("ses")
     email_source = data.pop("formSource", "contacto")
+
+    if email_source == "carreras":
+        return send_email_with_attachment(data, SENDER, RECIPIENT)
 
     column_mapping = get_column_mapping(email_source)
 
@@ -102,7 +109,65 @@ Nuevo mensaje:
         }
 
 
-def lambda_handler(event: Dict[str, Any], context: Any) -> Dict[str, Any]:
+def send_email_with_attachment(data: dict, sender: str, recipient: str) -> dict:
+    """Send email with file attachment using AWS SES."""
+
+    msg = MIMEMultipart()
+    msg["Subject"] = "Nueva Aplicación De Empleo"
+    msg["From"] = sender
+    msg["To"] = recipient
+
+    body = MIMEText("Adjunto se encuentra el CV.", "plain")
+    msg.attach(body)
+
+    try:
+        file_content = base64.b64decode(data["file"])
+        filename = data["filename"]
+
+        attachment = MIMEApplication(file_content)
+        attachment.add_header("Content-Disposition", "attachment", filename=filename)
+        msg.attach(attachment)
+
+        raw_email = base64.b64encode(msg.as_bytes()).decode("utf-8")
+
+        ses = boto3.client("ses")
+        response = ses.send_raw_email(
+            Source=sender, Destinations=[recipient], RawMessage={"Data": raw_email}
+        )
+
+        return {
+            "statusCode": 200,
+            "body": json.dumps(
+                {
+                    "message": "Email with attachment sent successfully",
+                    "messageId": response["MessageId"],
+                }
+            ),
+        }
+
+    except KeyError as e:
+        logger.error(f"Missing required field: {e}")
+        return {
+            "statusCode": 400,
+            "body": json.dumps({"message": f"Missing required field: {str(e)}"}),
+        }
+    except ClientError as e:
+        logger.error(f"Failed to send email: {e}")
+        return {
+            "statusCode": 500,
+            "body": json.dumps({"message": "Failed to send email", "error": str(e)}),
+        }
+    except Exception as e:
+        logger.error(f"Unexpected error: {e}")
+        return {
+            "statusCode": 500,
+            "body": json.dumps(
+                {"message": "An unexpected error occurred", "error": str(e)}
+            ),
+        }
+
+
+def lambda_handler(event: dict, context: Any) -> dict:
     """Main Lambda handler function."""
     if event["requestContext"]["http"]["method"] == "OPTIONS":
         logger.info("Received OPTIONS preflight request.")
