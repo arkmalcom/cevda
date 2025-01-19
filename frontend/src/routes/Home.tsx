@@ -18,7 +18,7 @@ import welcomeBg from "../assets/welcome_bg.jpg";
 
 import { useEffect } from "react";
 import { AccordionItem } from "../components/Accordion";
-import { Trans, useTranslation } from "react-i18next";
+import { useTranslation } from "react-i18next";
 
 const Home = () => {
   const { t, i18n } = useTranslation();

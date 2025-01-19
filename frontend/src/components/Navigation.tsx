@@ -1,9 +1,11 @@
 import React, { useState } from "react";
 import { Link } from "react-router-dom";
 import logo from "../assets/cevda_logo_tr.png";
+import { useTranslation } from "react-i18next";
 
 const Navigation: React.FC = () => {
   const [isMenuOpen, setIsMenuOpen] = useState(false);
+  const { t } = useTranslation();
 
   const toggleMenu = () => setIsMenuOpen(!isMenuOpen);
 
@@ -25,19 +27,19 @@ const Navigation: React.FC = () => {
           </button>
           <div className="hidden lg:flex space-x-4">
             <Link to="/" className="text-white text-xl">
-              Inicio
+              {t("home", { ns: "nav" })}
             </Link>
             <Link to="/admision" className="text-white text-xl">
-              Admisión
+              {t("admission", { ns: "nav" })}
             </Link>
             <Link to="/caracteristicas" className="text-white text-xl">
-              Características
+              {t("features", { ns: "nav" })}
             </Link>
             <Link to="/infotep" className="text-white text-xl">
               Infotep
             </Link>
             <Link to="/contacto" className="text-white text-xl">
-              Contacto
+              {t("contact", { ns: "nav" })}
             </Link>
           </div>
         </div>
@@ -56,21 +58,21 @@ const Navigation: React.FC = () => {
             </button>
           </div>
           <Link to="/" className="text-white text-xl" onClick={toggleMenu}>
-            Inicio
+            {t("home", { ns: "nav" })}
           </Link>
           <Link
             to="/admision"
             className="text-white text-xl"
             onClick={toggleMenu}
           >
-            Admisión
+            {t("admission", { ns: "nav" })}
           </Link>
           <Link
             to="/caracteristicas"
             className="text-white text-xl"
             onClick={toggleMenu}
           >
-            Características
+            {t("features", { ns: "nav" })}
           </Link>
           <Link
             to="/infotep"
@@ -84,7 +86,7 @@ const Navigation: React.FC = () => {
             className="text-white text-xl"
             onClick={toggleMenu}
           >
-            Contacto
+            {t("contact", { ns: "nav" })}
           </Link>
         </div>
       </nav>
