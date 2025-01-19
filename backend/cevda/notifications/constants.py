@@ -12,7 +12,7 @@ COLUMN_MAPPING = {
         "studentCountry": "País del Estudiante",
         "relationToStudent": "Relación con el Estudiante",
         "guardianFirstName": "Primer Nombre del Representante",
-        "guardianSecondName": "Segundo Nombre del Representante",
+        "guardianMiddleName": "Segundo Nombre del Representante",
         "guardianLastNames": "Apellidos del Representante",
         "guardianStreetAddress": "Dirección del Representante",
         "guardianCity": "Ciudad del Representante",

@@ -1,0 +1,50 @@
+{
+  "title": "Pre-Registration Form",
+  "content": "We are pleased to be considered your top option for your children's education.\n\nAs a first step, you can fill out the form below, and we will contact you to send more detailed information and answer your questions.",
+  "form": {
+    "selectOption": "Select an option",
+    "selectDate": "Select a date",
+    "gender": {
+      "title": "Gender",
+      "male": "Male",
+      "female": "Female"
+    },
+    "address": {
+      "title": "Address",
+      "street": "Street",
+      "city": "City",
+      "postalCode": "Postal Code",
+      "country": "Country"
+    },
+    "studentInfo": {
+      "title": "Student Information",
+      "name": "Name",
+      "names": "First and Middle Name",
+      "firstSurname": "First Surname",
+      "secondSurname": "Second Surname",
+      "gender": "Gender",
+      "dob": "Date of Birth",
+      "enteringYear": "Entering Year"
+    },
+    "guardianInfo": {
+      "title": "Guardian Information",
+      "relationToStudent": {
+        "title": "Relation to Student",
+        "father": "Father",
+        "mother": "Mother",
+        "guardian": "Legal Guardian",
+        "other": "Other"
+      },
+      "firstName": "First Name",
+      "middleName": "Middle Name",
+      "surnames": "Surnames",
+      "homePhone": "Home Phone",
+      "mobilePhone": "Mobile Phone",
+      "email": "Email"
+    },
+    "submit": "Submit",
+    "submitting": "Submitting...",
+    "successMessage": "Thank you for your interest! We will contact you soon.",
+    "errorMessage": "Sorry! There was an error submitting the form. Please try again."
+  }
+}

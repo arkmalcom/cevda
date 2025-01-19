@@ -1,5 +1,6 @@
 import React, { useState } from "react";
 import { GoogleReCaptchaProvider } from "react-google-recaptcha-v3";
+import { useTranslation } from "react-i18next";
 
 import { useSubmit } from "../hooks/useSubmit";
 import Input from "../components/Input";
@@ -20,7 +21,7 @@ interface AdmissionFormData {
   studentCountry: string;
   relationToStudent: string;
   guardianFirstName: string;
-  guardianSecondName: string;
+  guardianMiddleName: string;
   guardianLastNames: string;
   guardianStreetAddress: string;
   guardianCity: string;
@@ -45,7 +46,7 @@ const AdmissionForm: React.FC = () => {
     studentCountry: "DO",
     relationToStudent: "",
     guardianFirstName: "",
-    guardianSecondName: "",
+    guardianMiddleName: "",
     guardianLastNames: "",
     guardianStreetAddress: "",
     guardianCity: "",
@@ -90,7 +91,7 @@ const AdmissionForm: React.FC = () => {
           studentCountry: "DO",
           relationToStudent: "",
           guardianFirstName: "",
-          guardianSecondName: "",
+          guardianMiddleName: "",
           guardianLastNames: "",
           guardianStreetAddress: "",
           guardianCity: "",
@@ -105,51 +106,58 @@ const AdmissionForm: React.FC = () => {
   };
 
   const disableField = submitStatus === "success";
+  const { t } = useTranslation();
+
+  const translateCountries = (countries: { value: string; label: string }[]) =>
+    countries.map((country) => {
+      return {
+        value: country.value,
+        label: t(country.value, { ns: "countries" }),
+      };
+    });
+
+  const translatedCountryOptions = translateCountries(countryOptions);
 
   return (
     <div className="p-2 flex flex-col items-center mx-auto lg:w-5/6">
       <h1 className="lg:text-3xl text-2xl font-bold text-blue-800 mb-4">
-        Formulario de Pre-inscripción
+        {t("title", { ns: "admission" })}
       </h1>
       <div className="p-3 text-center max-lg:text-sm text-blue-800 space-y-2">
-        <p>
-          Es un placer para nosotros que nos consideren como pilar en la
-          educación de sus hijos.
-        </p>
-        <p>
-          Como primer paso, pueden llenar el formulario a continuación y nos
-          pondremos en contacto con ustedes para enviarles información de una
-          manera mas detallada y contestar sus preguntas.
-        </p>
+        <p>{t("content", { ns: "admission" })}</p>
       </div>
       <form
         onSubmit={onSubmit}
         className="w-full space-y-3 p-2 m-2 border border-gray-300"
       >
         <h2 className="text-lg font-bold text-blue-800">
-          Información del estudiante
+          {t("form.studentInfo.title", { ns: "admission" })}
         </h2>
         <div>
           <InputGroup
             inputs={[
               {
                 id: "studentNames",
-                label: "Nombre",
-                subtext: "Nombres",
+                label: t("form.studentInfo.name", { ns: "admission" }),
+                subtext: t("form.studentInfo.names", { ns: "admission" }),
                 required: true,
                 onChange: handleChange,
                 disabled: disableField,
               },
               {
                 id: "studentFirstSurname",
-                subtext: "Primer Apellido",
+                subtext: t("form.studentInfo.firstSurname", {
+                  ns: "admission",
+                }),
                 required: true,
                 onChange: handleChange,
                 disabled: disableField,
               },
               {
                 id: "studentSecondSurname",
-                subtext: "Segundo Apellido",
+                subtext: t("form.studentInfo.secondSurname", {
+                  ns: "admission",
+                }),
                 required: true,
                 onChange: handleChange,
                 disabled: disableField,
@@ -160,12 +168,18 @@ const AdmissionForm: React.FC = () => {
         <div>
           <Input
             id="studentGender"
-            label="Género"
+            label={t("form.gender.title", { ns: "admission" })}
             required
             as="select"
             options={[
-              { value: "male", label: "Masculino" },
-              { value: "female", label: "Femenino" },
+              {
+                value: "male",
+                label: t("form.gender.male", { ns: "admission" }),
+              },
+              {
+                value: "female",
+                label: t("form.gender.female", { ns: "admission" }),
+              },
             ]}
             onChange={handleChange}
             disabled={disableField}
@@ -174,9 +188,9 @@ const AdmissionForm: React.FC = () => {
         <div>
           <Input
             id="studentDob"
-            label="Fecha de nacimiento"
+            label={t("form.studentInfo.dob", { ns: "admission" })}
             as="date"
-            placeholder="Seleccione una fecha"
+            placeholder={t("form.selectDate", { ns: "admission" })}
             required
             onChange={handleChange}
             disabled={disableField}
@@ -185,7 +199,7 @@ const AdmissionForm: React.FC = () => {
         <div>
           <Input
             id="entering-year"
-            label="Año entrante"
+            label={t("form.studentInfo.enteringYear", { ns: "admission" })}
             as="select"
             required
             options={[
@@ -203,30 +217,30 @@ const AdmissionForm: React.FC = () => {
             inputs={[
               {
                 id: "studentStreetAddress",
-                label: "Dirección",
-                subtext: "Calle",
+                label: t("form.address.title", { ns: "admission" }),
+                subtext: t("form.address.street", { ns: "admission" }),
                 required: true,
                 onChange: handleChange,
                 disabled: disableField,
               },
               {
                 id: "studentCity",
-                subtext: "Ciudad",
+                subtext: t("form.address.city", { ns: "admission" }),
                 onChange: handleChange,
                 disabled: disableField,
               },
               {
                 id: "studentPostalCode",
-                subtext: "Código postal",
+                subtext: t("form.address.postalCode", { ns: "admission" }),
                 onChange: handleChange,
                 disabled: disableField,
               },
               {
                 id: "studentCountry",
-                subtext: "País",
+                subtext: t("form.address.country", { ns: "admission" }),
                 required: true,
                 as: "select",
-                options: countryOptions,
+                options: translatedCountryOptions,
                 placeholder: "DO",
                 onChange: handleChange,
                 disabled: disableField,
@@ -235,18 +249,40 @@ const AdmissionForm: React.FC = () => {
           />
         </div>
         <h2 className="text-lg font-bold text-blue-800">
-          Información del representante
+          {t("form.guardianInfo.title", { ns: "admission" })}
         </h2>
         <div>
           <Input
             id="relationToStudent"
-            label="Relación con el estudiante"
+            label={t("form.guardianInfo.relationToStudent.title", {
+              ns: "admission",
+            })}
             as="select"
             options={[
-              { value: "mother", label: "Madre" },
-              { value: "father", label: "Padre" },
-              { value: "guardian", label: "Guardián Legal" },
-              { value: "other", label: "Otro" },
+              {
+                value: "mother",
+                label: t("form.guardianinfo.relationToStudent.mother", {
+                  ns: "admission",
+                }),
+              },
+              {
+                value: "father",
+                label: t("form.guardianinfo.relationToStudent.father", {
+                  ns: "admission",
+                }),
+              },
+              {
+                value: "guardian",
+                label: t("form.guardianinfo.relationToStudent.guardian", {
+                  ns: "admission",
+                }),
+              },
+              {
+                value: "other",
+                label: t("form.guardianinfo.relationToStudent.other", {
+                  ns: "admission",
+                }),
+              },
             ]}
             required
             onChange={handleChange}
@@ -258,21 +294,21 @@ const AdmissionForm: React.FC = () => {
             inputs={[
               {
                 id: "guardianFirstName",
-                label: "Nombre",
+                label: t("form.guardianInfo.firstName", { ns: "admission" }),
                 subtext: "Primer nombre",
                 required: true,
                 onChange: handleChange,
                 disabled: disableField,
               },
               {
-                id: "guardianSecondName",
-                subtext: "Segundo Nombre",
+                id: "guardianMiddleName",
+                subtext: t("form.guardianInfo.middleName", { ns: "admission" }),
                 onChange: handleChange,
                 disabled: disableField,
               },
               {
                 id: "guardianLastNames",
-                subtext: "Apellidos",
+                subtext: t("form.guardianInfo.surnames", { ns: "admission" }),
                 required: true,
                 onChange: handleChange,
                 disabled: disableField,
@@ -283,12 +319,18 @@ const AdmissionForm: React.FC = () => {
         <div>
           <Input
             id="guardianGender"
-            label="Género"
+            label={t("form.gender.title", { ns: "admission" })}
             required
             as="select"
             options={[
-              { value: "male", label: "Masculino" },
-              { value: "female", label: "Femenino" },
+              {
+                value: "male",
+                label: t("form.gender.male", { ns: "admission" }),
+              },
+              {
+                value: "female",
+                label: t("form.gender.female", { ns: "admission" }),
+              },
             ]}
             onChange={handleChange}
             disabled={disableField}
@@ -299,30 +341,30 @@ const AdmissionForm: React.FC = () => {
             inputs={[
               {
                 id: "guardianStreetAddress",
-                label: "Dirección",
-                subtext: "Calle",
+                label: t("form.address.title", { ns: "admission" }),
+                subtext: t("form.address.street", { ns: "admission" }),
                 required: true,
                 onChange: handleChange,
                 disabled: disableField,
               },
               {
                 id: "guardianCity",
-                subtext: "Ciudad",
+                subtext: t("form.address.city", { ns: "admission" }),
                 onChange: handleChange,
                 disabled: disableField,
               },
               {
                 id: "guardianPostalCode",
-                subtext: "Código postal",
+                subtext: t("form.address.postalCode", { ns: "admission" }),
                 onChange: handleChange,
                 disabled: disableField,
               },
               {
                 id: "guardianCountry",
-                subtext: "País",
+                subtext: t("form.address.country", { ns: "admission" }),
                 required: true,
                 as: "select",
-                options: countryOptions,
+                options: translatedCountryOptions,
                 placeholder: "DO",
                 onChange: handleChange,
                 disabled: disableField,
@@ -333,7 +375,7 @@ const AdmissionForm: React.FC = () => {
         <div>
           <Input
             id="guardianHomePhone"
-            label="Teléfono de casa"
+            label={t("form.guardianInfo.homePhone", { ns: "admission" })}
             onChange={handleChange}
             disabled={disableField}
           />
@@ -341,7 +383,7 @@ const AdmissionForm: React.FC = () => {
         <div>
           <Input
             id="guardianMobilePhone"
-            label="Teléfono celular"
+            label={t("form.guardianInfo.mobilePhone", { ns: "admission" })}
             required
             onChange={handleChange}
             disabled={disableField}
@@ -350,19 +392,19 @@ const AdmissionForm: React.FC = () => {
         <div>
           <Input
             id="guardianEmail"
-            label="Correo electrónico"
+            label={t("form.guardianInfo.email", { ns: "admission" })}
             onChange={handleChange}
             disabled={disableField}
           />
         </div>
         {submitStatus === "success" && (
           <div className="text-green-600 text-center">
-            ¡Formulario de admisión enviado con éxito!
+            {t("form.successMessage", { ns: "admission" })}
           </div>
         )}
         {submitStatus === "error" && (
           <div className="text-red-600 text-center">
-            Error al enviar el formulario. Por favor, intente nuevamente.
+            {t("form.errorMessage", { ns: "admission" })}
           </div>
         )}
         <button
@@ -370,7 +412,9 @@ const AdmissionForm: React.FC = () => {
           className="bg-blue-500 text-white p-2 mt-2 w-full disabled:opacity-50 hover:bg-blue-600 transition-colors"
           disabled={isSubmitting}
         >
-          {isSubmitting ? "Enviando..." : "Enviar"}
+          {isSubmitting
+            ? t("form.submitting", { ns: "admission" })
+            : t("form.submit", { ns: "admission" })}
         </button>
       </form>
     </div>

@@ -1,0 +1,50 @@
+{
+  "title": "Formulario de Pre-inscripción",
+  "content": "Es un placer para nosotros que nos consideren como pilar en la educación de sus hijos.\n\nComo primer paso, pueden llenar el formulario a continuación y nos pondremos en contacto con ustedes para enviarles información de una manera mas detallada y contestar sus preguntas.",
+  "form": {
+    "selectOption": "Seleccione una opción",
+    "selectDate": "Seleccione una fecha",
+    "gender": {
+      "title": "Género",
+      "male": "Masculino",
+      "female": "Femenino"
+    },
+    "address": {
+      "title": "Dirección",
+      "street": "Calle",
+      "city": "Ciudad",
+      "postalCode": "Código Postal",
+      "country": "País"
+    },
+    "studentInfo": {
+      "title": "Información del Estudiante",
+      "name": "Nombre",
+      "names": "Nombres",
+      "firstSurname": "Primer Apellido",
+      "secondSurname": "Segundo Apellido",
+      "gender": "Género",
+      "dob": "Fecha de Nacimiento",
+      "enteringYear": "Año entrante"
+    },
+    "guardianInfo": {
+      "title": "Información del Representante",
+      "relationToStudent": {
+        "title": "Relación con el Estudiante",
+        "father": "Padre",
+        "mother": "Madre",
+        "guardian": "Guardián Legal",
+        "other": "Otro"
+      },
+      "firstName": "Primer nombre",
+      "middleName": "Segundo nombre",
+      "surnames": "Apellidos",
+      "homePhone": "Teléfono de Casa",
+      "mobilePhone": "Teléfono celular",
+      "email": "Correo Electrónico"
+    },
+    "submit": "Enviar",
+    "submitting": "Enviando...",
+    "successMessage": "¡Gracias por su interés! Nos pondremos en contacto con ustedes pronto.",
+    "errorMessage": "¡Lo sentimos! Hubo un error al enviar el formulario. Por favor, inténtelo de nuevo."
+  }
+}
