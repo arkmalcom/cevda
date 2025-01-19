@@ -2,16 +2,67 @@
   "accordionItems": [
     {
       "title": "Misión",
-      "content": "El Centro Educativo Villa de Ángeles tiene como misión educar, formar niños exitosos, con excelencia académica y humana y pleno respeto a su dignidad, que les permita conformar su propia y esencial identidad. Orientamos a nuestros alumnos en forma sistemática a construir los cimientos necesarios para que se extiendan en su vida, profesional y personal, siempre asumiendo sus responsabilidades con la familia, su entorno social, el medio ambiente y con la República Dominicana."
+      "content": "La misión del Centro Educativo Villa de Ángeles es educar y formar niños exitosos con excelencia académica y humana, respetando plenamente su dignidad, permitiéndoles construir su identidad única y esencial. Guiamos sistemáticamente a nuestros estudiantes para construir las bases necesarias para expandirse en sus vidas profesionales y personales, siempre asumiendo sus responsabilidades con la familia, su entorno social, el medio ambiente y la República Dominicana."
     },
     {
       "title": "Visión",
-      "content": "Padres de familia, directivos, maestros y demás miembros de la comunidad educativa, sólidamente unidos integrando un equipo para cumplir con su misión, inculcando en los niños una participación consiente y activa en su proceso de formación como líderes y agentes de cambio social."
+      "content": "Padres, ejecutivos, maestros y demás miembros de la comunidad educativa están fuertemente unidos como un equipo para cumplir con su misión, inculcando en los niños una participación consciente y activa en su proceso formativo como líderes y agentes de cambio social."
     },
     {
       "title": "Valores",
-      "content": "Amor: Sentimiento de vivo afecto e inclinación hacia una persona o cosa a la que se le desea todo lo bueno. La Fe: Basada en conocer a Dios y basar sus metas en él. Felicidad: Proporcionada por cumplir sus objetivos. Respeto: obteniendo una comunidad cortés. Integración: de las diferentes culturas. Creatividad: Potenciar las habilidades de transformar. Solidaridad: Apoyo a diferentes causas donde puede mostrar su colaboración."
+      "content": "Amor: Un sentimiento de profunda afecto e inclinación hacia una persona o cosa por la cual se desea todo lo bueno.\nFe: Basada en conocer a Dios y establecer metas en Él. Felicidad: Proporcionada al alcanzar objetivos.\nRespeto: Obtener una comunidad cortés.\nIntegración: De diferentes culturas.\nCreatividad: Potenciar la capacidad de transformar.\nSolidaridad: Apoyo a diversas causas donde se puede demostrar colaboración."
     }
   ],
-  "hello": "¡Hola, mundo!"
+  "academicOffering": {
+    "title": "Oferta Académica",
+    "list": [
+      {
+        "title": "Nivel Inicial",
+        "content": "En el Centro Educativo Villa de Ángeles, nuestro servicio de preescolar está diseñado para ser el inicio ideal en la formación de sus pequeños. Contamos con maestras especializadas que trabajan con pasión y dedicación para fomentar la creatividad, la curiosidad y el amor por el aprendizaje desde una edad temprana. Nuestro enfoque integral promueve el desarrollo físico, emocional y social de los niños, en un ambiente seguro, estimulante y lleno de actividades que potencian sus habilidades y refuerzan su confianza. Aquí, cada niño es único, y nuestro compromiso es acompañarlos en sus primeros pasos hacia un futuro brillante.",
+        "subtext": "45 días a 5 años"
+      },
+      {
+        "title": "Nivel Primario",
+        "content": "En el Centro Educativo Villa de Ángeles, nuestro nivel primario está diseñado para formar estudiantes preparados para los desafíos del mundo actual. Integramos la tecnología como parte esencial del aprendizaje, ofreciendo clases de Programación, Robótica e Informática que estimulan el pensamiento lógico y la creatividad. Además, fortalecemos el desarrollo integral de nuestros estudiantes con clases de inglés, para potenciar sus habilidades comunicativas, y flauta, fomentando la sensibilidad artística y musical. Todo esto en un ambiente dinámico y participativo, donde cada niño encuentra las herramientas para destacar y crecer en todas las áreas.",
+        "subtext": "6 a 10 años"
+      }
+    ]
+  },
+  "admissionRequirements": {
+    "title": "Requisitos de Admisión",
+    "list": [
+      "Fotocopia de acta de nacimiento",
+      "Copia de la cédula o pasaporte de ambos padres",
+      "4 fotos recientes 2x2",
+      "Certificado médico",
+      "Copia de seguro médico",
+      "Completar el formulario de inscripción",
+      "Firmar la carta de compromiso de pago",
+      "Si hay algún problema de salud, presentar copia del historial médico",
+      "Uso correcto del uniforme (desde el preescolar en adelante)",
+      "Evaluación oftalmológica (desde el preprimario en adelante)"
+    ],
+    "ifPreviousSchool": "Si el/la estudiante había estado en un centro educativo anteriormente:",
+    "previousSchoolRequirements": [
+      "Completar el formulario de referencia (escuela anterior)",
+      "Carta de balance",
+      "Carta de buena conducta",
+      "Historial académico SIGERD",
+      "Informe de calificaciones",
+      "Los niños de primaria deben someterse a una evaluación"
+    ]
+  },
+  "welcome": {
+    "header": "Bienvenidos al Centro Educativo Villa de Ángeles, un espacio dedicado al aprendizaje y al desarrollo integral de sus hijos.",
+    "content": "Somos un colegio comprometido con la excelencia educativa, ofreciendo servicios desde el nivel inicial hasta el nivel primario, complementados con clases extracurriculares diseñadas para potenciar las habilidades de nuestros estudiantes. Además, contamos con un sistema de seminternado que garantiza un ambiente seguro y enriquecedor. Nuestro enfoque intensivo está en brindar una educación de calidad y un cuidado excepcional, priorizando siempre el bienestar y el crecimiento de nuestros alumnos.",
+    "closing": "¡Gracias por confiar en nosotros!"
+  },
+  "services": {
+    "title": "Nuestros Servicios",
+    "robotics": "Robótica",
+    "earlyStimulation": "Estimulación Temprana",
+    "ballet": "Ballet",
+    "flute": "Flauta",
+    "computerScience": "Informática"
+  }
 }

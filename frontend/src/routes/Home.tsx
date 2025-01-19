@@ -18,7 +18,7 @@ import welcomeBg from "../assets/welcome_bg.jpg";
 
 import { useEffect } from "react";
 import { AccordionItem } from "../components/Accordion";
-import { useTranslation } from "react-i18next";
+import { Trans, useTranslation } from "react-i18next";
 
 const Home = () => {
   const { t, i18n } = useTranslation();
@@ -34,23 +34,8 @@ const Home = () => {
     (t("accordionItems", {
       ns: "home",
       returnObjects: true,
+      components: { br: <br /> },
     }) as AccordionItem[]) || [];
-
-  const nivelInicialContent = `
-  En el Centro Educativo Villa de Ángeles, nuestro servicio de preescolar está diseñado para ser el inicio ideal en la formación de sus pequeños. 
-  Contamos con maestras especializadas que trabajan con pasión y dedicación para fomentar la creatividad, la curiosidad y el amor por el aprendizaje desde una edad temprana. 
-  Nuestro enfoque integral promueve el desarrollo físico, emocional y social de los niños, en un ambiente seguro, estimulante y lleno de actividades que potencian sus habilidades y refuerzan su confianza. 
-  Aquí, cada niño es único, y nuestro compromiso es acompañarlos en sus primeros pasos hacia un futuro brillante.
-  `;
-
-  const nivelPrimarioContent = `
-  En el Centro Educativo Villa de Ángeles, nuestro nivel primario está diseñado para formar estudiantes preparados para los desafíos del mundo actual. 
-  Integramos la tecnología como parte esencial del aprendizaje, ofreciendo clases de Programación, 
-  Robótica e Informática que estimulan el pensamiento lógico y la creatividad. Además, 
-  fortalecemos el desarrollo integral de nuestros estudiantes con clases de inglés, 
-  para potenciar sus habilidades comunicativas, y flauta, fomentando la sensibilidad artística y musical. 
-  Todo esto en un ambiente dinámico y participativo, donde cada niño encuentra las herramientas para destacar y crecer en todas las áreas.
-  `;
 
   return (
     <>
@@ -70,23 +55,13 @@ const Home = () => {
                 Centro Educativo Villa de Ángeles
               </h1>
               <p className="text-justify max-lg:text-xs text-white font-welcome">
-                Bienvenidos al Centro Educativo Villa de Ángeles, un espacio
-                dedicado al aprendizaje y al desarrollo integral de sus hijos.
+                {t("welcome.header", { ns: "home" })}
               </p>
               <p className="text-justify max-lg:text-xs text-white font-welcome">
-                Somos un colegio comprometido con la excelencia educativa,
-                ofreciendo servicios desde el nivel inicial hasta el nivel
-                primario, complementados con clases extracurriculares diseñadas
-                para potenciar las habilidades de nuestros estudiantes. Además,
-                contamos con un sistema de seminternado que garantiza un
-                ambiente seguro y enriquecedor. Nuestro enfoque intensivo está
-                en brindar una educación de calidad y un cuidado excepcional,
-                priorizando siempre el bienestar y el crecimiento de nuestros
-                alumnos.
+                {t("welcome.content", { ns: "home" })}
               </p>
               <p className="text-justify max-lg:text-xs text-white font-welcome">
-                {" "}
-                ¡Gracias por confiar en nosotros!
+                {t("welcome.closing", { ns: "home" })}
               </p>
             </div>
           </div>
@@ -95,23 +70,26 @@ const Home = () => {
           </div>
           <div>
             <h1 className="text-3xl font-bold text-center text-blue-800">
-              Oferta academica
+              {t("academicOffering.title", { ns: "home" })}
             </h1>
             <div className="flex max-lg:flex-col max-lg:space-y-4 justify-evenly p-2">
-              <Card
-                title="Nivel inicial"
-                subtext="2 a 5 años"
-                content={nivelInicialContent}
-              />
-              <Card
-                title="Nivel inicial"
-                subtext="6 a 10 años"
-                content={nivelPrimarioContent}
-              />
+              {(
+                t("academicOffering.list", {
+                  ns: "home",
+                  returnObjects: true,
+                }) as any[]
+              ).map((offer, index) => (
+                <Card
+                  key={index}
+                  title={offer.title}
+                  subtext={offer.subtext}
+                  content={offer.content}
+                />
+              ))}
             </div>
           </div>
           <h1 className="text-center text-3xl text-blue-800 font-bold p-2">
-            Nuestros Servicios
+            {t("services.title", { ns: "home" })}
           </h1>
           <div className="bg-blue-500 flex flex-col items-center">
             <div className="flex flex-col md:flex-row">
@@ -119,14 +97,16 @@ const Home = () => {
                 <div className="relative flex items-center justify-center group">
                   <img
                     src={robotica}
-                    alt="robotica"
+                    alt={t("services.robotics", { ns: "home" })}
                     className="w-96 lg:h-96 h-36 max-lg:object-top object-cover opacity-35 group-hover:opacity-75 transition-opacity duration-300"
                   />
                   <div className="absolute flex flex-col items-center justify-center text-center border-2 border-amber-200 bg-amber-500 rounded-full w-16 h-16 opacity-100 group-hover:opacity-100 transition-opacity duration-300">
                     <i className="fas fa-robot text-blue-800"></i>
                   </div>
                   <div className="absolute top-1/2 mt-8 flex flex-col items-center justify-center group-hover:opacity-100 transition-opacity duration-300">
-                    <p className="text-white font-bold">Robótica</p>
+                    <p className="text-white font-bold">
+                      {t("services.robotics", { ns: "home" })}
+                    </p>
                   </div>
                 </div>
               </div>
@@ -134,7 +114,7 @@ const Home = () => {
                 <div className="relative flex items-center justify-center group">
                   <img
                     src={estimTemprana}
-                    alt="estimulacion temprana"
+                    alt={t("services.earlyStimulation", { ns: "home" })}
                     className="w-96 lg:h-96 h-36 max-lg:object-top object-cover opacity-35 group-hover:opacity-50 transition-opacity duration-300"
                   />
                   <div className="absolute flex flex-col items-center justify-center text-center border-2 border-amber-200 bg-amber-500 rounded-full w-16 h-16 opacity-100 group-hover:opacity-100 transition-opacity duration-300">
@@ -142,7 +122,7 @@ const Home = () => {
                   </div>
                   <div className="absolute top-1/2 mt-8 flex flex-col items-center justify-center group-hover:opacity-100 transition-opacity duration-300">
                     <p className="text-white font-bold">
-                      Estimulación Temprana
+                      {t("services.earlyStimulation", { ns: "home" })}
                     </p>
                   </div>
                 </div>
@@ -151,14 +131,16 @@ const Home = () => {
                 <div className="relative flex items-center justify-center group">
                   <img
                     src={ballet}
-                    alt="ballet"
+                    alt={t("services.ballet", { ns: "home" })}
                     className="w-96 lg:h-96 h-36 max-lg:object-top object-cover opacity-35 group-hover:opacity-75 transition-opacity duration-300"
                   />
                   <div className="absolute flex flex-col items-center justify-center text-center border-2 border-amber-200 bg-amber-500 rounded-full w-16 h-16 opacity-100 group-hover:opacity-100 transition-opacity duration-300">
                     <i className="fas fa-child-dress text-blue-800 text-lg"></i>
                   </div>
                   <div className="absolute top-1/2 mt-8 flex flex-col items-center justify-center group-hover:opacity-100 transition-opacity duration-300">
-                    <p className="text-white font-bold">Ballet</p>
+                    <p className="text-white font-bold">
+                      {t("services.ballet", { ns: "home" })}
+                    </p>
                   </div>
                 </div>
               </div>
@@ -166,14 +148,16 @@ const Home = () => {
                 <div className="relative flex items-center justify-center group">
                   <img
                     src={flauta}
-                    alt="flauta"
+                    alt={t("services.flute", { ns: "home" })}
                     className="w-96 lg:h-96 h-36 max-lg:object-top object-cover opacity-35 group-hover:opacity-75 transition-opacity duration-300"
                   />
                   <div className="absolute flex flex-col items-center justify-center text-center border-2 border-amber-200 bg-amber-500 rounded-full w-16 h-16 opacity-100 group-hover:opacity-100 transition-opacity duration-300">
                     <i className="fas fa-music text-blue-800"></i>
                   </div>
                   <div className="absolute top-1/2 mt-8 flex flex-col items-center justify-center group-hover:opacity-100 transition-opacity duration-300">
-                    <p className="text-white font-bold">Flauta</p>
+                    <p className="text-white font-bold">
+                      {t("services.flute", { ns: "home" })}
+                    </p>
                   </div>
                 </div>
               </div>
@@ -181,14 +165,16 @@ const Home = () => {
                 <div className="relative flex items-center justify-center group">
                   <img
                     src={informatica}
-                    alt="informatica"
+                    alt={t("services.computerScience", { ns: "home" })}
                     className="w-96 lg:h-96 h-36 max-lg:object-top object-cover opacity-35 group-hover:opacity-75 transition-opacity duration-300"
                   />
                   <div className="absolute flex flex-col items-center justify-center text-center border-2 border-amber-200 bg-amber-500 rounded-full w-16 h-16 opacity-100 group-hover:opacity-100 transition-opacity duration-300">
                     <i className="fas fa-laptop text-blue-800"></i>
                   </div>
                   <div className="absolute top-1/2 mt-8 flex flex-col items-center justify-center group-hover:opacity-100 transition-opacity duration-300">
-                    <p className="text-white font-bold">Informatica</p>
+                    <p className="text-white font-bold">
+                      {t("services.computerScience", { ns: "home" })}
+                    </p>
                   </div>
                 </div>
               </div>
@@ -196,43 +182,43 @@ const Home = () => {
           </div>
           <div className="p-2 text-justify lg:w-1/2 mx-auto">
             <h1 className="text-3xl font-bold text-center text-blue-800">
-              Requisitos de Admision
+              {t("admissionRequirements.title", { ns: "home" })}
             </h1>
             <ul className="my-4 list-disc list-inside">
-              <li>Fotocopia de Acta de nacimiento</li>
-              <li>Copia de la cédula o pasaporte de ambos padres.</li>
-              <li>4 fotos 2x2 (recientes)</li>
-              <li>Certificado médico</li>
-              <li>Copia de seguro médico</li>
-              <li>Llenar formulario de ingreso</li>
-              <li>Firmar carta de comrpomiso de pago</li>
-              <li>
-                Si presenta algún problema de salud; presentar copia de su
-                historial
-              </li>
-              <li>Uso correcto del uniforme (párvulos en adelante)</li>
-              <li>Evaluación oftalmológica (preprimario en adelante)</li>
+              {(
+                t("admissionRequirements.list", {
+                  ns: "home",
+                  returnObjects: true,
+                }) as string[]
+              ).map((item, index) => (
+                <li key={index}>{item}</li>
+              ))}
             </ul>
             <p className="my-4">
-              Si el/la estudiante había estado en un centro educativo
-              anteriormente:
+              {t("admissionRequirements.ifPreviousSchool", { ns: "home" })}
             </p>
             <ul className="list-disc list-inside">
-              <li>Llenar formulario de referencia (colegio de precedencia)</li>
-              <li>Carta de saldo</li>
-              <li>Carta de buena conducta</li>
-              <li>Historial académico SIGERD</li>
-              <li>Récord de notas</li>
-              <li>Niños de primaria deben aplicar evaluación</li>
+              {(
+                t("admissionRequirements.previousSchoolRequirements", {
+                  ns: "home",
+                  returnObjects: true,
+                }) as string[]
+              ).map((item, index) => (
+                <li key={index}>{item}</li>
+              ))}
             </ul>
           </div>
           <div className="max-lg:text-sm mx-auto lg:w-1/2 p-2">
             <h1 className="text-blue-800 font-bold space-y-2 text-3xl text-center my-4">
-              Contacto
+              {t("contact")}
             </h1>
             <p>{FULL_ADDRESS}</p>
-            <p>Tel: {PHONE_NUMBER}</p>
-            <p>Correo: {EMAIL_ADDRESS}</p>
+            <p>
+              {t("phone")}: {PHONE_NUMBER}
+            </p>
+            <p>
+              {t("email")}: {EMAIL_ADDRESS}
+            </p>
           </div>
         </div>
       </div>

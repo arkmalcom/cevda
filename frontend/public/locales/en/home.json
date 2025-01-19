@@ -2,16 +2,67 @@
   "accordionItems": [
     {
       "title": "Mission",
-      "content": "The Villa de Ángeles Educational Center's mission is to educate and train successful children with academic and human excellence and full respect for their dignity, enabling them to build their unique and essential identity. We systematically guide our students to build the foundations necessary to expand in their professional and personal lives, always assuming their responsibilities with family, their social environment, the environment, and the Dominican Republic."
+      "content": "The mission of Centro Educativo Villa de Ángeles is to educate and form successful children with academic and human excellence, fully respecting their dignity, allowing them to build their unique and essential identity. We systematically guide our students to build the necessary foundations to expand in their professional and personal lives, always assuming their responsibilities with family, social environment, the environment, and the Dominican Republic."
     },
     {
       "title": "Vision",
-      "content": "Parents, executives, teachers, and other members of the educational community are strongly united as a team to fulfill their mission, instilling in children a conscious and active participation in their formation process as leaders and agents of social change."
+      "content": "Parents, executives, teachers, and other members of the educational community are strongly united as a team to fulfill their mission, instilling in children a conscious and active participation in their formative process as leaders and agents of social change."
     },
     {
       "title": "Values",
-      "content": "Love: A feeling of deep affection and inclination toward a person or thing for which all good is desired. Faith: Based on knowing God and setting goals in Him. Happiness: Provided by achieving objectives. Respect: Obtaining a courteous community. Integration: Of different cultures. Creativity: Enhancing the ability to transform. Solidarity: Support for various causes where collaboration can be demonstrated."
+      "content": "Love: A feeling of deep affection and inclination towards a person or thing for which one desires all good things.\nFaith: Based on knowing God and setting goals in Him.\nHappiness: Provided by achieving goals.\nRespect: Building a polite community.\nIntegration: Of different cultures.\nCreativity: Enhancing the ability to transform.\nSolidarity: Support for various causes where collaboration can be demonstrated."
     }
   ],
-  "hello": "Hello, world!"
+  "academicOffering": {
+    "title": "Academic Offering",
+    "list": [
+      {
+        "title": "Initial Level",
+        "content": "At Centro Educativo Villa de Ángeles, our preschool service is designed to be the ideal start in the formation of your little ones. We have specialized teachers who work with passion and dedication to foster creativity, curiosity, and a love for learning from an early age. Our comprehensive approach promotes the physical, emotional, and social development of children in a safe, stimulating environment filled with activities that enhance their skills and reinforce their confidence. Here, each child is unique, and our commitment is to accompany them in their first steps toward a bright future.",
+        "subtext": "45 days to 5 years"
+      },
+      {
+        "title": "Primary Level",
+        "content": "At Centro Educativo Villa de Ángeles, our primary level is designed to prepare students for the challenges of today's world. We integrate technology as an essential part of learning, offering classes in Programming, Robotics, and Computer Science that stimulate logical thinking and creativity. In addition, we strengthen the comprehensive development of our students with English classes to enhance their communication skills, and flute, fostering artistic and musical sensitivity. All of this in a dynamic and participatory environment, where each child finds the tools to excel and grow in all areas.",
+        "subtext": "6 to 10 years"
+      }
+    ]
+  },
+  "admissionRequirements": {
+    "title": "Admission Requirements",
+    "list": [
+      "Photocopy of birth certificate",
+      "Copy of both parents' ID card or passport",
+      "4 recent 2x2 photos",
+      "Medical certificate",
+      "Copy of health insurance",
+      "Complete the registration form",
+      "Sign the payment commitment letter",
+      "If there is any health issue, submit a copy of the medical history",
+      "Correct use of the uniform (from preschool onwards)",
+      "Ophthalmological evaluation (from pre-primary onwards)"
+    ],
+    "ifPreviousSchool": "If the student had been in a previous educational institution:",
+    "previousSchoolRequirements": [
+      "Complete the reference form (previous school)",
+      "Balance letter",
+      "Good conduct letter",
+      "SIGERD academic history",
+      "Grade report",
+      "Primary school children must undergo an evaluation"
+    ]
+  },
+  "welcome": {
+    "header": "Welcome to Centro Educativo Villa de Ángeles, a space dedicated to the learning and comprehensive development of your children.",
+    "content": "We are a school committed to educational excellence, offering services from the initial level to the primary level, complemented by extracurricular classes designed to enhance the skills of our students. In addition, we have a semi-internship system that guarantees a safe and enriching environment. Our intensive focus is on providing quality education and exceptional care, always prioritizing the well-being and growth of our students.",
+    "closing": "Thank you for trusting us!"
+  },
+  "services": {
+    "title": "Our Services",
+    "robotics": "Robotics",
+    "earlyStimulation": "Early Stimulation",
+    "ballet": "Ballet",
+    "flute": "Flute",
+    "computerScience": "Computer Science"
+  }
 }
