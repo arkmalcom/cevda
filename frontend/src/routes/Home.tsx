@@ -25,12 +25,16 @@ const Home = () => {
 
   useEffect(() => {
     const loadNamespace = async () => {
-      await i18n.loadNamespaces(['home']);
+      await i18n.loadNamespaces(["home"]);
     };
     loadNamespace();
   }, [i18n]);
 
-  const accordionItems = t('accordionItems', { ns: 'home', returnObjects: true }) as AccordionItem[] || [];
+  const accordionItems =
+    (t("accordionItems", {
+      ns: "home",
+      returnObjects: true,
+    }) as AccordionItem[]) || [];
 
   const nivelInicialContent = `
   En el Centro Educativo Villa de Ángeles, nuestro servicio de preescolar está diseñado para ser el inicio ideal en la formación de sus pequeños. 

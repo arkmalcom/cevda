@@ -26,14 +26,20 @@ const Layout = () => {
         </a>
       </div>
       <div className="fixed bottom-24 lg:left-10 left-6 flex items-center space-x-2">
-        <button onClick={() => changeLanguage("es")} aria-label="Change to Spanish">
+        <button
+          onClick={() => changeLanguage("es")}
+          aria-label="Change to Spanish"
+        >
           <img
             src="https://flagcdn.com/w40/do.png"
             alt="Dominican Republic Flag"
             className="w-10 h-10 rounded-full"
           />
         </button>
-        <button onClick={() => changeLanguage("en")} aria-label="Change to English">
+        <button
+          onClick={() => changeLanguage("en")}
+          aria-label="Change to English"
+        >
           <img
             src="https://flagcdn.com/w40/us.png"
             alt="US Flag"

@@ -152,7 +152,7 @@ const AdmissionForm: React.FC = () => {
                 subtext: "Segundo Apellido",
                 required: true,
                 onChange: handleChange,
-                disabled: disableField,          
+                disabled: disableField,
               },
             ]}
           />
@@ -209,7 +209,12 @@ const AdmissionForm: React.FC = () => {
                 onChange: handleChange,
                 disabled: disableField,
               },
-              { id: "studentCity", subtext: "Ciudad", onChange: handleChange, disabled: disableField, },
+              {
+                id: "studentCity",
+                subtext: "Ciudad",
+                onChange: handleChange,
+                disabled: disableField,
+              },
               {
                 id: "studentPostalCode",
                 subtext: "Código postal",
@@ -300,7 +305,12 @@ const AdmissionForm: React.FC = () => {
                 onChange: handleChange,
                 disabled: disableField,
               },
-              { id: "guardianCity", subtext: "Ciudad", onChange: handleChange, disabled: disableField, },
+              {
+                id: "guardianCity",
+                subtext: "Ciudad",
+                onChange: handleChange,
+                disabled: disableField,
+              },
               {
                 id: "guardianPostalCode",
                 subtext: "Código postal",
