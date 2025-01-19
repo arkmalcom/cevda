@@ -107,21 +107,31 @@ Nuevo mensaje:
 
 
 def send_email_with_attachment(data: dict) -> dict:
-    """Send email with file attachment using AWS SES raw email."""
+    """Send email with file attachment using AWS SES."""
     SENDER = os.environ["SENDER_EMAIL"]
     RECIPIENT = os.environ["RECIPIENT_EMAIL"]
-
-    msg = MIMEMultipart()
-    msg["Subject"] = "Nueva Aplicación De Empleo"
-    msg["From"] = SENDER
-    msg["To"] = RECIPIENT
-
-    body = MIMEText("Adjunto se encuentra el CV.", "plain")
-    msg.attach(body)
+    MAX_SIZE = 8 * 1024 * 1024
 
     try:
         file_content = base64.b64decode(data["file"])
         filename = data["filename"]
+
+        if len(file_content) > MAX_SIZE:
+            logger.warning(f"File size ({len(file_content)} bytes) exceeds limit")
+            return {
+                "statusCode": 400,
+                "body": json.dumps(
+                    {"message": "File size too large. Please submit a file under 8MB."}
+                ),
+            }
+
+        msg = MIMEMultipart()
+        msg["Subject"] = "New Job Application"
+        msg["From"] = SENDER
+        msg["To"] = RECIPIENT
+
+        body = MIMEText("Please find attached the job application.", "plain")
+        msg.attach(body)
 
         attachment = MIMEApplication(file_content)
         attachment.add_header("Content-Disposition", "attachment", filename=filename)
