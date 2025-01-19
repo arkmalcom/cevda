@@ -65,9 +65,6 @@ def send_email(data: dict) -> dict:
     ses = boto3.client("ses")
     email_source = data.pop("formSource", "contacto")
 
-    if email_source == "carreras":
-        return send_email_with_attachment(data, SENDER, RECIPIENT)
-
     column_mapping = get_column_mapping(email_source)
 
     message_body = "\n".join(
@@ -109,13 +106,15 @@ Nuevo mensaje:
         }
 
 
-def send_email_with_attachment(data: dict, sender: str, recipient: str) -> dict:
+def send_email_with_attachment(data: dict) -> dict:
     """Send email with file attachment using AWS SES raw email."""
+    SENDER = os.environ["SENDER_EMAIL"]
+    RECIPIENT = os.environ["RECIPIENT_EMAIL"]
 
     msg = MIMEMultipart()
     msg["Subject"] = "Nueva Aplicación De Empleo"
-    msg["From"] = sender
-    msg["To"] = recipient
+    msg["From"] = SENDER
+    msg["To"] = RECIPIENT
 
     body = MIMEText("Adjunto se encuentra el CV.", "plain")
     msg.attach(body)
@@ -132,7 +131,7 @@ def send_email_with_attachment(data: dict, sender: str, recipient: str) -> dict:
 
         ses = boto3.client("ses")
         response = ses.send_raw_email(
-            Source=sender, Destinations=[recipient], RawMessage={"Data": raw_email}
+            Source=SENDER, Destinations=[RECIPIENT], RawMessage={"Data": raw_email}
         )
 
         return {
@@ -181,8 +180,15 @@ def lambda_handler(event: dict, context: Any) -> dict:
         body = json.loads(event["body"])
         logger.info(f"Received notification email data: {body}")
         captcha_token = body.pop("captchaToken", None)
+        email_source = body.get("formSource", "contacto")
 
-        if not captcha_token:
+        if email_source == "carreras":
+            result = send_email_with_attachment(body)
+            result["headers"] = DEFAULT_HEADERS
+            logger.info(f"Email sent successfully: {result}")
+            return result
+
+        if not captcha_token and email_source != "carreras":
             return {
                 "statusCode": 400,
                 "body": json.dumps(
@@ -198,7 +204,7 @@ def lambda_handler(event: dict, context: Any) -> dict:
                 "headers": DEFAULT_HEADERS,
             }
 
-        result = send_email(body)
+        result = send_email(body, email_source)
 
         result["headers"] = DEFAULT_HEADERS
         logger.info(f"Email sent successfully: {result}")
