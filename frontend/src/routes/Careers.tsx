@@ -15,33 +15,53 @@ const Careers: React.FC = () => {
     }
   };
 
+  const MAX_FILE_SIZE = 4 * 1024 * 1024;
+
   const handleSubmit = async () => {
     if (!selectedFile) {
       alert(t("form.noFileSelected"));
       return;
     }
 
-    const formData = new FormData();
-    formData.append("file", selectedFile);
+    if (selectedFile.size > MAX_FILE_SIZE) {
+      alert(t("form.fileTooLarge"));
+      return;
+    }
 
-    try {
-      const response = await fetch(
-        `${import.meta.env.VITE_BASE_API_URL}/${STAGE}/email-handler-${STAGE}`,
-        {
-          method: "POST",
-          body: formData,
-        },
-      );
+    const reader = new FileReader();
+    reader.readAsDataURL(selectedFile);
 
-      if (response.ok) {
-        alert(t("form.successMessage"));
-      } else {
+    reader.onload = async () => {
+      const base64File = (reader.result as string).split(",")[1];
+
+      try {
+        const response = await fetch(
+          `${import.meta.env.VITE_BASE_API_URL}/${STAGE}/email-handler-${STAGE}`,
+          {
+            method: "POST",
+            headers: {
+              "Content-Type": "application/json",
+            },
+            body: JSON.stringify({
+              formSource: "carreras",
+              file: base64File,
+              filename: selectedFile.name,
+            }),
+          },
+        );
+
+        const responseData = await response.json();
+
+        if (response.ok) {
+          alert(t("form.successMessage"));
+        } else {
+          alert(responseData.message || t("form.errorMessage"));
+        }
+      } catch (error) {
+        console.error("Error uploading file:", error);
         alert(t("form.errorMessage"));
       }
-    } catch (error) {
-      console.error("Error uploading file:", error);
-      alert(t("form.errorMessage"));
-    }
+    };
   };
 
   return (
