@@ -110,7 +110,7 @@ Nuevo mensaje:
 
 
 def send_email_with_attachment(data: dict, sender: str, recipient: str) -> dict:
-    """Send email with file attachment using AWS SES."""
+    """Send email with file attachment using AWS SES raw email."""
 
     msg = MIMEMultipart()
     msg["Subject"] = "Nueva Aplicación De Empleo"
