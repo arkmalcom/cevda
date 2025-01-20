@@ -27,3 +27,5 @@ dist-ssr
 cevda_backend.egg-info
 requirements.txt
 packages
+
+.env

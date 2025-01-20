@@ -116,11 +116,11 @@ def send_email_with_attachment(data: dict) -> dict:
         filename = data["filename"]
 
         msg = MIMEMultipart()
-        msg["Subject"] = "New Job Application"
+        msg["Subject"] = "Nueva Solicitud de Empleo"
         msg["From"] = SENDER
         msg["To"] = RECIPIENT
 
-        body = MIMEText("Please find attached the job application.", "plain")
+        body = MIMEText("Adjunto el CV.", "plain")
         msg.attach(body)
 
         attachment = MIMEApplication(base64.b64decode(file_content))
