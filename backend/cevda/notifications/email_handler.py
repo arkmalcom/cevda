@@ -204,7 +204,7 @@ def lambda_handler(event: dict, context: Any) -> dict:
                 "headers": DEFAULT_HEADERS,
             }
 
-        result = send_email(body, email_source)
+        result = send_email(body)
 
         result["headers"] = DEFAULT_HEADERS
         logger.info(f"Email sent successfully: {result}")
