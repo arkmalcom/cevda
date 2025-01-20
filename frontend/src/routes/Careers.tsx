@@ -123,43 +123,43 @@ const Careers: React.FC = () => {
   const { t } = useTranslation("careers");
 
   return (
-  <div>
-    <div className="flex flex-col space-y-2 p-1 text-justify md:w-5/6 items-center mx-auto">
-      <div className="flex flex-col p-1 rounded-md border-amber-500 border-2 relative min-h-[426px]">
-        <div className="absolute inset-0 bg-black"></div>
-        <div 
-          className="absolute inset-0 m-0 p-0 bg-cover bg-center opacity-50"
-          style={{ backgroundImage: `url(${careers})` }}
-        ></div>
-        <div className="relative space-y-6">
-          <h1 className="text-center text-3xl text-blue-800 bg-amber-500 p-1 rounded shadow-md">
-            {t("careers.title")}
-          </h1>
-          <p className="text-white">{t("careers.description")}</p>
-          <GoogleReCaptchaProvider
-            reCaptchaKey={import.meta.env.VITE_GOOGLE_RECAPTCHA_CLIENT}
-          >
-            <CareerForm />
-          </GoogleReCaptchaProvider>
+    <div>
+      <div className="flex flex-col space-y-2 p-1 text-justify md:w-5/6 items-center mx-auto">
+        <div className="flex flex-col p-1 rounded-md border-amber-500 border-2 relative min-h-[426px]">
+          <div className="absolute inset-0 bg-black"></div>
+          <div
+            className="absolute inset-0 m-0 p-0 bg-cover bg-center opacity-50"
+            style={{ backgroundImage: `url(${careers})` }}
+          ></div>
+          <div className="relative space-y-6">
+            <h1 className="text-center text-3xl text-blue-800 bg-amber-500 p-1 rounded shadow-md">
+              {t("careers.title")}
+            </h1>
+            <p className="text-white">{t("careers.description")}</p>
+            <GoogleReCaptchaProvider
+              reCaptchaKey={import.meta.env.VITE_GOOGLE_RECAPTCHA_CLIENT}
+            >
+              <CareerForm />
+            </GoogleReCaptchaProvider>
+          </div>
         </div>
-      </div>
 
-      <div className="flex flex-col rounded-md border-amber-500 border-2 p-1 relative min-h-[425px]">
-        <div className="absolute inset-0 bg-black"></div>
-        <div 
-          className="absolute inset-0 bg-cover bg-top opacity-30"
-          style={{ backgroundImage: `url(${teacher})` }}
-        ></div>
-        <div className="relative space-y-6">
-          <h1 className="text-center text-3xl text-blue-800 bg-amber-500 p-1 rounded shadow-md">
-            {t("aboutUs.title")}
-          </h1>
-          <p className="text-white">{t("aboutUs.description")}</p>
+        <div className="flex flex-col rounded-md border-amber-500 border-2 p-1 relative min-h-[425px]">
+          <div className="absolute inset-0 bg-black"></div>
+          <div
+            className="absolute inset-0 bg-cover bg-top opacity-30"
+            style={{ backgroundImage: `url(${teacher})` }}
+          ></div>
+          <div className="relative space-y-6">
+            <h1 className="text-center text-3xl text-blue-800 bg-amber-500 p-1 rounded shadow-md">
+              {t("aboutUs.title")}
+            </h1>
+            <p className="text-white">{t("aboutUs.description")}</p>
+          </div>
         </div>
       </div>
     </div>
-  </div>
-);
-}
+  );
+};
 
 export default Careers;

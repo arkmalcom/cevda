@@ -18,10 +18,18 @@ const Navigation: React.FC = () => {
           <h1 className="uppercase md:text-xl font-title text-blue-800 md:w-96">
             Centro Educativo Villa de Ángeles
           </h1>
-          <img src={smartTeamLogo} alt="smart-team-logo" className="md:block hidden w-14 h-8" />
+          <img
+            src={smartTeamLogo}
+            alt="smart-team-logo"
+            className="md:block hidden w-14 h-8"
+          />
         </div>
         <div className="flex items-center w-full justify-end">
-          <img src={smartTeamLogo} alt="smart-team-logo" className="md:hidden mx-4 block w-12 h-6" />
+          <img
+            src={smartTeamLogo}
+            alt="smart-team-logo"
+            className="md:hidden mx-4 block w-12 h-6"
+          />
           <button
             className="lg:hidden text-white text-2xl ml-auto"
             onClick={toggleMenu}
