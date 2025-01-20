@@ -1,11 +1,19 @@
 import { useTranslation } from "react-i18next";
 import React, { useState } from "react";
+import { GoogleReCaptchaProvider } from "react-google-recaptcha-v3";
+
+import useRecaptcha from "../hooks/useRecaptcha";
 
 import careers from "../assets/careers/careers.jpg";
 
-const Careers: React.FC = () => {
+const CareerForm: React.FC = () => {
   const { t } = useTranslation("careers");
   const STAGE = import.meta.env.VITE_STAGE;
+  const [isSubmitting, setIsSubmitting] = useState(false);
+  const [submitStatus, setSubmitStatus] = useState<"success" | "error" | null>(
+    null,
+  );
+  const { verifyRecaptcha } = useRecaptcha();
 
   const [selectedFile, setSelectedFile] = useState<File | null>(null);
 
@@ -17,7 +25,11 @@ const Careers: React.FC = () => {
 
   const MAX_FILE_SIZE = 4 * 1024 * 1024;
 
-  const handleSubmit = async () => {
+  const handleSubmit = async (e: React.FormEvent) => {
+    e.preventDefault();
+    setIsSubmitting(true);
+    setSubmitStatus(null);
+
     if (!selectedFile) {
       alert(t("form.noFileSelected"));
       return;
@@ -35,6 +47,12 @@ const Careers: React.FC = () => {
       const base64File = (reader.result as string).split(",")[1];
 
       try {
+        const captchaToken = await verifyRecaptcha();
+
+        if (!captchaToken) {
+          throw new Error("reCAPTCHA verification failed");
+        }
+
         const response = await fetch(
           `${import.meta.env.VITE_BASE_API_URL}/${STAGE}/email-handler-${STAGE}`,
           {
@@ -44,6 +62,7 @@ const Careers: React.FC = () => {
             },
             body: JSON.stringify({
               formSource: "carreras",
+              captchaToken,
               file: base64File,
               filename: selectedFile.name,
             }),
@@ -53,16 +72,54 @@ const Careers: React.FC = () => {
         const responseData = await response.json();
 
         if (response.ok) {
-          alert(t("form.successMessage"));
+          setSubmitStatus("success");
+          return responseData;
         } else {
-          alert(responseData.message || t("form.errorMessage"));
+          setSubmitStatus("error");
         }
       } catch (error) {
         console.error("Error uploading file:", error);
-        alert(t("form.errorMessage"));
+        setSubmitStatus("error");
+      } finally {
+        setIsSubmitting(false);
       }
     };
   };
+
+  return (
+    <form
+      onSubmit={handleSubmit}
+      className="space-y-2 items-center text-center"
+    >
+      <input
+        type="file"
+        accept=".pdf, .docx"
+        onChange={handleFileChange}
+        className="block w-full text-center"
+      />
+      {submitStatus === "success" && (
+        <div className="text-green-600 text-center">
+          {t("form.successMessage")}
+        </div>
+      )}
+      {submitStatus === "error" && (
+        <div className="text-red-600 text-center">{t("form.errorMessage")}</div>
+      )}
+      <button
+        type="submit"
+        className="bg-blue-500 text-white p-2 mt-2 w-52 mx-auto disabled:opacity-50 hover:bg-blue-600 transition-colors"
+        disabled={isSubmitting}
+      >
+        {isSubmitting
+          ? t("submitting", { ns: "common" })
+          : t("submit", { ns: "common" })}
+      </button>
+    </form>
+  );
+};
+
+const Careers: React.FC = () => {
+  const { t } = useTranslation("careers");
 
   return (
     <div>
@@ -73,18 +130,11 @@ const Careers: React.FC = () => {
           </h1>
           <img src={careers} alt="careers" className="w-auto h-1/2 mx-auto" />
           <p>{t("careers.description")}</p>
-          <input
-            type="file"
-            accept=".pdf, .docx"
-            onChange={handleFileChange}
-            className="block w-full text-center"
-          />
-          <button
-            onClick={handleSubmit}
-            className="bg-blue-500 text-white p-2 w-52 mx-auto rounded hover:bg-blue-600"
+          <GoogleReCaptchaProvider
+            reCaptchaKey={import.meta.env.VITE_GOOGLE_RECAPTCHA_CLIENT}
           >
-            {t("submit", { ns: "common" })}
-          </button>
+            <CareerForm />
+          </GoogleReCaptchaProvider>
         </div>
         <div className="rounded-md border-amber-200 bg-amber-500 border-2 p-1">
           <h1>{t("aboutUs.title")}</h1>
