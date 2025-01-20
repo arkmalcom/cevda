@@ -16,7 +16,7 @@ const Card: React.FC<CardProps> = ({ title, subtext, content }) => {
   return (
     <section>
       <div
-        className={`group h-56 w-96 [perspective:1000px]`}
+        className={`group h-56 w-full lg:w-96 [perspective:1000px]`}
         onClick={handleFlip}
       >
         <div

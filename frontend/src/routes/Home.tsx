@@ -29,7 +29,7 @@ const Home = () => {
 
   return (
     <>
-      <div className="flex flex-col items-center lg:justify-center lg:mx-auto">
+      <div className="flex flex-col items-center lg:justify-center">
         <div className="w-full space-y-6">
           <div>
             <Carousel
