@@ -1,6 +1,7 @@
 import React, { useState } from "react";
 import { Link } from "react-router-dom";
 import logo from "../assets/cevda_logo_tr.png";
+import smartTeamLogo from "../assets/smart_team_logo_tr.png";
 import { useTranslation } from "react-i18next";
 
 const Navigation: React.FC = () => {
@@ -14,11 +15,13 @@ const Navigation: React.FC = () => {
       <nav className="flex flex-row bg-amber-500 p-4 text-blue-8 h-16 shadow-md z-10">
         <div className="flex flex-row items-center space-x-1 lg:w-96">
           <img src={logo} alt="nav-logo" className="w-12 h-12 inline-block" />
-          <h1 className="uppercase text-lg font-title">
+          <h1 className="uppercase md:text-xl font-title text-blue-800 md:w-96">
             Centro Educativo Villa de Ángeles
           </h1>
+          <img src={smartTeamLogo} alt="smart-team-logo" className="md:block hidden w-14 h-8" />
         </div>
         <div className="flex items-center w-full justify-end">
+          <img src={smartTeamLogo} alt="smart-team-logo" className="md:hidden mx-4 block w-12 h-6" />
           <button
             className="lg:hidden text-white text-2xl ml-auto"
             onClick={toggleMenu}
