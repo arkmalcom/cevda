@@ -182,12 +182,6 @@ def lambda_handler(event: dict, context: Any) -> dict:
         captcha_token = body.pop("captchaToken", None)
         email_source = body.get("formSource", "contacto")
 
-        if email_source == "carreras":
-            result = send_email_with_attachment(body)
-            result["headers"] = DEFAULT_HEADERS
-            logger.info(f"Email sent successfully: {result}")
-            return result
-
         if not captcha_token and email_source != "carreras":
             return {
                 "statusCode": 400,
@@ -204,7 +198,10 @@ def lambda_handler(event: dict, context: Any) -> dict:
                 "headers": DEFAULT_HEADERS,
             }
 
-        result = send_email(body)
+        if email_source == "carreras":
+            result = send_email_with_attachment(body)
+        else:
+            result = send_email(body)
 
         result["headers"] = DEFAULT_HEADERS
         logger.info(f"Email sent successfully: {result}")
