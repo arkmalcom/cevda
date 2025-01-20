@@ -144,7 +144,7 @@ const Careers: React.FC = () => {
           </div>
         </div>
 
-        <div className="flex flex-col rounded-md border-amber-500 border-2 p-1 relative min-h-[425px]">
+        <div className="flex flex-col rounded-md border-amber-500 border-2 p-1 relative min-h-[426px]">
           <div className="absolute inset-0 bg-black"></div>
           <div
             className="absolute inset-0 bg-cover bg-top opacity-30"
