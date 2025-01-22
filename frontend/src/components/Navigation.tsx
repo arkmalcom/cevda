@@ -15,7 +15,7 @@ const Navigation: React.FC = () => {
       <nav className="flex flex-row bg-amber-500 p-4 text-blue-8 h-16 shadow-md z-10">
         <div className="flex flex-row items-center space-x-1 lg:w-96">
           <img src={logo} alt="nav-logo" className="w-12 h-12 inline-block" />
-          <h1 className="uppercase md:text-xl font-title text-blue-800 md:w-96">
+          <h1 className="md:text-xl font-title text-blue-800 md:w-96">
             Centro Educativo Villa de Ángeles
           </h1>
           <img
