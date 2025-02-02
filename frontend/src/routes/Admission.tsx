@@ -261,25 +261,25 @@ const AdmissionForm: React.FC = () => {
             options={[
               {
                 value: "mother",
-                label: t("form.guardianinfo.relationToStudent.mother", {
+                label: t("form.guardianInfo.relationToStudent.mother", {
                   ns: "admission",
                 }),
               },
               {
                 value: "father",
-                label: t("form.guardianinfo.relationToStudent.father", {
+                label: t("form.guardianInfo.relationToStudent.father", {
                   ns: "admission",
                 }),
               },
               {
                 value: "guardian",
-                label: t("form.guardianinfo.relationToStudent.guardian", {
+                label: t("form.guardianInfo.relationToStudent.guardian", {
                   ns: "admission",
                 }),
               },
               {
                 value: "other",
-                label: t("form.guardianinfo.relationToStudent.other", {
+                label: t("form.guardianInfo.relationToStudent.other", {
                   ns: "admission",
                 }),
               },
