@@ -30,7 +30,15 @@ type dynamoAttemptRepository struct {
 }
 
 func fromDynamoAttempt(d *dynamoAssessmentAttempt) *models.AssessmentAttempt {
-	id, _ := uuid.Parse(d.AttemptID)
+	id, err := uuid.Parse(d.AttemptID)
+	if err != nil {
+		return nil
+	}
+
+	status, err := models.ParseStatusType(d.AssessmentStatus)
+	if err != nil {
+		return nil
+	}
 
 	return &models.AssessmentAttempt{
 		AttemptID:        id,
@@ -40,7 +48,7 @@ func fromDynamoAttempt(d *dynamoAssessmentAttempt) *models.AssessmentAttempt {
 		QuestionIDs:      d.QuestionIDs,
 		Answers:          d.Answers,
 		Score:            d.Score,
-		AssessmentStatus: d.AssessmentStatus,
+		AssessmentStatus: status,
 	}
 }
 
@@ -53,7 +61,7 @@ func toDynamoAttempt(a *models.AssessmentAttempt) *dynamoAssessmentAttempt {
 		QuestionIDs:      a.QuestionIDs,
 		Answers:          a.Answers,
 		Score:            a.Score,
-		AssessmentStatus: a.AssessmentStatus,
+		AssessmentStatus: a.AssessmentStatus.String(),
 	}
 }
 
