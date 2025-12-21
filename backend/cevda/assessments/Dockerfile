@@ -7,11 +7,14 @@ RUN go mod download
 
 COPY . .
 
-RUN CGO_ENABLED=0 GOOS=linux GOARCH=amd64 go build -o main .
+RUN CGO_ENABLED=0 GOOS=linux GOARCH=amd64 go build -o main ./command/api
+
+RUN CGO_ENABLED=0 GOOS=linux GOARCH=amd64 go build -o seed ./command/seed
 
 FROM alpine:latest
 
 COPY --from=builder /app/main /main
+COPY --from=builder /app/seed /seed
 
 EXPOSE 8080
 

@@ -10,6 +10,7 @@ services:
       - ./backend/cevda/assessments/.env
     volumes:
       - ./backend/cevda/assessments:/app
+      - ./backend/cevda/assessments/data:/data
     restart: always
 
   frontend:
