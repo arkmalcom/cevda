@@ -23,10 +23,8 @@ const EnglishExam = () => {
     const [score, setScore] = useState<number | null>(null);
     const [errors, setErrors] = useState<Record<string, string>>({});
 
-    const BASE_API_ENDPOINT = import.meta.env.VITE_BASE_API_ENDPOINT_URI;
-
     const startAttempt = async () => {
-        const res = await fetch(`${BASE_API_ENDPOINT}/attempts/start`, {
+        const res = await fetch(`${import.meta.env.VITE_BASE_API_ENDPOINT_URI}/attempts/start`, {
             method: "POST",
             headers: {
                 "Content-Type": "application/json",
@@ -46,7 +44,7 @@ const EnglishExam = () => {
 
         console.log("Loading questions for attemptID:", attemptID);
 
-        const qRes = await fetch(`${BASE_API_ENDPOINT}/questions/${attemptID}`);
+        const qRes = await fetch(`${import.meta.env.VITE_BASE_API_ENDPOINT_URI}/questions/${attemptID}`);
 
         if (!qRes.ok) {
             console.error("Failed to load questions");
@@ -86,7 +84,7 @@ const EnglishExam = () => {
             answersPayload[q.QuestionID] = answers[q.QuestionID]!;
         })
 
-        const res = await fetch(`${BASE_API_ENDPOINT}/attempts/submit`, {
+        const res = await fetch(`${import.meta.env.VITE_BASE_API_ENDPOINT_URI}/attempts/submit`, {
             method: "POST",
             headers: {
                 "Content-Type": "application/json",
