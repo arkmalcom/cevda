@@ -13,6 +13,9 @@ FROM alpine:latest
 
 COPY --from=builder /app/main /main
 
+COPY --from=public.ecr.aws/awsguru/aws-lambda-adapter:0.9.1 /lambda-adapter /opt/extensions/lambda-adapter
+
+ENV PORT=8080
 EXPOSE 8080
 
 CMD [ "/main" ]

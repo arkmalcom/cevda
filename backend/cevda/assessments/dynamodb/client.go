@@ -34,9 +34,15 @@ func Init() {
 		log.Fatalf("unable to load SDK config, %v", err)
 	}
 
-	Client = dynamodb.NewFromConfig(cfg, func(o *dynamodb.Options) {
-		o.BaseEndpoint = aws.String(os.Getenv("DYNAMODB_ENDPOINT"))
-	})
+	ClientOptions := []func(*dynamodb.Options){}
+
+	if endpoint := os.Getenv("DYNAMODB_ENDPOINT"); endpoint != "" {
+		ClientOptions = append(ClientOptions, func(o *dynamodb.Options) {
+			o.BaseEndpoint = aws.String(endpoint)
+		})
+	}
+
+	Client = dynamodb.NewFromConfig(cfg, ClientOptions...)
 
 	log.Println("DynamoDB client initialized")
 }
