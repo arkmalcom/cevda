@@ -34,7 +34,7 @@ const ContactForm: React.FC = () => {
   const onSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
     await handleSubmit({
-      url: `${import.meta.env.VITE_BASE_API_URL}/${STAGE}/email-handler-${STAGE}`,
+      url: `${import.meta.env.VITE_BASE_EMAIL_ENDPOINT}/${STAGE}/email-handler-${STAGE}`,
       formData,
       formSource: "contacto",
       onSuccess: () => {
