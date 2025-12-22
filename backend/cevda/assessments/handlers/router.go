@@ -8,17 +8,16 @@ import (
 
 type Handler struct {
 	Attempts          repository.AttemptRepository
-	Questions         repository.QuestionRepository
 	AssessmentService services.AssessmentService
 }
 
 func New(
 	attempts repository.AttemptRepository,
-	questions repository.QuestionRepository,
+	svc services.AssessmentService,
 ) *Handler {
 	return &Handler{
-		Attempts:  attempts,
-		Questions: questions,
+		Attempts:          attempts,
+		AssessmentService: svc,
 	}
 }
 
@@ -29,5 +28,5 @@ func (h *Handler) RegisterRoutes(mux *http.ServeMux) {
 	mux.HandleFunc("POST /attempts/start", h.startAttempt)
 	mux.HandleFunc("POST /attempts/submit", h.submitAttempt)
 	// Question routes
-	mux.HandleFunc("GET /questions", h.getQuestions)
+	mux.HandleFunc("GET /questions/{attempt_id}", h.getQuestionsForAttempt)
 }

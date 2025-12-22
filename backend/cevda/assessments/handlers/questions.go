@@ -1,32 +1,39 @@
 package handlers
 
 import (
-	"encoding/json"
+	"math/rand"
 	"net/http"
+	"time"
 
+	"cevda/assessments/data"
 	"cevda/assessments/models"
 )
 
-func (h *Handler) getQuestions(w http.ResponseWriter, r *http.Request) {
-	var req struct {
-		QuestionIDs []string `json:"question_ids"`
-	}
-
-	if err := json.NewDecoder(r.Body).Decode(&req); err != nil {
-		http.Error(w, "Invalid request body", http.StatusBadRequest)
+func (h *Handler) getQuestionsForAttempt(w http.ResponseWriter, r *http.Request) {
+	attemptID := r.PathValue("attempt_id")
+	if attemptID == "" {
+		http.Error(w, "Missing attempt ID", http.StatusBadRequest)
 		return
 	}
 
-	questions, err := h.Questions.BatchGetById(r.Context(), req.QuestionIDs)
+	attempt, err := h.Attempts.GetByID(r.Context(), attemptID)
 	if err != nil {
-		http.Error(w, "Failed to get questions", http.StatusInternalServerError)
+		http.Error(w, "Attempt not found", http.StatusNotFound)
 		return
 	}
 
-	public := make([]*models.PublicAssessmentQuestion, 0, len(questions))
-	for _, q := range questions {
-		public = append(public, models.ToPublicQuestion(q))
+	questions := make([]*models.PublicAssessmentQuestion, 0, len(attempt.QuestionIDs))
+	for _, qID := range attempt.QuestionIDs {
+		if question, ok := data.AllByID[qID]; ok {
+			questions = append(questions, models.ToPublicQuestion(&question))
+		}
 	}
 
-	writeJSON(w, http.StatusOK, public)
+	// Shuffle questions to ensure random order
+	rand.New(rand.NewSource(time.Now().UnixNano()))
+	rand.Shuffle(len(questions), func(i, j int) {
+		questions[i], questions[j] = questions[j], questions[i]
+	})
+
+	writeJSON(w, http.StatusOK, questions)
 }

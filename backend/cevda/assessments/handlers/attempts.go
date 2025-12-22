@@ -3,6 +3,7 @@ package handlers
 import (
 	"cevda/assessments/models"
 	"encoding/json"
+	"log"
 	"net/http"
 )
 
@@ -16,7 +17,7 @@ func (h *Handler) startAttempt(w http.ResponseWriter, r *http.Request) {
 		return
 	}
 
-	attempt, err := models.NewAssessmentAttempt(req.Email)
+	attempt, err := h.AssessmentService.CreateAssessmentAttempt(r.Context(), req.Email)
 	if err != nil {
 		http.Error(w, "Failed to create attempt", http.StatusInternalServerError)
 		return
@@ -34,6 +35,7 @@ func (h *Handler) submitAttempt(w http.ResponseWriter, r *http.Request) {
 	var req struct {
 		AttemptID string         `json:"attempt_id"`
 		Answers   map[string]int `json:"answers"`
+		CreatedAt int            `json:"created_at"`
 	}
 
 	if err := json.NewDecoder(r.Body).Decode(&req); err != nil {
@@ -52,10 +54,14 @@ func (h *Handler) submitAttempt(w http.ResponseWriter, r *http.Request) {
 		return
 	}
 
+	log.Printf("Updating attempt %s with score %d", req.AttemptID, score)
+	log.Printf("Answers: %+v", req.Answers)
+
 	err = h.Attempts.Update(
 		r.Context(),
 		req.AttemptID,
 		req.Answers,
+		req.CreatedAt,
 		models.StatusCompleted.String(),
 		&score,
 	)

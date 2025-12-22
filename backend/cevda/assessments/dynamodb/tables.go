@@ -23,7 +23,6 @@ func CreateTablesIfLocal(ctx context.Context) {
 
 	log.Println("Creating DynamoDB tables in local environment...")
 	createAttemptsTable(ctx)
-	createQuestionsTable(ctx)
 }
 
 func createTableBase(ctx context.Context, tableName string, keySchema []types.KeySchemaElement, attributeDefinitions []types.AttributeDefinition) {
@@ -42,7 +41,7 @@ func createTableBase(ctx context.Context, tableName string, keySchema []types.Ke
 			log.Printf("Table %s already exists", tableName)
 			return
 		}
-		panic(err)
+		log.Fatalf("Failed to create table %s: %v", tableName, err)
 	}
 
 	log.Printf("Created table %s", tableName)
@@ -50,7 +49,7 @@ func createTableBase(ctx context.Context, tableName string, keySchema []types.Ke
 
 func createAttemptsTable(ctx context.Context) {
 	createTableBase(ctx,
-		os.Getenv("ATTEMPTS_TABLE"),
+		os.Getenv("ATTEMPTS_TABLE_NAME"),
 		[]types.KeySchemaElement{
 			{
 				AttributeName: aws.String("attempt_id"),
@@ -69,24 +68,6 @@ func createAttemptsTable(ctx context.Context) {
 			{
 				AttributeName: aws.String("created_at"),
 				AttributeType: types.ScalarAttributeTypeN,
-			},
-		},
-	)
-}
-
-func createQuestionsTable(ctx context.Context) {
-	createTableBase(ctx,
-		os.Getenv("QUESTIONS_TABLE"),
-		[]types.KeySchemaElement{
-			{
-				AttributeName: aws.String("question_id"),
-				KeyType:       types.KeyTypeHash,
-			},
-		},
-		[]types.AttributeDefinition{
-			{
-				AttributeName: aws.String("question_id"),
-				AttributeType: types.ScalarAttributeTypeS,
 			},
 		},
 	)

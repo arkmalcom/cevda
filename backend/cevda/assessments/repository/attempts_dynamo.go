@@ -7,6 +7,7 @@ import (
 	"log"
 	"strconv"
 
+	"github.com/aws/aws-sdk-go-v2/aws"
 	"github.com/aws/aws-sdk-go-v2/feature/dynamodb/attributevalue"
 	"github.com/aws/aws-sdk-go-v2/service/dynamodb"
 	"github.com/aws/aws-sdk-go-v2/service/dynamodb/types"
@@ -83,29 +84,33 @@ func (r *dynamoAttemptRepository) Create(ctx context.Context, attempt *models.As
 }
 
 func (r *dynamoAttemptRepository) GetByID(ctx context.Context, attemptID string) (*models.AssessmentAttempt, error) {
-	log.Println("Getting attempt with ID ", attemptID)
 	_, err := uuid.Parse(attemptID)
 	if err != nil {
 		return nil, err
 	}
 
-	result, err := r.client.GetItem(ctx, &dynamodb.GetItemInput{
-		TableName: &r.tableName,
-		Key: map[string]types.AttributeValue{
-			"attempt_id": &types.AttributeValueMemberS{Value: attemptID},
+	log.Printf("Getting attempt with ID %s", attemptID)
+
+	result, err := r.client.Query(ctx, &dynamodb.QueryInput{
+		TableName:              &r.tableName,
+		KeyConditionExpression: aws.String("attempt_id = :attempt_id"),
+		ExpressionAttributeValues: map[string]types.AttributeValue{
+			":attempt_id": &types.AttributeValueMemberS{Value: attemptID},
 		},
 	})
+
+	log.Printf("DynamoDB GetItem result: %+v", result)
 
 	if err != nil {
 		return nil, err
 	}
 
-	if result.Item == nil {
+	if len(result.Items) == 0 {
 		return nil, errors.New("Attempt not found.")
 	}
 
 	var item dynamoAssessmentAttempt
-	if err := attributevalue.UnmarshalMap(result.Item, &item); err != nil {
+	if err := attributevalue.UnmarshalMap(result.Items[0], &item); err != nil {
 		return nil, err
 	}
 
@@ -122,7 +127,7 @@ func marshalAnswers(answers map[string]int) map[string]types.AttributeValue {
 	return out
 }
 
-func (r *dynamoAttemptRepository) Update(ctx context.Context, attemptID string, answers map[string]int, status string, score *int) error {
+func (r *dynamoAttemptRepository) Update(ctx context.Context, attemptID string, answers map[string]int, createdAt int, status string, score *int) error {
 	log.Printf("Updating attempt with ID %s", attemptID)
 
 	updateExpr := "SET answers = :answers, assessment_status = :status"
@@ -140,6 +145,7 @@ func (r *dynamoAttemptRepository) Update(ctx context.Context, attemptID string, 
 		TableName: &r.tableName,
 		Key: map[string]types.AttributeValue{
 			"attempt_id": &types.AttributeValueMemberS{Value: attemptID},
+			"created_at": &types.AttributeValueMemberN{Value: strconv.Itoa(createdAt)},
 		},
 		UpdateExpression:          &updateExpr,
 		ExpressionAttributeValues: values,
