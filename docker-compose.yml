@@ -1,0 +1,37 @@
+services:
+  assessments-backend:
+    build: ./backend/cevda/assessments
+    depends_on:
+      - dynamodb
+    container_name: cevda-assessments-backend
+    ports:
+      - "8024:8080"
+    env_file:
+      - ./backend/cevda/assessments/.env
+    volumes:
+      - ./backend/cevda/assessments:/app
+      - ./backend/cevda/assessments/data:/data
+    restart: always
+
+  frontend:
+    build:
+      context: ./frontend
+      dockerfile: Dockerfile
+    container_name: cevda-frontend
+    env_file:
+      - ./frontend/.env
+    ports:
+      - "5124:80"
+    depends_on:
+      - assessments-backend
+    restart: always
+
+  dynamodb:
+    image: amazon/dynamodb-local
+    container_name: cevda-dynamodb
+    ports:
+      - "8001:8000"
+    volumes:
+      - ./dynamodb_data:/home/dynamodblocal/data
+    command: -jar DynamoDBLocal.jar -sharedDb -dbPath /home/dynamodblocal/data
+    restart: always

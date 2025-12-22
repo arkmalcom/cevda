@@ -6,6 +6,7 @@ import Admission from "./routes/Admission";
 import Careers from "./routes/Careers";
 import Characteristics from "./routes/Characteristics";
 import Contact from "./routes/Contact";
+import EnglishExam from "./routes/EnglishExam";
 import Home from "./routes/Home";
 import Infotep from "./routes/Infotep";
 
@@ -20,6 +21,7 @@ function App() {
           <Route path="/infotep" element={<Infotep />} />
           <Route path="/caracteristicas" element={<Characteristics />} />
           <Route path="/carreras" element={<Careers />} />
+          <Route path="/examen-ingles" element={<EnglishExam />} />
         </Route>
       </Routes>
     </Router>

@@ -54,7 +54,7 @@ const CareerForm: React.FC = () => {
         }
 
         const response = await fetch(
-          `${import.meta.env.VITE_BASE_API_URL}/${STAGE}/email-handler-${STAGE}`,
+          `${import.meta.env.VITE_BASE_EMAIL_ENDPOINT}/${STAGE}/email-handler-${STAGE}`,
           {
             method: "POST",
             headers: {
