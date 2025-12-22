@@ -180,7 +180,7 @@ const EnglishExam = () => {
         return (
             <div className="p-4 max-w-xl mx-auto text-center">
                 <h1 className="text-3xl font-bold mb-4">Resultado</h1>
-                <p className="text-xl mb-4">Tu puntuación: {score}%</p>
+                <p className="text-xl mb-4">Tu puntuación final: {score}%</p>
             </div>
         );
     }
