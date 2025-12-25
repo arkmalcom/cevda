@@ -1,0 +1,36 @@
+{
+    "fieldLabels": {
+        "name": "Nombre completo",
+        "phone": "Número de teléfono",
+        "email": "Correo electrónico"
+    },
+    "fields": {
+        "name": "nombre",
+        "phone": "teléfono",
+        "email": "correo electrónico"
+    },
+    "formErrors": {
+        "required": "El campo {{field}} es obligatorio.",
+        "invalid": "El campo {{field}} es inválido.",
+        "genericText": "Hubo algunos errores con tu envío. Por favor, corrígelos e inténtalo de nuevo."
+    },
+    "completed": {
+        "title": "Resultado",
+        "score": "Tu puntuación: {{score}}%",
+        "content": "Has completado el examen de inglés.",
+        "expiredText": "Se ha acabado el tiempo para completar el examen."
+    },
+    "inProgress": {
+        "title": "Examen de Inglés",
+        "submitButton": "Enviar",
+        "missingAnswerText": "Debes seleccionar una respuesta a esta pregunta."
+    },
+    "start": {
+        "title": "Inicia tu examen de inglés",
+        "content": "Cuando el examen comience, tendrás 15 minutos para completarlo. Asegúrate de tener una conexión a internet estable y un entorno tranquilo para concentrarte. ¡Buena suerte!",
+        "emailPlaceholder": "Tu correo electrónico",
+        "phonePlaceholder": "Tu número de teléfono",
+        "namePlaceholder": "Tu nombre completo",
+        "startButton": "Comenzar"
+    }
+}

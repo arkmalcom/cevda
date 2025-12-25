@@ -32,7 +32,7 @@ func main() {
 	log.Println("Registering routes...")
 
 	allowedOrigins := []string{
-		"http://localhost:5124",
+		"http://localhost:5173",
 		os.Getenv("BASE_SITE_URL"),
 	}
 	mux := http.NewServeMux()

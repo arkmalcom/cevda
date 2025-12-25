@@ -52,7 +52,7 @@ const Characteristics: React.FC = () => {
       style={{ backgroundImage: `url(${characteristicsBg})` }}
     >
       <h1 className="p-1 font-bold text-blue-800 text-center lg:text-xl font-welcome">
-        Descubre los Servicios y Beneficios de Nuestro Centro Educativo
+        {t("title")}
       </h1>
       <ul>
         {characteristics.map((item, index) => (

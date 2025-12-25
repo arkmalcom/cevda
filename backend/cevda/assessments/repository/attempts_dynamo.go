@@ -19,6 +19,8 @@ type dynamoAssessmentAttempt struct {
 	CreatedAt        int64          `dynamodbav:"created_at"`
 	ExpiresAt        int64          `dynamodbav:"expires_at"`
 	Email            string         `dynamodbav:"email"`
+	Name             string         `dynamodbav:"name"`
+	Phone            string         `dynamodbav:"phone"`
 	QuestionIDs      []string       `dynamodbav:"question_ids"`
 	Answers          map[string]int `dynamodbav:"answers"`
 	Score            *int           `dynamodbav:"score,omitempty"`
@@ -46,6 +48,8 @@ func fromDynamoAttempt(d *dynamoAssessmentAttempt) *models.AssessmentAttempt {
 		CreatedAt:        d.CreatedAt,
 		ExpiresAt:        d.ExpiresAt,
 		Email:            d.Email,
+		Name:             d.Name,
+		Phone:            d.Phone,
 		QuestionIDs:      d.QuestionIDs,
 		Answers:          d.Answers,
 		Score:            d.Score,
@@ -59,6 +63,8 @@ func toDynamoAttempt(a *models.AssessmentAttempt) *dynamoAssessmentAttempt {
 		CreatedAt:        a.CreatedAt,
 		ExpiresAt:        a.ExpiresAt,
 		Email:            a.Email,
+		Name:             a.Name,
+		Phone:            a.Phone,
 		QuestionIDs:      a.QuestionIDs,
 		Answers:          a.Answers,
 		Score:            a.Score,

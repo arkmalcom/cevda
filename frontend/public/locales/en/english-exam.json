@@ -1,0 +1,36 @@
+{
+    "fieldLabels": {
+        "name": "Name",
+        "phone": "Phone Number",
+        "email": "Email Address"
+    },
+    "fields": {
+        "name": "name",
+        "phone": "phone",
+        "email": "email"
+    },
+    "formErrors": {
+        "required": "{{field}} is required.",
+        "invalid": "{{field}} is invalid.",
+        "genericText": "There were some errors with your submission. Please correct them and try again."
+    },
+    "completed": {
+        "title": "Exam Completed",
+        "score": "Your score: {{score}}%",
+        "content": "You have completed the English exam.",
+        "expiredText": "The time to complete the exam has expired."
+    },
+    "inProgress": {
+        "title": "English Exam",
+        "submitButton": "Submit",
+        "missingAnswerText": "You must select an answer for this question."
+    },
+    "start": {
+        "title": "Start your English Exam",
+        "content": "When the exam begins, you will have 15 minutes to complete it. Make sure you have a stable internet connection and a quiet environment to focus. Good luck!",
+        "emailPlaceholder": "Your email address",
+        "phonePlaceholder": "Your phone number",
+        "namePlaceholder": "Your full name",
+        "startButton": "Start"
+    }
+}

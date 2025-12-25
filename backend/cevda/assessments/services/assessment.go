@@ -2,20 +2,21 @@ package services
 
 import (
 	"context"
-	"errors"
 	"math/rand"
 	"os"
 	"strconv"
 	"time"
 
+	"cevda/assessments/apperrors"
 	"cevda/assessments/data"
 	"cevda/assessments/models"
 	"cevda/assessments/repository"
+	"cevda/assessments/utils"
 
 	"github.com/google/uuid"
 )
 
-const defaultAttemptTTLSeconds int64 = 3600 // 1 hour
+const defaultAttemptTTLSeconds int64 = 60 // 15 minutes
 const defaultCategoryCount = 5
 
 type AssessmentService struct {
@@ -88,9 +89,40 @@ func (s *AssessmentService) GetRandomQuestions(
 	return selected, nil
 }
 
-func (s *AssessmentService) CreateAssessmentAttempt(ctx context.Context, email string) (*models.AssessmentAttempt, error) {
+func (s *AssessmentService) CreateAssessmentAttempt(ctx context.Context, email string, name string, phone string) (*models.AssessmentAttempt, error) {
+	errs := apperrors.ValidationErrors{}
 	if email == "" {
-		return nil, errors.New("Email is required.")
+		errs["email"] = apperrors.FieldError{
+			Code:  apperrors.FieldRequired,
+			Field: "email",
+		}
+	}
+
+	if name == "" {
+		errs["name"] = apperrors.FieldError{
+			Code:  apperrors.FieldRequired,
+			Field: "name",
+		}
+	}
+
+	if phone == "" {
+		errs["phone"] = apperrors.FieldError{
+			Code:  apperrors.FieldRequired,
+			Field: "phone",
+		}
+	}
+
+	if len(errs) > 0 {
+		return nil, errs
+	}
+
+	normalizedPhone, err := utils.NormalizePhone(phone)
+	if err != nil {
+		errs["phone"] = apperrors.FieldError{
+			Code:  apperrors.FieldInvalid,
+			Field: "phone",
+		}
+		return nil, errs
 	}
 
 	now := time.Now().Unix()
@@ -128,6 +160,8 @@ func (s *AssessmentService) CreateAssessmentAttempt(ctx context.Context, email s
 		CreatedAt:        now,
 		ExpiresAt:        now + ttlSeconds,
 		Email:            email,
+		Name:             name,
+		Phone:            normalizedPhone,
 		QuestionIDs:      selectedIds,
 		Answers:          make(map[string]int),
 		AssessmentStatus: models.StatusInProgress,

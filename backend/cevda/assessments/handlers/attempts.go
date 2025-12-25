@@ -1,8 +1,10 @@
 package handlers
 
 import (
+	"cevda/assessments/apperrors"
 	"cevda/assessments/models"
 	"encoding/json"
+	"errors"
 	"log"
 	"net/http"
 )
@@ -10,6 +12,8 @@ import (
 func (h *Handler) startAttempt(w http.ResponseWriter, r *http.Request) {
 	var req struct {
 		Email string `json:"email"`
+		Name  string `json:"name"`
+		Phone string `json:"phone"`
 	}
 
 	if err := json.NewDecoder(r.Body).Decode(&req); err != nil {
@@ -17,9 +21,18 @@ func (h *Handler) startAttempt(w http.ResponseWriter, r *http.Request) {
 		return
 	}
 
-	attempt, err := h.AssessmentService.CreateAssessmentAttempt(r.Context(), req.Email)
+	attempt, err := h.AssessmentService.CreateAssessmentAttempt(r.Context(), req.Email, req.Name, req.Phone)
 	if err != nil {
-		http.Error(w, "Failed to create attempt", http.StatusInternalServerError)
+		var verrs apperrors.ValidationErrors
+		if errors.As(err, &verrs) {
+			writeJSON(w, http.StatusBadRequest, map[string]interface{}{
+				"errors": verrs,
+			})
+			return
+		}
+
+		log.Printf("Error creating attempt: %v", err)
+		http.Error(w, "Internal Server Error", http.StatusInternalServerError)
 		return
 	}
 
