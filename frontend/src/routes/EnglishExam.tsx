@@ -175,8 +175,33 @@ const EnglishExam = () => {
             return;
         }
 
+        const STAGE = import.meta.env.VITE_STAGE;
+
+        await fetch(`${import.meta.env.VITE_BASE_EMAIL_ENDPOINT}/${STAGE}/email-handler-${STAGE}`, {
+            method: "POST",
+            headers: { "Content-Type": "application/json" },
+            body: JSON.stringify({
+                formSource: "english_exam",
+                attempt_id: attemptID,
+                email,
+                name,
+                phone,
+                score: gradeResult.score,
+                total_questions: gradeResult.total_questions,
+                results: questions.map(q => {
+                    const r = resultMap[q.QuestionID];
+                    return {
+                        question_id: q.QuestionID,
+                        prompt: q.Prompt,
+                        selected: answers[q.QuestionID] ?? null,
+                        correct: r?.correct ?? false,
+                        answered: r?.answered ?? false,
+                    };
+                }),
+            }),
+        });
+
         const data = await res.json();
-        console.log("Grade Result:", data);
         const resultMap: Record<string, QuestionResult> = Object.fromEntries(
             data.results.map((qr: QuestionResult) => [qr.question_id, qr])
         );
