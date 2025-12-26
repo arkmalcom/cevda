@@ -175,7 +175,6 @@ def send_exam_email(body: dict) -> dict:
     email = body.get("email", "N/A")
     phone = body.get("phone", "N/A")
     score = body.get("score")
-    total = body.get("total_questions")
     results = body.get("results", [])
 
     lines = [
@@ -183,7 +182,7 @@ def send_exam_email(body: dict) -> dict:
         f"Email: {email}",
         f"Teléfono: {phone}",
         "",
-        f"Puntaje: {score}/{total}",
+        f"Puntaje: {score}/100",
         "",
         "Resultados por pregunta:",
         "",
