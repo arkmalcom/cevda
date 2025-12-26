@@ -21,6 +21,7 @@ i18n
       "infotep",
       "contact",
       "careers",
+      "english-exam",
     ],
     defaultNS: "common",
     backend: {

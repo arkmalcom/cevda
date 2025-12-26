@@ -2,24 +2,37 @@ package services
 
 import (
 	"context"
-	"errors"
 	"math/rand"
 	"os"
 	"strconv"
 	"time"
 
+	"cevda/assessments/apperrors"
 	"cevda/assessments/data"
 	"cevda/assessments/models"
 	"cevda/assessments/repository"
+	"cevda/assessments/utils"
 
 	"github.com/google/uuid"
 )
 
-const defaultAttemptTTLSeconds int64 = 3600 // 1 hour
+const defaultAttemptTTLSeconds int64 = 30 // 15 minutes
 const defaultCategoryCount = 5
 
 type AssessmentService struct {
 	attempts repository.AttemptRepository
+}
+
+type QuestionResult struct {
+	QuestionID string `json:"question_id"`
+	Correct    bool   `json:"correct"`
+	Answered   bool   `json:"answered"`
+}
+
+type GradeResult struct {
+	Score          int              `json:"score"`
+	TotalQuestions int              `json:"total_questions"`
+	Results        []QuestionResult `json:"results"`
 }
 
 func NewAssessmentService(attempts repository.AttemptRepository) *AssessmentService {
@@ -32,31 +45,48 @@ func (s *AssessmentService) GradeAttempt(
 	ctx context.Context,
 	attemptID string,
 	answers map[string]int,
-) (int, error) {
+) (*GradeResult, error) {
 	attempt, err := s.attempts.GetByID(ctx, attemptID)
 	if err != nil {
-		return 0, err
+		return nil, err
 	}
 
 	if attempt.AssessmentStatus == models.StatusCompleted {
-		return 0, nil
+		return nil, nil
 	}
 
+	results := make([]QuestionResult, 0, len(attempt.QuestionIDs))
 	totalScore := 0
 	for _, qID := range attempt.QuestionIDs {
-		if question, ok := data.AllByID[qID]; ok {
-			if answer, exists := answers[qID]; exists && answer == question.CorrectIndex {
-				totalScore++
-			}
+		question, ok := data.AllByID[qID]
+		if !ok {
+			continue
 		}
+
+		answer := answers[qID]
+		answered := answer >= 0 && answer < len(question.Choices)
+		correct := answered && answer == question.CorrectIndex
+		if correct {
+			totalScore++
+		}
+
+		results = append(results, QuestionResult{
+			QuestionID: qID,
+			Correct:    correct,
+			Answered:   answered,
+		})
 	}
 
-	if len(attempt.QuestionIDs) == 0 {
-		return 0, nil
+	percentageScore := 0
+	if len(attempt.QuestionIDs) != 0 {
+		percentageScore = (totalScore * 100) / len(attempt.QuestionIDs)
 	}
 
-	percentageScore := (totalScore * 100) / len(attempt.QuestionIDs)
-	return percentageScore, nil
+	return &GradeResult{
+		Score:          percentageScore,
+		TotalQuestions: len(attempt.QuestionIDs),
+		Results:        results,
+	}, nil
 }
 
 func (s *AssessmentService) GetRandomQuestions(
@@ -72,6 +102,7 @@ func (s *AssessmentService) GetRandomQuestions(
 
 	rand.New(rand.NewSource(time.Now().UnixNano()))
 	selected := make([]*models.PublicAssessmentQuestion, 0)
+	seen := make(map[string]struct{})
 
 	for _, questions := range catMap {
 		n := categoryCount
@@ -81,16 +112,54 @@ func (s *AssessmentService) GetRandomQuestions(
 
 		perm := rand.Perm(len(questions))
 		for i := 0; i < n; i++ {
-			selected = append(selected, models.ToPublicQuestion(&questions[perm[i]]))
+			q := &questions[perm[i]]
+			if _, exists := seen[q.QuestionID]; exists {
+				continue
+			}
+
+			seen[q.QuestionID] = struct{}{}
+			selected = append(selected, models.ToPublicQuestion(q))
+			n--
 		}
 	}
 
 	return selected, nil
 }
 
-func (s *AssessmentService) CreateAssessmentAttempt(ctx context.Context, email string) (*models.AssessmentAttempt, error) {
+func (s *AssessmentService) CreateAssessmentAttempt(ctx context.Context, email string, name string, phone string) (*models.AssessmentAttempt, error) {
+	errs := apperrors.ValidationErrors{}
 	if email == "" {
-		return nil, errors.New("Email is required.")
+		errs["email"] = apperrors.FieldError{
+			Code:  apperrors.FieldRequired,
+			Field: "email",
+		}
+	}
+
+	if name == "" {
+		errs["name"] = apperrors.FieldError{
+			Code:  apperrors.FieldRequired,
+			Field: "name",
+		}
+	}
+
+	if phone == "" {
+		errs["phone"] = apperrors.FieldError{
+			Code:  apperrors.FieldRequired,
+			Field: "phone",
+		}
+	}
+
+	if len(errs) > 0 {
+		return nil, errs
+	}
+
+	normalizedPhone, err := utils.NormalizePhone(phone)
+	if err != nil {
+		errs["phone"] = apperrors.FieldError{
+			Code:  apperrors.FieldInvalid,
+			Field: "phone",
+		}
+		return nil, errs
 	}
 
 	now := time.Now().Unix()
@@ -128,6 +197,8 @@ func (s *AssessmentService) CreateAssessmentAttempt(ctx context.Context, email s
 		CreatedAt:        now,
 		ExpiresAt:        now + ttlSeconds,
 		Email:            email,
+		Name:             name,
+		Phone:            normalizedPhone,
 		QuestionIDs:      selectedIds,
 		Answers:          make(map[string]int),
 		AssessmentStatus: models.StatusInProgress,

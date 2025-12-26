@@ -166,6 +166,66 @@ def send_email_with_attachment(data: dict) -> dict:
         }
 
 
+def send_exam_email(body: dict) -> dict:
+    """Send email for English exam submissions."""
+    SENDER = os.environ["SENDER_EMAIL"]
+    RECIPIENT = os.environ["RECIPIENT_EMAIL"]
+
+    name = body.get("name", "N/A")
+    email = body.get("email", "N/A")
+    phone = body.get("phone", "N/A")
+    score = body.get("score")
+    total = body.get("total_questions")
+    results = body.get("results", [])
+
+    lines = [
+        f"Nombre: {name}",
+        f"Email: {email}",
+        f"Teléfono: {phone}",
+        "",
+        f"Puntaje: {score}/{total}",
+        "",
+        "Resultados por pregunta:",
+        "",
+    ]
+
+    for r in results:
+        status = (
+            "NO RESPONDIDA"
+            if not r["answered"]
+            else "CORRECTA"
+            if r["correct"]
+            else "INCORRECTA"
+        )
+
+        lines.append(f"- {r['prompt']}")
+        lines.append(f"  Resultado: {status}")
+        lines.append("")
+
+    body = "\n".join(lines)
+
+    ses = boto3.client("ses")
+
+    response = ses.send_email(
+        Source=SENDER,
+        Destination={"ToAddresses": [RECIPIENT]},
+        Message={
+            "Subject": {"Data": "Resultado de Examen de Inglés"},
+            "Body": {"Text": {"Data": body}},
+        },
+    )
+
+    return {
+        "statusCode": 200,
+        "body": json.dumps(
+            {
+                "message": "Exam email sent successfully",
+                "messageId": response["MessageId"],
+            }
+        ),
+    }
+
+
 def lambda_handler(event: dict, context: Any) -> dict:
     """Main Lambda handler function."""
     if event["requestContext"]["http"]["method"] == "OPTIONS":
@@ -180,7 +240,10 @@ def lambda_handler(event: dict, context: Any) -> dict:
         body = json.loads(event["body"])
         logger.info(f"Received notification email data: {body}")
         captcha_token = body.pop("captchaToken", None)
-        email_source = body.get("formSource", "contacto")
+        email_source = body.pop("formSource", "contacto")
+
+        if email_source == "english_exam":
+            return send_exam_email(body)
 
         if not captcha_token and email_source != "carreras":
             return {

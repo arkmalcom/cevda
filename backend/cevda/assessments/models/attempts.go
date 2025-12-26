@@ -13,6 +13,8 @@ type AssessmentAttempt struct {
 	CreatedAt        int64
 	ExpiresAt        int64
 	Email            string
+	Name             string
+	Phone            string
 	QuestionIDs      []string
 	Answers          map[string]int
 	Score            *int
