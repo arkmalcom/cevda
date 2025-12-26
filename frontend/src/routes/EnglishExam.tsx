@@ -237,7 +237,7 @@ const EnglishExam = () => {
         return () => clearInterval(interval);
     }, [expiresAt, phase, submitAttempt]);
 
-    const renderError = (err: FieldError) => {
+    const renderError = (err: FieldError | string) => {
         if (typeof err === "string") return err;
 
         const key = `formErrors.${err.code}`;
