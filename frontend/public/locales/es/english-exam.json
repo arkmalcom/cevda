@@ -18,7 +18,10 @@
         "title": "Resultado",
         "score": "Tu puntuación: {{score}}%",
         "content": "Has completado el examen de inglés.",
-        "expiredText": "Se ha acabado el tiempo para completar el examen."
+        "expiredText": "Se ha acabado el tiempo para completar el examen.",
+        "incorrect": "Incorrecto",
+        "correct": "Correcto",
+        "notAnswered": "No respondido"
     },
     "inProgress": {
         "title": "Examen de Inglés",

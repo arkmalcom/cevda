@@ -56,7 +56,7 @@ func (h *Handler) submitAttempt(w http.ResponseWriter, r *http.Request) {
 		return
 	}
 
-	score, err := h.AssessmentService.GradeAttempt(
+	gradeResults, err := h.AssessmentService.GradeAttempt(
 		r.Context(),
 		req.AttemptID,
 		req.Answers,
@@ -66,6 +66,8 @@ func (h *Handler) submitAttempt(w http.ResponseWriter, r *http.Request) {
 		http.Error(w, "Failed to grade attempt", http.StatusInternalServerError)
 		return
 	}
+
+	score := gradeResults.Score
 
 	log.Printf("Updating attempt %s with score %d", req.AttemptID, score)
 	log.Printf("Answers: %+v", req.Answers)
@@ -84,5 +86,5 @@ func (h *Handler) submitAttempt(w http.ResponseWriter, r *http.Request) {
 		return
 	}
 
-	json.NewEncoder(w).Encode(map[string]int{"score": score})
+	json.NewEncoder(w).Encode(gradeResults)
 }

@@ -22,6 +22,18 @@ type FieldError = {
 
 type ValidationErrors = Record<string, FieldError>;
 
+type QuestionResult = {
+    question_id: string;
+    correct: boolean;
+    answered: boolean;
+}
+
+type GradeResult = {
+    score: number;
+    total_questions: number;
+    results: QuestionResult[];
+}
+
 const EnglishExam = () => {
     const [phase, setPhase] = useState<ExamPhase>(ExamPhase.EnterEmail);
     const [email, setEmail] = useState("");
@@ -31,11 +43,12 @@ const EnglishExam = () => {
     const [attemptCreatedAt, setAttemptCreatedAt] = useState<number | null>(null);
     const [questions, setQuestions] = useState<PublicAssessmentQuestion[]>([]);
     const [answers, setAnswers] = useState<Record<string, number>>({});
-    const [score, setScore] = useState<number | null>(null);
+    const [gradeResult, setGradeResult] = useState<GradeResult | null>(null);
     const [errors, setErrors] = useState<ValidationErrors>({});
     const [expiresAt, setExpiresAt] = useState<number | null>(null);
     const [isExpired, setIsExpired] = useState<boolean>(false);
     const [timeLeft, setTimeLeft] = useState<number>(0);
+    const [resultMap, setResultMap] = useState<Record<string, QuestionResult>>({});
     const hasExpiredRef = useRef(false);
     const { t } = useTranslation("english-exam");
 
@@ -141,12 +154,9 @@ const EnglishExam = () => {
         setErrors({});
 
         const answersPayload: Record<string, number> = {};
-        console.log("Submitting answers:", answers);
         questions.forEach((q: PublicAssessmentQuestion) => {
             answersPayload[q.QuestionID] = answers[q.QuestionID] ?? -1;
         })
-
-        console.log("Answers payload:", answersPayload);
 
         const res = await fetch(`${import.meta.env.VITE_BASE_API_ENDPOINT_URI}/attempts/submit`, {
             method: "POST",
@@ -166,7 +176,16 @@ const EnglishExam = () => {
         }
 
         const data = await res.json();
-        setScore(data.score);
+        console.log("Grade Result:", data);
+        const resultMap: Record<string, QuestionResult> = Object.fromEntries(
+            data.results.map((qr: QuestionResult) => [qr.question_id, qr])
+        );
+        setGradeResult({
+            score: data.score,
+            total_questions: data.total_questions,
+            results: data.results,
+        });
+        setResultMap(resultMap);
         setPhase(ExamPhase.Completed);
     }
 
@@ -264,6 +283,7 @@ const EnglishExam = () => {
         );
     }
 
+
     if (phase === ExamPhase.InProgress) {
         return (
             <div className="p-4 max-w-4xl mx-auto flex flex-col justify-center items-center">
@@ -328,7 +348,52 @@ const EnglishExam = () => {
                         <p className="text-lg mb-4">{t("completed.content")}</p>
                     )
                 }
-                <p className="text-xl mb-4">{t("completed.score", { score })}</p>
+                <p className="text-xl mb-4">{t("completed.score", { score: gradeResult?.score })}</p>
+                {questions.map(q => {
+                    const result = resultMap[q.QuestionID];
+                    const wasAnswered = result?.answered;
+                    const wasCorrect = result?.correct;
+                    return (
+                        <div key={q.QuestionID}>
+                            <p>{q.Prompt}</p>
+
+                            {q.Choices.map((choice, idx) => {
+                                const isSelected = answers[q.QuestionID] === idx;
+
+                                return (
+                                    <div
+                                        key={idx}
+                                        className={`
+                                            ${isSelected ? "font-semibold" : ""}
+                                            ${isSelected && wasCorrect ? "text-green-600" : ""}
+                                            ${isSelected && !wasCorrect ? "text-red-600" : ""}
+                                        `}
+                                    >
+                                        {choice}
+                                    </div>
+                                );
+                            })}
+
+                            {!wasAnswered && (
+                                <p className="py-2 text-yellow-600 text-sm">
+                                    ⚠️ {t("completed.notAnswered")}
+                                </p>
+                            )}
+
+                            {wasAnswered && !wasCorrect && (
+                                <p className="py-2 text-red-500 text-sm">
+                                    ❌ {t("completed.incorrect")}
+                                </p>
+                            )}
+
+                            {wasCorrect && (
+                                <p className="py-2 text-green-600 text-sm">
+                                    ✅ {t("completed.correct")}
+                                </p>
+                            )}
+                        </div>
+                    );
+                })}
             </div>
         );
     }
