@@ -201,8 +201,8 @@ const EnglishExam = () => {
                 email,
                 name,
                 phone,
-                score: gradeResult.score,
-                total_questions: gradeResult.total_questions,
+                score: data.score,
+                total_questions: data.total_questions,
                 results: questions.map(q => {
                     const r = resultMap[q.QuestionID];
                     return {
@@ -259,14 +259,21 @@ const EnglishExam = () => {
                         onChange={
                             (e) => {
                                 setName(e.target.value);
-                                setErrors((prev) => ({ ...prev, name: "" }));
+                                setErrors(prev => {
+                                    const { name, ...rest } = prev;
+                                    return rest;
+                                });
                             }
                         }
                         placeholder={t("start.namePlaceholder")}
                         className={`border p-2 w-full mb-4 ${errors["name"] ? "border-red-500" : ""}`}
                     />
                     {errors.name && (
-                        <p className="text-red-500 text-sm mb-2">{renderError(errors.name)}</p>
+                        <p className="text-red-500 text-sm mb-2">
+                            {typeof errors.name === "string"
+                                ? errors.name
+                                : renderError(errors.name)}
+                        </p>
                     )}
                     <label htmlFor="phone">{t("fieldLabels.phone")}</label>
                     <input
@@ -274,13 +281,20 @@ const EnglishExam = () => {
                         value={phone}
                         onChange={(e) => {
                             setPhone(e.target.value);
-                            setErrors((prev) => ({ ...prev, phone: "" }));
+                            setErrors(prev => {
+                                const { phone, ...rest } = prev;
+                                return rest;
+                            });
                         }}
                         placeholder={t("start.phonePlaceholder")}
                         className={`border p-2 w-full mb-4 ${errors["phone"] ? "border-red-500" : ""}`}
                     />
                     {errors.phone && (
-                        <p className="text-red-500 text-sm mb-2">{renderError(errors.phone)}</p>
+                        <p className="text-red-500 text-sm mb-2">
+                            {typeof errors.phone === "string"
+                                ? errors.phone
+                                : renderError(errors.phone)}
+                        </p>
                     )}
                     <label htmlFor="email">{t("fieldLabels.email")}</label>
                     <input
@@ -288,13 +302,20 @@ const EnglishExam = () => {
                         value={email}
                         onChange={(e) => {
                             setEmail(e.target.value);
-                            setErrors((prev) => ({ ...prev, email: "" }));
+                            setErrors(prev => {
+                                const { email, ...rest } = prev;
+                                return rest;
+                            });
                         }}
                         placeholder={t("start.emailPlaceholder")}
                         className={`border p-2 w-full mb-4 ${errors["email"] ? "border-red-500" : ""}`}
                     />
                     {errors.email && (
-                        <p className="text-red-500 text-sm mb-2">{renderError(errors.email)}</p>
+                        <p className="text-red-500 text-sm mb-2">
+                            {typeof errors.email === "string"
+                                ? errors.email
+                                : renderError(errors.email)}
+                        </p>
                     )}
                     {errors.form && (
                         <div className="text-red-600 text-sm text-center">
