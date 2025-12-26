@@ -20,7 +20,7 @@ type FieldError = {
     field: string;
 }
 
-type ValidationErrors = Record<string, FieldError>;
+type ValidationErrors = Record<string, FieldError | string>;
 
 type QuestionResult = {
     question_id: string;
@@ -177,6 +177,21 @@ const EnglishExam = () => {
 
         const STAGE = import.meta.env.VITE_STAGE;
 
+        const data = await res.json();
+
+        const resultMap: Record<string, QuestionResult> = Object.fromEntries(
+            data.results.map((qr: QuestionResult) => [qr.question_id, qr])
+        );
+
+
+        setGradeResult({
+            score: data.score,
+            total_questions: data.total_questions,
+            results: data.results,
+        });
+        setResultMap(resultMap);
+        setPhase(ExamPhase.Completed);
+
         await fetch(`${import.meta.env.VITE_BASE_EMAIL_ENDPOINT}/${STAGE}/email-handler-${STAGE}`, {
             method: "POST",
             headers: { "Content-Type": "application/json" },
@@ -200,18 +215,6 @@ const EnglishExam = () => {
                 }),
             }),
         });
-
-        const data = await res.json();
-        const resultMap: Record<string, QuestionResult> = Object.fromEntries(
-            data.results.map((qr: QuestionResult) => [qr.question_id, qr])
-        );
-        setGradeResult({
-            score: data.score,
-            total_questions: data.total_questions,
-            results: data.results,
-        });
-        setResultMap(resultMap);
-        setPhase(ExamPhase.Completed);
     }
 
     useEffect(() => {
@@ -345,7 +348,10 @@ const EnglishExam = () => {
                                 ))}
                                 {errors[q.QuestionID] && (
                                     <p className="text-red-500 text-sm mt-1">
-                                        {errors[q.QuestionID]}
+                                        {typeof errors[q.QuestionID] === "string"
+                                            ? errors[q.QuestionID]
+                                            : renderError(errors[q.QuestionID] as FieldError)
+                                        }
                                     </p>
                                 )}
                             </div>
