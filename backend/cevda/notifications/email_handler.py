@@ -199,6 +199,10 @@ def send_exam_email(body: dict) -> dict:
         )
 
         lines.append(f"- {r['prompt']}")
+
+        if r.get("selected_text"):
+            lines.append(f"  Respuesta seleccionada: {r['selected_text']}")
+
         lines.append(f"  Resultado: {status}")
         lines.append("")
 

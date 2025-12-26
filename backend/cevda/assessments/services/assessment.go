@@ -105,21 +105,26 @@ func (s *AssessmentService) GetRandomQuestions(
 	seen := make(map[string]struct{})
 
 	for _, questions := range catMap {
-		n := categoryCount
-		if len(questions) < n {
-			n = len(questions)
+		if len(questions) == 0 {
+			continue
 		}
 
 		perm := rand.Perm(len(questions))
-		for i := 0; i < n; i++ {
-			q := &questions[perm[i]]
+		picked := 0
+
+		for _, idx := range perm {
+			if picked >= categoryCount {
+				break
+			}
+
+			q := &questions[idx]
 			if _, exists := seen[q.QuestionID]; exists {
 				continue
 			}
 
 			seen[q.QuestionID] = struct{}{}
 			selected = append(selected, models.ToPublicQuestion(q))
-			n--
+			picked++
 		}
 	}
 

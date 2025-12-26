@@ -205,10 +205,12 @@ const EnglishExam = () => {
                 total_questions: data.total_questions,
                 results: questions.map(q => {
                     const r = resultMap[q.QuestionID];
+                    const selectedIndex = answers[q.QuestionID];
                     return {
                         question_id: q.QuestionID,
                         prompt: q.Prompt,
-                        selected: answers[q.QuestionID] ?? null,
+                        selected_index: selectedIndex ?? null,
+                        selected_text: selectedIndex !== undefined ? q.Choices[selectedIndex] : null,
                         correct: r?.correct ?? false,
                         answered: r?.answered ?? false,
                     };
