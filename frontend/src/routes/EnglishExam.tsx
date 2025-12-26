@@ -238,6 +238,8 @@ const EnglishExam = () => {
     }, [expiresAt, phase, submitAttempt]);
 
     const renderError = (err: FieldError) => {
+        if (typeof err === "string") return err;
+
         const key = `formErrors.${err.code}`;
 
         return t(key, {
@@ -270,9 +272,7 @@ const EnglishExam = () => {
                     />
                     {errors.name && (
                         <p className="text-red-500 text-sm mb-2">
-                            {typeof errors.name === "string"
-                                ? errors.name
-                                : renderError(errors.name)}
+                            {renderError(errors.name)}
                         </p>
                     )}
                     <label htmlFor="phone">{t("fieldLabels.phone")}</label>
@@ -291,9 +291,7 @@ const EnglishExam = () => {
                     />
                     {errors.phone && (
                         <p className="text-red-500 text-sm mb-2">
-                            {typeof errors.phone === "string"
-                                ? errors.phone
-                                : renderError(errors.phone)}
+                            {renderError(errors.phone)}
                         </p>
                     )}
                     <label htmlFor="email">{t("fieldLabels.email")}</label>
@@ -312,14 +310,12 @@ const EnglishExam = () => {
                     />
                     {errors.email && (
                         <p className="text-red-500 text-sm mb-2">
-                            {typeof errors.email === "string"
-                                ? errors.email
-                                : renderError(errors.email)}
+                            {renderError(errors.email)}
                         </p>
                     )}
                     {errors.form && (
                         <div className="text-red-600 text-sm text-center">
-                            {errors.form}
+                            {renderError(errors.form)}
                         </div>
                     )}
                     <button
@@ -369,10 +365,7 @@ const EnglishExam = () => {
                                 ))}
                                 {errors[q.QuestionID] && (
                                     <p className="text-red-500 text-sm mt-1">
-                                        {typeof errors[q.QuestionID] === "string"
-                                            ? errors[q.QuestionID]
-                                            : renderError(errors[q.QuestionID] as FieldError)
-                                        }
+                                        {renderError(errors[q.QuestionID])}
                                     </p>
                                 )}
                             </div>
