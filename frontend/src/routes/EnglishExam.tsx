@@ -239,6 +239,14 @@ const EnglishExam = () => {
         return () => clearInterval(interval);
     }, [expiresAt, phase, submitAttempt]);
 
+    useEffect(() => {
+        if (phase === ExamPhase.Completed) {
+            setTimeout(() => {
+                window.scrollTo({ top: 0, behavior: "smooth" });
+            }, 0);
+        }
+    }, [phase]);
+
     const renderError = (err: FieldError | string) => {
         if (typeof err === "string") return err;
 
