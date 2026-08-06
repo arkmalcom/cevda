@@ -14,9 +14,41 @@ const Navigation: React.FC = () => {
 
   const toggleMenu = () => setIsMenuOpen(!isMenuOpen);
 
+  const navItems = [
+    { to: "/", label: t("home", { ns: "nav" }), icon: "fa-house" },
+    {
+      to: "/admision",
+      label: t("admission", { ns: "nav" }),
+      icon: "fa-file-pen",
+    },
+    {
+      to: "/caracteristicas",
+      label: t("features", { ns: "nav" }),
+      icon: "fa-list-check",
+    },
+    { to: "/infotep", label: "Infotep", icon: "fa-certificate" },
+    {
+      to: "/carreras",
+      label: t("careers", { ns: "nav" }),
+      icon: "fa-briefcase",
+    },
+    {
+      to: "/contacto",
+      label: t("contact", { ns: "nav" }),
+      icon: "fa-address-book",
+    },
+  ];
+
   useEffect(() => {
     setIsMenuOpen(false);
   }, [location.pathname]);
+
+  useEffect(() => {
+    document.body.style.overflow = isMenuOpen ? "hidden" : "";
+    return () => {
+      document.body.style.overflow = "";
+    };
+  }, [isMenuOpen]);
 
   useEffect(() => {
     if (!isHome) {
@@ -92,88 +124,116 @@ const Navigation: React.FC = () => {
             />
           </span>
           <button
-            className={`text-2xl lg:hidden ${
-              isTransparent ? "text-white" : "text-white"
-            }`}
+            className="text-2xl text-white lg:hidden"
             onClick={toggleMenu}
             aria-label="Toggle menu"
+            aria-expanded={isMenuOpen}
           >
             <i className="fas fa-bars"></i>
           </button>
           <div className="hidden items-center gap-3 lg:flex xl:gap-4">
-            <Link to="/" className={linkClass}>
-              {t("home", { ns: "nav" })}
-            </Link>
-            <Link to="/admision" className={linkClass}>
-              {t("admission", { ns: "nav" })}
-            </Link>
-            <Link to="/caracteristicas" className={linkClass}>
-              {t("features", { ns: "nav" })}
-            </Link>
-            <Link to="/infotep" className={linkClass}>
-              Infotep
-            </Link>
-            <Link to="/carreras" className={linkClass}>
-              {t("careers", { ns: "nav" })}
-            </Link>
-            <Link to="/contacto" className={linkClass}>
-              {t("contact", { ns: "nav" })}
-            </Link>
+            {navItems.map((item) => (
+              <Link key={item.to} to={item.to} className={linkClass}>
+                {item.label}
+              </Link>
+            ))}
           </div>
         </div>
       </div>
 
       <div
-        className={`absolute left-0 top-0 z-10 flex h-screen w-full flex-col space-y-4 bg-amber-500 text-center shadow-md transition-transform duration-300 ease-in-out lg:hidden ${
+        className={`fixed inset-0 z-50 flex h-[100dvh] w-full flex-col overflow-hidden bg-gradient-to-br from-blue-950 via-blue-900 to-blue-800 transition-all duration-300 ease-out lg:hidden ${
           isMenuOpen
-            ? "translate-y-0 pointer-events-auto"
-            : "-translate-y-full pointer-events-none"
+            ? "pointer-events-auto translate-y-0 opacity-100"
+            : "pointer-events-none -translate-y-4 opacity-0"
         }`}
       >
-        <div className="flex h-22 flex-row justify-end">
-          <img src={logo} alt="nav-logo" className="m-2 h-12 w-12" />
+        <div
+          className="pointer-events-none absolute -left-20 top-24 h-64 w-64 rounded-full bg-amber-400/20 blur-3xl"
+          aria-hidden
+        />
+        <div
+          className="pointer-events-none absolute -right-16 bottom-32 h-72 w-72 rounded-full bg-amber-500/10 blur-3xl"
+          aria-hidden
+        />
+
+        <div className="relative flex items-center justify-between px-5 pt-5">
+          <div className="flex items-center gap-3">
+            <div className="flex h-14 w-14 items-center justify-center overflow-hidden rounded-full bg-white p-1.5 shadow-lg ring-2 ring-amber-400/80">
+              <img
+                src={logo}
+                alt=""
+                className="h-full w-full object-contain"
+              />
+            </div>
+            <div>
+              <p className="font-brand text-lg leading-tight text-white">
+                CEVDA
+              </p>
+              <p className="text-xs uppercase tracking-[0.18em] text-amber-300/90">
+                Villa de Ángeles
+              </p>
+            </div>
+          </div>
           <button
-            className="ml-auto p-4 text-xl text-white"
+            className="flex h-11 w-11 items-center justify-center rounded-full bg-white/10 text-xl text-white transition-colors hover:bg-white/20"
             onClick={toggleMenu}
             aria-label="Close menu"
           >
             <i className="fas fa-times"></i>
           </button>
         </div>
-        <Link to="/" className="text-xl text-white" onClick={toggleMenu}>
-          {t("home", { ns: "nav" })}
-        </Link>
-        <Link
-          to="/admision"
-          className="text-xl text-white"
-          onClick={toggleMenu}
-        >
-          {t("admission", { ns: "nav" })}
-        </Link>
-        <Link
-          to="/caracteristicas"
-          className="text-xl text-white"
-          onClick={toggleMenu}
-        >
-          {t("features", { ns: "nav" })}
-        </Link>
-        <Link to="/infotep" className="text-xl text-white" onClick={toggleMenu}>
-          Infotep
-        </Link>
-        <Link
-          to="/carreras"
-          className="text-xl text-white"
-          onClick={toggleMenu}
-        >
-          {t("careers", { ns: "nav" })}
-        </Link>
-        <Link
-          to="/contacto"
-          className="text-xl text-white"
-          onClick={toggleMenu}
-        >
-          {t("contact", { ns: "nav" })}
-        </Link>
+
+        <nav className="relative flex flex-1 flex-col justify-center gap-2 px-6 py-8">
+          {navItems.map((item, index) => {
+            const isActive = location.pathname === item.to;
+
+            return (
+              <Link
+                key={item.to}
+                to={item.to}
+                onClick={toggleMenu}
+                style={{
+                  transitionDelay: isMenuOpen ? `${80 + index * 40}ms` : "0ms",
+                }}
+                className={`group flex items-center gap-4 rounded-xl px-4 py-3.5 transition-all duration-300 ${
+                  isMenuOpen
+                    ? "translate-x-0 opacity-100"
+                    : "translate-x-4 opacity-0"
+                } ${
+                  isActive
+                    ? "bg-amber-500 text-blue-950 shadow-lg shadow-amber-500/20"
+                    : "text-white hover:bg-white/10"
+                }`}
+              >
+                <span
+                  className={`flex h-10 w-10 items-center justify-center rounded-full transition-colors ${
+                    isActive
+                      ? "bg-blue-900 text-amber-300"
+                      : "bg-white/10 text-amber-300 group-hover:bg-white/15"
+                  }`}
+                >
+                  <i className={`fas ${item.icon}`} aria-hidden />
+                </span>
+                <span className="font-title text-xl font-semibold tracking-wide">
+                  {item.label}
+                </span>
+                <i
+                  className={`fas fa-chevron-right ml-auto text-sm transition-transform group-hover:translate-x-1 ${
+                    isActive ? "text-blue-900/50" : "text-white/30"
+                  }`}
+                  aria-hidden
+                />
+              </Link>
+            );
+          })}
+        </nav>
+
+        <div className="relative border-t border-white/10 px-6 py-5">
+          <p className="text-center text-xs text-white/50">
+            Centro Educativo Villa de Ángeles
+          </p>
+        </div>
       </div>
     </nav>
   );
