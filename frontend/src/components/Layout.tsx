@@ -1,4 +1,5 @@
 import { Outlet, useLocation } from "react-router-dom";
+import { useEffect } from "react";
 import Navigation from "./Navigation";
 import Footer from "./Footer";
 import { useTranslation } from "react-i18next";
@@ -7,6 +8,10 @@ const Layout = () => {
   const { i18n } = useTranslation();
   const location = useLocation();
   const isHome = location.pathname === "/";
+
+  useEffect(() => {
+    window.scrollTo(0, 0);
+  }, [location.pathname]);
 
   const changeLanguage = (lng: string) => {
     i18n.changeLanguage(lng);
