@@ -4,8 +4,13 @@
     "description": "At Centro Educativo Villa de Ángeles, we are committed to educational excellence and seek professionals passionate about teaching and the comprehensive development of our students. For teaching positions, we require preschool and elementary school teachers with academic training in education, proven experience, group management skills, creativity, a service-oriented attitude, and the ability to work in a team. In the administrative area, we look for organized, responsible collaborators with experience in school management, customer service, or related fields.\n\nIf you share our vision and want to be part of a team dedicated to shaping future generations, send us your updated résumé and join our educational mission."
   },
   "form": {
+    "sectionTitle": "Send your résumé",
+    "sectionSubtitle": "Attach your CV as PDF or DOCX (max 4 MB).",
+    "uploadLabel": "Résumé",
+    "uploadHint": "Accepted formats: PDF, DOCX",
     "successMessage": "Thank you for your interest in joining our team! Your application has been successfully submitted. We will contact you as soon as possible.",
     "errorMessage": "We’re sorry! An error occurred while submitting your application. Please try again later.",
-    "noFileSelected": "You must select a file to proceed."
+    "noFileSelected": "You must select a file to proceed.",
+    "fileTooLarge": "The file exceeds the maximum size of 4 MB."
   }
 }

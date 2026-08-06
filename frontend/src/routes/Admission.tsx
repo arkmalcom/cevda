@@ -5,6 +5,8 @@ import { useTranslation } from "react-i18next";
 import { useSubmit } from "../hooks/useSubmit";
 import Input from "../components/Input";
 import InputGroup from "../components/InputGroup";
+import SectionHeading from "../components/SectionHeading";
+import AdmissionPrintForm from "../components/AdmissionPrintForm";
 
 import countryOptions from "../utils/Constants";
 
@@ -32,30 +34,32 @@ interface AdmissionFormData {
   guardianEmail: string;
 }
 
+const emptyForm: AdmissionFormData = {
+  studentNames: "",
+  studentFirstSurname: "",
+  studentSecondSurname: "",
+  studentGender: "",
+  studentDob: "",
+  enteringYear: "",
+  studentStreetAddress: "",
+  studentCity: "",
+  studentPostalCode: "",
+  studentCountry: "DO",
+  relationToStudent: "",
+  guardianFirstName: "",
+  guardianMiddleName: "",
+  guardianLastNames: "",
+  guardianStreetAddress: "",
+  guardianCity: "",
+  guardianPostalCode: "",
+  guardianCountry: "DO",
+  guardianHomePhone: "",
+  guardianMobilePhone: "",
+  guardianEmail: "",
+};
+
 const AdmissionForm: React.FC = () => {
-  const [formData, setFormData] = useState<AdmissionFormData>({
-    studentNames: "",
-    studentFirstSurname: "",
-    studentSecondSurname: "",
-    studentGender: "",
-    studentDob: "",
-    enteringYear: "",
-    studentStreetAddress: "",
-    studentCity: "",
-    studentPostalCode: "",
-    studentCountry: "DO",
-    relationToStudent: "",
-    guardianFirstName: "",
-    guardianMiddleName: "",
-    guardianLastNames: "",
-    guardianStreetAddress: "",
-    guardianCity: "",
-    guardianPostalCode: "",
-    guardianCountry: "DO",
-    guardianHomePhone: "",
-    guardianMobilePhone: "",
-    guardianEmail: "",
-  });
+  const [formData, setFormData] = useState<AdmissionFormData>(emptyForm);
 
   const { handleSubmit, isSubmitting, submitStatus } =
     useSubmit<AdmissionFormData>();
@@ -78,29 +82,7 @@ const AdmissionForm: React.FC = () => {
       formData,
       formSource: "admisión",
       onSuccess: () => {
-        setFormData({
-          studentNames: "",
-          studentFirstSurname: "",
-          studentSecondSurname: "",
-          studentGender: "",
-          studentDob: "",
-          enteringYear: "",
-          studentStreetAddress: "",
-          studentCity: "",
-          studentPostalCode: "",
-          studentCountry: "DO",
-          relationToStudent: "",
-          guardianFirstName: "",
-          guardianMiddleName: "",
-          guardianLastNames: "",
-          guardianStreetAddress: "",
-          guardianCity: "",
-          guardianPostalCode: "",
-          guardianCountry: "DO",
-          guardianHomePhone: "",
-          guardianMobilePhone: "",
-          guardianEmail: "",
-        });
+        setFormData(emptyForm);
       },
     });
   };
@@ -109,36 +91,55 @@ const AdmissionForm: React.FC = () => {
   const { t } = useTranslation("admission");
 
   const translateCountries = (countries: { value: string; label: string }[]) =>
-    countries.map((country) => {
-      return {
-        value: country.value,
-        label: t(country.value, { ns: "countries" }),
-      };
-    });
+    countries.map((country) => ({
+      value: country.value,
+      label: t(country.value, { ns: "countries" }),
+    }));
 
   const translatedCountryOptions = translateCountries(countryOptions);
 
   return (
-    <div className="p-2 flex flex-col items-center mx-auto lg:w-5/6">
-      <h1 className="lg:text-3xl text-2xl font-bold text-blue-800 mb-4">
-        {t("title")}
-      </h1>
-      <div className="p-3 text-center max-lg:text-sm text-blue-800 space-y-2">
+    <div className="admission-screen mx-auto max-w-4xl px-4 py-10 md:px-6 md:py-14">
+      <FadeInHeading title={t("title")} />
+
+      <div className="mb-8 space-y-3 text-center text-sm leading-relaxed text-slate-700 md:text-base">
         <p>{t("content")}</p>
       </div>
+
+      <div className="mb-6 flex flex-wrap items-center justify-center gap-3 print:hidden">
+        <button
+          type="button"
+          onClick={() => window.print()}
+          className="inline-flex items-center gap-2 border border-blue-800 px-4 py-2 text-sm font-medium text-blue-800 transition-colors hover:bg-blue-50"
+        >
+          <i className="fas fa-print" aria-hidden />
+          {t("print.button")}
+        </button>
+      </div>
+
       <form
         onSubmit={onSubmit}
-        className="w-full space-y-3 p-2 m-2 border border-gray-300"
+        className="admission-digital-form relative mx-auto space-y-8 border border-amber-700/20 bg-[#fbf7f0] px-5 py-8 shadow-[0_18px_50px_-28px_rgba(30,58,138,0.45)] md:px-10 md:py-10"
       >
-        <h2 className="text-lg font-bold text-blue-800">
-          {t("form.studentInfo.title")}
-        </h2>
-        <div>
+        <div
+          className="pointer-events-none absolute inset-x-0 top-0 h-1.5 bg-amber-500"
+          aria-hidden
+        />
+
+        <section>
+          <h2 className="mb-5 flex items-center gap-3 border-b border-blue-900/20 pb-2 font-title text-xl font-bold text-blue-900">
+            <span className="flex h-8 w-8 items-center justify-center rounded-full bg-amber-500 text-sm text-blue-900">
+              <i className="fas fa-child" aria-hidden />
+            </span>
+            {t("form.studentInfo.title")}
+          </h2>
+
           <InputGroup
+            variant="paper"
+            label={t("form.studentInfo.name")}
             inputs={[
               {
                 id: "studentNames",
-                label: t("form.studentInfo.name"),
                 subtext: t("form.studentInfo.names"),
                 required: true,
                 onChange: handleChange,
@@ -146,82 +147,73 @@ const AdmissionForm: React.FC = () => {
               },
               {
                 id: "studentFirstSurname",
-                subtext: t("form.studentInfo.firstSurname", {
-                  ns: "admission",
-                }),
+                subtext: t("form.studentInfo.firstSurname"),
                 required: true,
                 onChange: handleChange,
                 disabled: disableField,
               },
               {
                 id: "studentSecondSurname",
-                subtext: t("form.studentInfo.secondSurname", {
-                  ns: "admission",
-                }),
+                subtext: t("form.studentInfo.secondSurname"),
                 required: true,
                 onChange: handleChange,
                 disabled: disableField,
               },
             ]}
           />
-        </div>
-        <div>
-          <Input
-            id="studentGender"
-            label={t("form.gender.title")}
-            required
-            as="select"
-            options={[
-              {
-                value: "male",
-                label: t("form.gender.male"),
-              },
-              {
-                value: "female",
-                label: t("form.gender.female"),
-              },
-            ]}
-            onChange={handleChange}
-            disabled={disableField}
-          />
-        </div>
-        <div>
-          <Input
-            id="studentDob"
-            label={t("form.studentInfo.dob")}
-            as="date"
-            placeholder={t("form.selectDate")}
-            required
-            onChange={handleChange}
-            disabled={disableField}
-          />
-        </div>
-        <div>
-          <Input
-            id="entering-year"
-            label={t("form.studentInfo.enteringYear")}
-            as="select"
-            required
-            options={[
-              { value: "2024-2025", label: "2024-2025" },
-              { value: "2025-2026", label: "2025-2026" },
-              { value: "2026-2027", label: "2026-2027" },
-              { value: "2027-2028", label: "2027-2028" },
-            ]}
-            onChange={handleChange}
-            disabled={disableField}
-          />
-        </div>
-        <div>
+
+          <div className="mb-4 grid grid-cols-1 gap-4 sm:grid-cols-2 lg:grid-cols-3">
+            <Input
+              variant="paper"
+              id="studentGender"
+              label={t("form.gender.title")}
+              required
+              as="select"
+              options={[
+                { value: "male", label: t("form.gender.male") },
+                { value: "female", label: t("form.gender.female") },
+              ]}
+              onChange={handleChange}
+              disabled={disableField}
+            />
+            <Input
+              variant="paper"
+              id="studentDob"
+              label={t("form.studentInfo.dob")}
+              as="date"
+              placeholder={t("form.selectDate")}
+              required
+              onChange={handleChange}
+              disabled={disableField}
+            />
+            <Input
+              variant="paper"
+              id="enteringYear"
+              label={t("form.studentInfo.enteringYear")}
+              as="select"
+              required
+              options={[
+                { value: "2024-2025", label: "2024-2025" },
+                { value: "2025-2026", label: "2025-2026" },
+                { value: "2026-2027", label: "2026-2027" },
+                { value: "2027-2028", label: "2027-2028" },
+              ]}
+              onChange={handleChange}
+              disabled={disableField}
+            />
+          </div>
+
           <InputGroup
+            variant="paper"
+            label={t("form.address.title")}
             inputs={[
               {
                 id: "studentStreetAddress",
-                label: t("form.address.title"),
                 subtext: t("form.address.street"),
                 required: true,
                 onChange: handleChange,
                 disabled: disableField,
+                wide: true,
               },
               {
                 id: "studentCity",
@@ -247,55 +239,53 @@ const AdmissionForm: React.FC = () => {
               },
             ]}
           />
-        </div>
-        <h2 className="text-lg font-bold text-blue-800">
-          {t("form.guardianInfo.title")}
-        </h2>
-        <div>
-          <Input
-            id="relationToStudent"
-            label={t("form.guardianInfo.relationToStudent.title", {
-              ns: "admission",
-            })}
-            as="select"
-            options={[
-              {
-                value: "mother",
-                label: t("form.guardianInfo.relationToStudent.mother", {
-                  ns: "admission",
-                }),
-              },
-              {
-                value: "father",
-                label: t("form.guardianInfo.relationToStudent.father", {
-                  ns: "admission",
-                }),
-              },
-              {
-                value: "guardian",
-                label: t("form.guardianInfo.relationToStudent.guardian", {
-                  ns: "admission",
-                }),
-              },
-              {
-                value: "other",
-                label: t("form.guardianInfo.relationToStudent.other", {
-                  ns: "admission",
-                }),
-              },
-            ]}
-            required
-            onChange={handleChange}
-            disabled={disableField}
-          />
-        </div>
-        <div>
+        </section>
+
+        <section>
+          <h2 className="mb-5 flex items-center gap-3 border-b border-blue-900/20 pb-2 font-title text-xl font-bold text-blue-900">
+            <span className="flex h-8 w-8 items-center justify-center rounded-full bg-amber-500 text-sm text-blue-900">
+              <i className="fas fa-user-tie" aria-hidden />
+            </span>
+            {t("form.guardianInfo.title")}
+          </h2>
+
+          <div className="mb-4">
+            <Input
+              variant="paper"
+              id="relationToStudent"
+              label={t("form.guardianInfo.relationToStudent.title")}
+              as="select"
+              options={[
+                {
+                  value: "mother",
+                  label: t("form.guardianInfo.relationToStudent.mother"),
+                },
+                {
+                  value: "father",
+                  label: t("form.guardianInfo.relationToStudent.father"),
+                },
+                {
+                  value: "guardian",
+                  label: t("form.guardianInfo.relationToStudent.guardian"),
+                },
+                {
+                  value: "other",
+                  label: t("form.guardianInfo.relationToStudent.other"),
+                },
+              ]}
+              required
+              onChange={handleChange}
+              disabled={disableField}
+            />
+          </div>
+
           <InputGroup
+            variant="paper"
+            label={t("form.studentInfo.name")}
             inputs={[
               {
                 id: "guardianFirstName",
-                label: t("form.guardianInfo.firstName"),
-                subtext: "Primer nombre",
+                subtext: t("form.guardianInfo.firstName"),
                 required: true,
                 onChange: handleChange,
                 disabled: disableField,
@@ -315,37 +305,34 @@ const AdmissionForm: React.FC = () => {
               },
             ]}
           />
-        </div>
-        <div>
-          <Input
-            id="guardianGender"
-            label={t("form.gender.title")}
-            required
-            as="select"
-            options={[
-              {
-                value: "male",
-                label: t("form.gender.male"),
-              },
-              {
-                value: "female",
-                label: t("form.gender.female"),
-              },
-            ]}
-            onChange={handleChange}
-            disabled={disableField}
-          />
-        </div>
-        <div>
+
+          <div className="mb-4">
+            <Input
+              variant="paper"
+              id="guardianGender"
+              label={t("form.gender.title")}
+              required
+              as="select"
+              options={[
+                { value: "male", label: t("form.gender.male") },
+                { value: "female", label: t("form.gender.female") },
+              ]}
+              onChange={handleChange}
+              disabled={disableField}
+            />
+          </div>
+
           <InputGroup
+            variant="paper"
+            label={t("form.address.title")}
             inputs={[
               {
                 id: "guardianStreetAddress",
-                label: t("form.address.title"),
                 subtext: t("form.address.street"),
                 required: true,
                 onChange: handleChange,
                 disabled: disableField,
+                wide: true,
               },
               {
                 id: "guardianCity",
@@ -371,55 +358,66 @@ const AdmissionForm: React.FC = () => {
               },
             ]}
           />
-        </div>
-        <div>
-          <Input
-            id="guardianHomePhone"
-            label={t("form.guardianInfo.homePhone")}
-            onChange={handleChange}
-            disabled={disableField}
-          />
-        </div>
-        <div>
-          <Input
-            id="guardianMobilePhone"
-            label={t("form.guardianInfo.mobilePhone")}
-            required
-            onChange={handleChange}
-            disabled={disableField}
-          />
-        </div>
-        <div>
-          <Input
-            id="guardianEmail"
-            label={t("form.guardianInfo.email")}
-            onChange={handleChange}
-            disabled={disableField}
-          />
-        </div>
+
+          <div className="grid grid-cols-1 gap-4 sm:grid-cols-2 lg:grid-cols-3">
+            <Input
+              variant="paper"
+              id="guardianHomePhone"
+              label={t("form.guardianInfo.homePhone")}
+              onChange={handleChange}
+              disabled={disableField}
+            />
+            <Input
+              variant="paper"
+              id="guardianMobilePhone"
+              label={t("form.guardianInfo.mobilePhone")}
+              required
+              onChange={handleChange}
+              disabled={disableField}
+            />
+            <Input
+              variant="paper"
+              id="guardianEmail"
+              label={t("form.guardianInfo.email")}
+              type="email"
+              onChange={handleChange}
+              disabled={disableField}
+            />
+          </div>
+        </section>
+
         {submitStatus === "success" && (
-          <div className="text-green-600 text-center">
+          <div className="text-center text-green-700">
             {t("form.successMessage")}
           </div>
         )}
         {submitStatus === "error" && (
-          <div className="text-red-600 text-center">
+          <div className="text-center text-red-600">
             {t("form.errorMessage")}
           </div>
         )}
+
         <button
           type="submit"
-          className="bg-blue-500 text-white p-2 mt-2 w-full disabled:opacity-50 hover:bg-blue-600 transition-colors"
-          disabled={isSubmitting}
+          className="w-full bg-amber-500 px-4 py-3 text-sm font-semibold tracking-wide text-blue-900 transition-colors hover:bg-amber-400 disabled:opacity-50 md:text-base"
+          disabled={isSubmitting || disableField}
         >
           {isSubmitting
             ? t("submitting", { ns: "common" })
             : t("submit", { ns: "common" })}
         </button>
       </form>
+
+      <AdmissionPrintForm />
     </div>
   );
 };
+
+const FadeInHeading: React.FC<{ title: string }> = ({ title }) => (
+  <div className="mb-6 print:hidden">
+    <SectionHeading title={title} icon="fa-file-pen" />
+  </div>
+);
 
 const Admission: React.FC = () => {
   return (

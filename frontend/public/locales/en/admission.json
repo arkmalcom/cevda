@@ -1,6 +1,11 @@
 {
   "title": "Pre-Registration Form",
   "content": "We are pleased to be considered your top option for your children's education.\n\nAs a first step, you can fill out the form below, and we will contact you to send more detailed information and answer your questions.",
+  "print": {
+    "button": "Print blank form",
+    "date": "Date",
+    "signature": "Guardian signature"
+  },
   "form": {
     "selectOption": "Select an option",
     "selectDate": "Select a date",

@@ -10,7 +10,37 @@
     },
     {
       "title": "Valores",
-      "content": "Amor: Un sentimiento de profunda afecto e inclinación hacia una persona o cosa por la cual se desea todo lo bueno.\nFe: Basada en conocer a Dios y establecer metas en Él. Felicidad: Proporcionada al alcanzar objetivos.\nRespeto: Obtener una comunidad cortés.\nIntegración: De diferentes culturas.\nCreatividad: Potenciar la capacidad de transformar.\nSolidaridad: Apoyo a diversas causas donde se puede demostrar colaboración."
+      "content": "",
+      "values": [
+        {
+          "title": "Amor",
+          "content": "Un sentimiento de profundo afecto e inclinación hacia una persona o cosa por la cual se desea todo lo bueno."
+        },
+        {
+          "title": "Fe",
+          "content": "Basada en conocer a Dios y establecer metas en Él."
+        },
+        {
+          "title": "Felicidad",
+          "content": "Proporcionada al alcanzar objetivos."
+        },
+        {
+          "title": "Respeto",
+          "content": "Obtener una comunidad cortés."
+        },
+        {
+          "title": "Integración",
+          "content": "De diferentes culturas."
+        },
+        {
+          "title": "Creatividad",
+          "content": "Potenciar la capacidad de transformar."
+        },
+        {
+          "title": "Solidaridad",
+          "content": "Apoyo a diversas causas donde se puede demostrar colaboración."
+        }
+      ]
     }
   ],
   "academicOffering": {

@@ -14,6 +14,7 @@ interface InputProps {
   className?: string;
   onChange?: (event: React.ChangeEvent<HTMLInputElement>) => void;
   disabled?: boolean;
+  variant?: "default" | "paper";
 }
 
 const Input: React.FC<InputProps> = ({
@@ -28,21 +29,62 @@ const Input: React.FC<InputProps> = ({
   className = "",
   onChange,
   disabled = false,
+  variant = "default",
 }) => {
-  const commonClasses =
-    "mt-2 p-1 block lg:w-52 w-26 rounded-sm border shadow-sm focus:ring focus:border text-xs";
-  const disabledClasses = "bg-gray-200 text-gray-500 cursor-not-allowed";
-  const [dob, setDob] = useState(new Date());
+  const isPaper = variant === "paper";
+  const [dob, setDob] = useState<Date | null>(null);
+
+  const commonClasses = isPaper
+    ? "mt-1 block w-full border-0 border-b border-blue-900/40 bg-transparent px-1 py-2 text-sm text-blue-950 shadow-none outline-none transition-colors focus:border-amber-500 focus:ring-0"
+    : "mt-2 block w-26 rounded-sm border p-1 text-xs shadow-sm focus:border focus:ring lg:w-52";
+
+  const disabledClasses = isPaper
+    ? "cursor-not-allowed border-slate-300 text-slate-400"
+    : "cursor-not-allowed bg-gray-200 text-gray-500";
+
+  const enabledBorder = isPaper ? "" : "border-blue-800";
+
+  const fieldClass = `${commonClasses} ${
+    disabled ? disabledClasses : enabledBorder
+  } ${className}`;
+
+  const handleSelectChange = (e: React.ChangeEvent<HTMLSelectElement>) => {
+    if (!onChange) return;
+    onChange(e as unknown as React.ChangeEvent<HTMLInputElement>);
+  };
+
+  const handleDateChange = (date: Date | null) => {
+    setDob(date);
+    if (!onChange) return;
+    const syntheticEvent = {
+      target: {
+        name: id,
+        value: date ? date.toISOString().slice(0, 10) : "",
+      },
+    } as React.ChangeEvent<HTMLInputElement>;
+    onChange(syntheticEvent);
+  };
 
   return (
-    <div className="flex flex-col">
-      <label
-        htmlFor={id}
-        className={`block text-sm ${label ? "text-blue-800" : "invisible"}`}
-      >
-        {label || "Placeholder"}{" "}
-        {required && <span className="text-red-500">*</span>}
-      </label>
+    <div className={`flex flex-col ${isPaper ? "w-full" : ""}`}>
+      {(label || !isPaper) && (
+        <label
+          htmlFor={id}
+          className={`block text-sm ${
+            label
+              ? isPaper
+                ? "font-medium text-blue-900"
+                : "text-blue-800"
+              : "invisible"
+          }`}
+        >
+          {label || "Placeholder"}{" "}
+          {required && label && <span className="text-red-500">*</span>}
+        </label>
+      )}
+      {!label && isPaper && required && (
+        <span className="sr-only">Required</span>
+      )}
 
       {as === "input" && (
         <input
@@ -50,9 +92,7 @@ const Input: React.FC<InputProps> = ({
           id={id}
           name={id}
           placeholder={placeholder}
-          className={`${commonClasses} ${
-            disabled ? disabledClasses : "border-blue-800"
-          } ${className}`}
+          className={fieldClass}
           required={required}
           onChange={onChange}
           disabled={disabled}
@@ -63,15 +103,16 @@ const Input: React.FC<InputProps> = ({
         <select
           id={id}
           name={id}
-          className={`${commonClasses} ${
-            disabled ? disabledClasses : "border-blue-800"
-          } ${className} w-36`}
+          className={`${fieldClass} ${isPaper ? "w-full" : "w-36"}`}
           required={required}
-          defaultValue={placeholder}
+          defaultValue={placeholder || ""}
           disabled={disabled}
+          onChange={handleSelectChange}
         >
           <option value="" disabled>
-            Seleccione una opción
+            {placeholder && placeholder !== "DO"
+              ? placeholder
+              : "Seleccione una opción"}
           </option>
           {options?.map((option, index) => (
             <option key={index} value={option.value}>
@@ -86,27 +127,33 @@ const Input: React.FC<InputProps> = ({
           id={id}
           name={id}
           placeholder={placeholder}
-          className={`${commonClasses} ${
-            disabled ? disabledClasses : "border-blue-800"
-          } ${className}`}
+          className={fieldClass}
           disabled={disabled}
         />
       )}
 
       {as === "date" && (
         <DatePicker
-          showIcon
+          showIcon={!isPaper}
           selected={dob}
-          onChange={(date) => setDob(date as Date)}
+          onChange={handleDateChange}
           dateFormat="dd/MM/yyyy"
-          className={`${commonClasses} ${
-            disabled ? disabledClasses : "border-blue-800"
-          } ${className}`}
+          className={fieldClass}
           placeholderText={placeholder}
           disabled={disabled}
+          name={id}
+          wrapperClassName={isPaper ? "w-full" : undefined}
         />
       )}
-      {subtext && <p className="text-xs text-gray-500">{subtext}</p>}
+      {subtext && (
+        <p
+          className={`text-xs ${
+            isPaper ? "mt-1 text-slate-500" : "text-gray-500"
+          }`}
+        >
+          {subtext}
+        </p>
+      )}
     </div>
   );
 };

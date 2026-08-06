@@ -1,10 +1,13 @@
 {
+  "title": "Contact",
+  "formTitle": "Send us a message",
+  "openInMaps": "Open in Maps",
   "form": {
-    "name": "Name:",
-    "phone": "Phone:",
-    "subject": "Subject:",
-    "message": "Message:"
+    "name": "Name",
+    "phone": "Phone",
+    "subject": "Subject",
+    "message": "Message"
   },
-  "submit": "Submit",
-  "submitting": "Submitting..."
+  "successMessage": "Message sent successfully!",
+  "errorMessage": "Sorry! There was an error sending the message. Please try again."
 }

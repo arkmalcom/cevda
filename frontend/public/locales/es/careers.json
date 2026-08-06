@@ -4,8 +4,13 @@
     "description": "En el Centro Educativo Villa de Ángeles estamos comprometidos con la excelencia educativa y buscamos profesionales apasionados por la enseñanza y el desarrollo integral de nuestros estudiantes. Para el área docente, requerimos maestros(as) del nivel inicial y básica que posean formación académica en educación, experiencia comprobada, habilidades en manejo de grupos, creatividad, vocación de servicio y disposición para trabajar en equipo. En el área administrativa, buscamos colaboradores organizados, responsables y con experiencia en gestión escolar, atención al cliente o áreas relacionadas.\n\nSi compartes nuestra visión y deseas formar parte de un equipo dedicado a la formación de futuras generaciones, envíanos tu currículum actualizado y únete a nuestra misión educativa."
   },
   "form": {
+    "sectionTitle": "Envía tu currículum",
+    "sectionSubtitle": "Adjunta tu CV en PDF o DOCX (máx. 4 MB).",
+    "uploadLabel": "Currículum",
+    "uploadHint": "Formatos aceptados: PDF, DOCX",
     "successMessage": "¡Gracias por tu interés en formar parte de nuestro equipo! Tu solicitud ha sido enviada con éxito. Nos pondremos en contacto contigo a la brevedad posible.",
     "errorMessage": "¡Lo sentimos! Ha ocurrido un error al enviar tu solicitud. Por favor, inténtalo de nuevo más tarde.",
-    "noFileSelected": "Debes seleccionar un archivo para continuar."
+    "noFileSelected": "Debes seleccionar un archivo para continuar.",
+    "fileTooLarge": "El archivo supera el tamaño máximo de 4 MB."
   }
 }

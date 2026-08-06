@@ -1,6 +1,11 @@
 {
   "title": "Formulario de Pre-inscripción",
   "content": "Es un placer para nosotros que nos consideren como pilar en la educación de sus hijos.\n\nComo primer paso, pueden llenar el formulario a continuación y nos pondremos en contacto con ustedes para enviarles información de una manera mas detallada y contestar sus preguntas.",
+  "print": {
+    "button": "Imprimir formulario en blanco",
+    "date": "Fecha",
+    "signature": "Firma del representante"
+  },
   "form": {
     "selectOption": "Seleccione una opción",
     "selectDate": "Seleccione una fecha",

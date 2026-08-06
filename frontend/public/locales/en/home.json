@@ -10,7 +10,37 @@
     },
     {
       "title": "Values",
-      "content": "Love: A feeling of deep affection and inclination towards a person or thing for which one desires all good things.\nFaith: Based on knowing God and setting goals in Him.\nHappiness: Provided by achieving goals.\nRespect: Building a polite community.\nIntegration: Of different cultures.\nCreativity: Enhancing the ability to transform.\nSolidarity: Support for various causes where collaboration can be demonstrated."
+      "content": "",
+      "values": [
+        {
+          "title": "Love",
+          "content": "A feeling of deep affection and inclination towards a person or thing for which one desires all good things."
+        },
+        {
+          "title": "Faith",
+          "content": "Based on knowing God and setting goals in Him."
+        },
+        {
+          "title": "Happiness",
+          "content": "Provided by achieving goals."
+        },
+        {
+          "title": "Respect",
+          "content": "Building a polite community."
+        },
+        {
+          "title": "Integration",
+          "content": "Of different cultures."
+        },
+        {
+          "title": "Creativity",
+          "content": "Enhancing the ability to transform."
+        },
+        {
+          "title": "Solidarity",
+          "content": "Support for various causes where collaboration can be demonstrated."
+        }
+      ]
     }
   ],
   "academicOffering": {

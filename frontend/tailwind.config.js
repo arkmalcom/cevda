@@ -2,11 +2,13 @@
 export default {
   content: ["./src/**/*.{ts,tsx,html}"],
   theme: {
-    fontFamily: {
-      title: ["Pirata One", "serif"],
-      welcome: ["Geist", "serif"],
+    extend: {
+      fontFamily: {
+        brand: ['"Pirata One"', "Georgia", "serif"],
+        title: ['"Source Serif 4"', "Georgia", "serif"],
+        welcome: ['"Source Sans 3"', "system-ui", "sans-serif"],
+      },
     },
-    extend: {},
   },
   plugins: [],
 };

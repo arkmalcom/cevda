@@ -1,10 +1,13 @@
 {
+  "title": "Contacto",
+  "formTitle": "Envíanos un mensaje",
+  "openInMaps": "Abrir en Maps",
   "form": {
-    "name": "Nombre:",
-    "phone": "Teléfono:",
-    "subject": "Asunto:",
-    "message": "Mensaje:"
+    "name": "Nombre",
+    "phone": "Teléfono",
+    "subject": "Asunto",
+    "message": "Mensaje"
   },
-  "successMessage": "Mensaje enviado con éxito!",
+  "successMessage": "¡Mensaje enviado con éxito!",
   "errorMessage": "¡Lo sentimos! Hubo un error al enviar el mensaje. Por favor, inténtelo de nuevo."
 }
