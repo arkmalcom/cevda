@@ -26,7 +26,8 @@
   "inProgress": {
     "title": "English Exam",
     "submitButton": "Submit",
-    "missingAnswerText": "You must select an answer for this question."
+    "missingAnswerText": "You must select an answer for this question.",
+    "progress": "{{answered}} of {{total}} answered"
   },
   "start": {
     "title": "Start your English Exam",

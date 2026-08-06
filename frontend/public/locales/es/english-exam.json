@@ -26,7 +26,8 @@
   "inProgress": {
     "title": "Examen de Inglés",
     "submitButton": "Enviar",
-    "missingAnswerText": "Debes seleccionar una respuesta a esta pregunta."
+    "missingAnswerText": "Debes seleccionar una respuesta a esta pregunta.",
+    "progress": "{{answered}} de {{total}} respondidas"
   },
   "start": {
     "title": "Inicia tu examen de inglés",

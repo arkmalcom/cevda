@@ -1,6 +1,8 @@
 import { useEffect, useRef, useState } from "react";
 import { useTranslation } from "react-i18next";
 import { PublicAssessmentQuestion } from "../utils/Types";
+import SectionHeading from "../components/SectionHeading";
+import FadeIn from "../components/FadeIn";
 
 enum ExamPhase {
   EnterEmail,
@@ -33,6 +35,9 @@ type GradeResult = {
   total_questions: number;
   results: QuestionResult[];
 };
+
+const fieldClass =
+  "mt-1 block w-full border-0 border-b border-blue-900/40 bg-transparent px-1 py-2 text-sm text-blue-950 outline-none transition-colors focus:border-amber-500";
 
 const EnglishExam = () => {
   const [phase, setPhase] = useState<ExamPhase>(ExamPhase.EnterEmail);
@@ -272,141 +277,232 @@ const EnglishExam = () => {
 
   if (phase === ExamPhase.EnterEmail) {
     return (
-      <div className="p-4">
-        <form
-          onSubmit={(e) => {
-            e.preventDefault();
-            startAttempt();
-          }}
-          className="w-full flex justify-center flex-col space-y-3 mx-auto max-w-xl"
-        >
-          <h1 className="text-3xl font-bold mb-4">{t("start.title")}</h1>
-          <p>{t("start.content")}</p>
-          <label htmlFor="name">{t("fieldLabels.name")}</label>
-          <input
-            type="text"
-            value={name}
-            onChange={(e) => {
-              setName(e.target.value);
-              setErrors((prev) => {
-                const { name, ...rest } = prev;
-                return rest;
-              });
-            }}
-            placeholder={t("start.namePlaceholder")}
-            className={`border p-2 w-full mb-4 ${errors["name"] ? "border-red-500" : ""}`}
+      <div className="bg-amber-500/10 px-4 py-10 pb-28 md:px-8 md:py-14 md:pb-32">
+        <FadeIn>
+          <SectionHeading
+            title={t("start.title")}
+            icon="fa-language"
+            className="mx-auto max-w-xl"
           />
-          {errors.name && (
-            <p className="text-red-500 text-sm mb-2">
-              {renderError(errors.name)}
-            </p>
-          )}
-          <label htmlFor="phone">{t("fieldLabels.phone")}</label>
-          <input
-            type="tel"
-            value={phone}
-            onChange={(e) => {
-              setPhone(e.target.value);
-              setErrors((prev) => {
-                const { phone, ...rest } = prev;
-                return rest;
-              });
+        </FadeIn>
+
+        <FadeIn delayMs={80}>
+          <form
+            onSubmit={(e) => {
+              e.preventDefault();
+              startAttempt();
             }}
-            placeholder={t("start.phonePlaceholder")}
-            className={`border p-2 w-full mb-4 ${errors["phone"] ? "border-red-500" : ""}`}
-          />
-          {errors.phone && (
-            <p className="text-red-500 text-sm mb-2">
-              {renderError(errors.phone)}
-            </p>
-          )}
-          <label htmlFor="email">{t("fieldLabels.email")}</label>
-          <input
-            type="email"
-            value={email}
-            onChange={(e) => {
-              setEmail(e.target.value);
-              setErrors((prev) => {
-                const { email, ...rest } = prev;
-                return rest;
-              });
-            }}
-            placeholder={t("start.emailPlaceholder")}
-            className={`border p-2 w-full mb-4 ${errors["email"] ? "border-red-500" : ""}`}
-          />
-          {errors.email && (
-            <p className="text-red-500 text-sm mb-2">
-              {renderError(errors.email)}
-            </p>
-          )}
-          {errors.form && (
-            <div className="text-red-600 text-sm text-center">
-              {renderError(errors.form)}
+            className="relative mx-auto max-w-xl space-y-5 border border-amber-700/20 bg-[#fbf7f0] px-5 py-8 shadow-[0_18px_50px_-28px_rgba(30,58,138,0.45)] md:px-8 md:py-10"
+          >
+            <div
+              className="absolute inset-x-0 top-0 h-1.5 bg-amber-500"
+              aria-hidden
+            />
+            <p className="leading-relaxed text-slate-700">{t("start.content")}</p>
+
+            <div>
+              <label
+                htmlFor="name"
+                className="text-sm font-medium text-blue-900"
+              >
+                {t("fieldLabels.name")} <span className="text-red-500">*</span>
+              </label>
+              <input
+                id="name"
+                type="text"
+                value={name}
+                onChange={(e) => {
+                  setName(e.target.value);
+                  setErrors((prev) => {
+                    const { name: _name, ...rest } = prev;
+                    return rest;
+                  });
+                }}
+                placeholder={t("start.namePlaceholder")}
+                className={`${fieldClass} ${errors["name"] ? "border-red-500" : ""}`}
+              />
+              {errors.name && (
+                <p className="mt-1 text-sm text-red-600">
+                  {renderError(errors.name)}
+                </p>
+              )}
             </div>
-          )}
-          <button className="bg-amber-500 text-white px-4 py-2 rounded mx-auto">
-            {t("start.startButton")}
-          </button>
-        </form>
+
+            <div>
+              <label
+                htmlFor="phone"
+                className="text-sm font-medium text-blue-900"
+              >
+                {t("fieldLabels.phone")} <span className="text-red-500">*</span>
+              </label>
+              <input
+                id="phone"
+                type="tel"
+                value={phone}
+                onChange={(e) => {
+                  setPhone(e.target.value);
+                  setErrors((prev) => {
+                    const { phone: _phone, ...rest } = prev;
+                    return rest;
+                  });
+                }}
+                placeholder={t("start.phonePlaceholder")}
+                className={`${fieldClass} ${errors["phone"] ? "border-red-500" : ""}`}
+              />
+              {errors.phone && (
+                <p className="mt-1 text-sm text-red-600">
+                  {renderError(errors.phone)}
+                </p>
+              )}
+            </div>
+
+            <div>
+              <label
+                htmlFor="email"
+                className="text-sm font-medium text-blue-900"
+              >
+                {t("fieldLabels.email")} <span className="text-red-500">*</span>
+              </label>
+              <input
+                id="email"
+                type="email"
+                value={email}
+                onChange={(e) => {
+                  setEmail(e.target.value);
+                  setErrors((prev) => {
+                    const { email: _email, ...rest } = prev;
+                    return rest;
+                  });
+                }}
+                placeholder={t("start.emailPlaceholder")}
+                className={`${fieldClass} ${errors["email"] ? "border-red-500" : ""}`}
+              />
+              {errors.email && (
+                <p className="mt-1 text-sm text-red-600">
+                  {renderError(errors.email)}
+                </p>
+              )}
+            </div>
+
+            {errors.form && (
+              <div className="text-center text-sm text-red-600">
+                {renderError(errors.form)}
+              </div>
+            )}
+
+            <button
+              type="submit"
+              className="w-full bg-amber-500 px-4 py-3 text-sm font-semibold tracking-wide text-blue-900 transition-colors hover:bg-amber-400 md:text-base"
+            >
+              {t("start.startButton")}
+            </button>
+          </form>
+        </FadeIn>
       </div>
     );
   }
 
   if (phase === ExamPhase.InProgress) {
+    const answeredCount = questions.filter(
+      (q) => answers[q.QuestionID] !== undefined,
+    ).length;
+
     return (
-      <div className="p-4 max-w-4xl mx-auto flex flex-col justify-center items-center">
+      <div className="bg-amber-500/10 px-4 py-10 pb-28 md:px-8 md:py-14 md:pb-32">
+        <div
+          className={`fixed bottom-20 right-4 z-30 flex items-center gap-2 rounded-full px-4 py-2 text-sm font-semibold shadow-lg md:bottom-24 md:right-10 ${
+            timeLeft < 60
+              ? "bg-red-600 text-white"
+              : "bg-blue-900 text-amber-300"
+          }`}
+        >
+          <i className="fas fa-clock" aria-hidden />
+          {formatTime(timeLeft)}
+        </div>
+
+        <FadeIn>
+          <SectionHeading
+            title={t("inProgress.title")}
+            icon="fa-language"
+            className="mx-auto max-w-3xl"
+          />
+        </FadeIn>
+
+        <FadeIn delayMs={60}>
+          <p className="mx-auto mb-8 max-w-3xl text-center text-sm text-slate-600">
+            {t("inProgress.progress", {
+              answered: answeredCount,
+              total: questions.length,
+              defaultValue: `${answeredCount} / ${questions.length}`,
+            })}
+          </p>
+        </FadeIn>
+
         <form
           onSubmit={(e) => {
             e.preventDefault();
             submitAttempt();
           }}
-          className="w-full flex justify-center flex-col space-y-3 mx-auto max-w-xl"
+          className="mx-auto max-w-3xl space-y-5"
         >
-          <h1 className="text-3xl font-bold mb-4">{t("inProgress.title")}</h1>
-          <div>
-            <div
-              className={`fixed bottom-12 right-4 px-3 py-1 rounded mx-auto
-                    ${timeLeft < 60 ? "bg-red-600" : "bg-black"} text-white`}
-            >
-              ⏱ {formatTime(timeLeft)}
-            </div>
-            {questions.map((q, idx) => (
-              <div key={q.QuestionID} className="mb-6">
-                <p className="font-medium mb-2">
-                  {idx + 1}. {q.Prompt}
-                </p>
-                {q.Choices.map((choice, cIdx) => (
-                  <label key={cIdx} className="block mb-1">
-                    <input
-                      type="radio"
-                      name={q.QuestionID}
-                      value={cIdx}
-                      checked={answers[q.QuestionID] === cIdx}
-                      onChange={() =>
-                        setAnswers((prev) => ({
-                          ...prev,
-                          [q.QuestionID]: cIdx,
-                        }))
-                      }
-                      className="mr-2"
-                    />
-                    {choice}
-                  </label>
-                ))}
+          {questions.map((q, idx) => (
+            <FadeIn key={q.QuestionID} delayMs={Math.min(idx * 40, 200)}>
+              <fieldset
+                className={`border border-amber-700/15 bg-[#fbf7f0] px-5 py-5 shadow-sm md:px-6 ${
+                  errors[q.QuestionID] ? "ring-2 ring-red-400" : ""
+                }`}
+              >
+                <legend className="mb-3 font-semibold text-blue-900">
+                  <span className="mr-2 inline-flex h-7 w-7 items-center justify-center rounded-full bg-amber-500 text-xs text-blue-900">
+                    {idx + 1}
+                  </span>
+                  {q.Prompt}
+                </legend>
+                <div className="space-y-2">
+                  {q.Choices.map((choice, cIdx) => {
+                    const selected = answers[q.QuestionID] === cIdx;
+                    return (
+                      <label
+                        key={cIdx}
+                        className={`flex cursor-pointer items-center gap-3 border px-3 py-2.5 transition-colors ${
+                          selected
+                            ? "border-amber-500 bg-amber-500/15 text-blue-900"
+                            : "border-transparent bg-white/60 hover:border-amber-300"
+                        }`}
+                      >
+                        <input
+                          type="radio"
+                          name={q.QuestionID}
+                          value={cIdx}
+                          checked={selected}
+                          onChange={() =>
+                            setAnswers((prev) => ({
+                              ...prev,
+                              [q.QuestionID]: cIdx,
+                            }))
+                          }
+                          className="accent-amber-500"
+                        />
+                        <span className="text-sm md:text-base">{choice}</span>
+                      </label>
+                    );
+                  })}
+                </div>
                 {errors[q.QuestionID] && (
-                  <p className="text-red-500 text-sm mt-1">
+                  <p className="mt-2 text-sm text-red-600">
                     {renderError(errors[q.QuestionID])}
                   </p>
                 )}
-              </div>
-            ))}
-            <button
-              type="submit"
-              className="bg-amber-500 text-white px-4 py-2 rounded"
-            >
-              {t("inProgress.submitButton")}
-            </button>
-          </div>
+              </fieldset>
+            </FadeIn>
+          ))}
+
+          <button
+            type="submit"
+            className="w-full bg-amber-500 px-4 py-3 text-sm font-semibold tracking-wide text-blue-900 transition-colors hover:bg-amber-400 md:text-base"
+          >
+            {t("inProgress.submitButton")}
+          </button>
         </form>
       </div>
     );
@@ -414,63 +510,94 @@ const EnglishExam = () => {
 
   if (phase === ExamPhase.Completed) {
     return (
-      <div className="p-4 max-w-xl mx-auto text-center">
-        <h1 className="text-3xl font-bold mb-4">{t("completed.title")}</h1>
-        {isExpired ? (
-          <p className="text-lg mb-4 text-red-600">
-            {t("completed.expiredText")}
-          </p>
-        ) : (
-          <p className="text-lg mb-4">{t("completed.content")}</p>
-        )}
-        <p className="text-xl mb-4">
-          {t("completed.score", { score: gradeResult?.score })}
-        </p>
-        {questions.map((q) => {
-          const result = resultMap[q.QuestionID];
-          const wasAnswered = result?.answered;
-          const wasCorrect = result?.correct;
-          return (
-            <div key={q.QuestionID}>
-              <p>{q.Prompt}</p>
+      <div className="bg-amber-500/10 px-4 py-10 pb-28 md:px-8 md:py-14 md:pb-32">
+        <FadeIn>
+          <SectionHeading
+            title={t("completed.title")}
+            icon="fa-clipboard-check"
+            className="mx-auto max-w-3xl"
+          />
+        </FadeIn>
 
-              {q.Choices.map((choice, idx) => {
-                const isSelected = answers[q.QuestionID] === idx;
-
-                return (
-                  <div
-                    key={idx}
-                    className={`
-                                            ${isSelected ? "font-semibold" : ""}
-                                            ${isSelected && wasCorrect ? "text-green-600" : ""}
-                                            ${isSelected && !wasCorrect ? "text-red-600" : ""}
-                                        `}
-                  >
-                    {choice}
-                  </div>
-                );
-              })}
-
-              {!wasAnswered && (
-                <p className="py-2 text-yellow-600 text-sm">
-                  ⚠️ {t("completed.notAnswered")}
-                </p>
-              )}
-
-              {wasAnswered && !wasCorrect && (
-                <p className="py-2 text-red-500 text-sm">
-                  ❌ {t("completed.incorrect")}
-                </p>
-              )}
-
-              {wasCorrect && (
-                <p className="py-2 text-green-600 text-sm">
-                  ✅ {t("completed.correct")}
-                </p>
-              )}
+        <FadeIn delayMs={80}>
+          <div className="mx-auto mb-10 max-w-xl border border-amber-700/20 bg-[#fbf7f0] px-6 py-8 text-center shadow-[0_18px_50px_-28px_rgba(30,58,138,0.45)]">
+            <div
+              className="mx-auto mb-4 flex h-16 w-16 items-center justify-center rounded-full bg-amber-500 text-blue-900"
+              aria-hidden
+            >
+              <i className="fas fa-graduation-cap text-2xl" />
             </div>
-          );
-        })}
+            {isExpired ? (
+              <p className="mb-3 text-red-600">{t("completed.expiredText")}</p>
+            ) : (
+              <p className="mb-3 text-slate-700">{t("completed.content")}</p>
+            )}
+            <p className="font-title text-3xl font-bold text-blue-900">
+              {t("completed.score", { score: gradeResult?.score })}
+            </p>
+          </div>
+        </FadeIn>
+
+        <div className="mx-auto max-w-3xl space-y-4">
+          {questions.map((q, idx) => {
+            const result = resultMap[q.QuestionID];
+            const wasAnswered = result?.answered;
+            const wasCorrect = result?.correct;
+
+            return (
+              <FadeIn key={q.QuestionID} delayMs={Math.min(idx * 40, 200)}>
+                <div className="border border-amber-700/15 bg-[#fbf7f0] px-5 py-5 md:px-6">
+                  <p className="mb-3 font-semibold text-blue-900">
+                    <span className="mr-2 inline-flex h-7 w-7 items-center justify-center rounded-full bg-amber-500 text-xs text-blue-900">
+                      {idx + 1}
+                    </span>
+                    {q.Prompt}
+                  </p>
+                  <div className="space-y-1.5">
+                    {q.Choices.map((choice, choiceIdx) => {
+                      const isSelected = answers[q.QuestionID] === choiceIdx;
+                      return (
+                        <div
+                          key={choiceIdx}
+                          className={`px-3 py-2 text-sm ${
+                            isSelected && wasCorrect
+                              ? "bg-green-100 font-semibold text-green-800"
+                              : isSelected && !wasCorrect
+                                ? "bg-red-100 font-semibold text-red-700"
+                                : isSelected
+                                  ? "font-semibold text-blue-900"
+                                  : "text-slate-600"
+                          }`}
+                        >
+                          {choice}
+                        </div>
+                      );
+                    })}
+                  </div>
+
+                  {!wasAnswered && (
+                    <p className="mt-3 flex items-center gap-2 text-sm text-amber-700">
+                      <i className="fas fa-triangle-exclamation" aria-hidden />
+                      {t("completed.notAnswered")}
+                    </p>
+                  )}
+                  {wasAnswered && !wasCorrect && (
+                    <p className="mt-3 flex items-center gap-2 text-sm text-red-600">
+                      <i className="fas fa-xmark" aria-hidden />
+                      {t("completed.incorrect")}
+                    </p>
+                  )}
+                  {wasCorrect && (
+                    <p className="mt-3 flex items-center gap-2 text-sm text-green-700">
+                      <i className="fas fa-check" aria-hidden />
+                      {t("completed.correct")}
+                    </p>
+                  )}
+                </div>
+              </FadeIn>
+            );
+          })}
+        </div>
       </div>
     );
   }

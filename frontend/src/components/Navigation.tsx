@@ -1,7 +1,6 @@
 import React, { useEffect, useState } from "react";
 import { Link, useLocation } from "react-router-dom";
 import logo from "../assets/cevda_logo_tr.png";
-import smartTeamLogo from "../assets/smart_team_logo_tr.png";
 import { useTranslation } from "react-i18next";
 
 const Navigation: React.FC = () => {
@@ -99,30 +98,8 @@ const Navigation: React.FC = () => {
               Centro Educativo Villa de Ángeles
             </span>
           </h1>
-          <span
-            className={`hidden shrink-0 rounded-md p-1 transition-colors duration-500 xl:block ${
-              isTransparent ? "bg-white/95 shadow-sm" : ""
-            }`}
-          >
-            <img
-              src={smartTeamLogo}
-              alt="smart-team-logo"
-              className="h-8 w-14"
-            />
-          </span>
         </Link>
         <div className="ml-auto flex shrink-0 items-center justify-end">
-          <span
-            className={`mx-3 block rounded-md p-1 transition-colors duration-500 md:hidden ${
-              isTransparent ? "bg-white/95 shadow-sm" : ""
-            }`}
-          >
-            <img
-              src={smartTeamLogo}
-              alt="smart-team-logo"
-              className="h-6 w-12"
-            />
-          </span>
           <button
             className="text-2xl text-white lg:hidden"
             onClick={toggleMenu}
