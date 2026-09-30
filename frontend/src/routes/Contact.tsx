@@ -3,8 +3,10 @@ import { useTranslation } from "react-i18next";
 import { GoogleReCaptchaProvider } from "react-google-recaptcha-v3";
 import { useSubmit } from "../hooks/useSubmit";
 import { EMAIL_ADDRESS, FULL_ADDRESS, PHONE_NUMBER } from "../utils/Constants";
-import SectionHeading from "../components/SectionHeading";
-import FadeIn from "../components/FadeIn";
+import PageIntro from "../components/PageIntro";
+import Reveal from "../components/Reveal";
+import Button from "../components/ui/Button";
+import { ErrorNote, SuccessNote } from "../components/StarBurst";
 
 const MAPS_URL = "https://maps.app.goo.gl/CVupFTzgSk3Diy7p8";
 const MAP_EMBED =
@@ -24,15 +26,42 @@ const emptyForm: FormData = {
   message: "",
 };
 
+const fields: { id: keyof FormData; type: string; autoComplete?: string }[] = [
+  { id: "name", type: "text", autoComplete: "name" },
+  { id: "phone", type: "tel", autoComplete: "tel" },
+  { id: "subject", type: "text" },
+];
+
+const ContactRow: React.FC<{ href: string; icon: string; children: React.ReactNode; external?: boolean }> = ({
+  href,
+  icon,
+  children,
+  external,
+}) => (
+  <li>
+    <a
+      href={href}
+      {...(external ? { target: "_blank", rel: "noopener noreferrer" } : {})}
+      className="group -mx-3 flex items-center gap-4 rounded-card px-3 py-2.5 text-[17px] text-ink transition-colors duration-200 hover-fine:bg-blue-50"
+    >
+      <span
+        className="flex h-11 w-11 shrink-0 items-center justify-center rounded-full bg-amber-500 text-blue-950 transition-transform duration-300 group-hover-fine:-rotate-12"
+        aria-hidden
+      >
+        <i className={icon} />
+      </span>
+      <span className="min-w-0 break-words">{children}</span>
+    </a>
+  </li>
+);
+
 const ContactForm: React.FC = () => {
   const [formData, setFormData] = useState<FormData>(emptyForm);
   const { handleSubmit, isSubmitting, submitStatus } = useSubmit<FormData>();
   const STAGE = import.meta.env.VITE_STAGE;
   const { t } = useTranslation("contact");
 
-  const handleChange = (
-    e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>,
-  ) => {
+  const handleChange = (e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) => {
     const { name, value } = e.target;
     setFormData((prev) => ({
       ...prev,
@@ -52,155 +81,68 @@ const ContactForm: React.FC = () => {
     });
   };
 
-  const fieldClass =
-    "mt-1 block w-full border-0 border-b border-blue-900/40 bg-transparent px-1 py-2 text-sm text-blue-950 outline-none transition-colors focus:border-amber-500";
-
   return (
-    <div className="pb-28 md:pb-32">
-      <section className="relative h-64 w-full md:h-80 lg:h-96">
-        <iframe
-          title="Google Maps"
-          src={MAP_EMBED}
-          className="h-full w-full border-0"
-          allowFullScreen={false}
-          loading="lazy"
-          referrerPolicy="no-referrer-when-downgrade"
-        />
-        <a
-          href={MAPS_URL}
-          target="_blank"
-          rel="noopener noreferrer"
-          className="absolute bottom-4 right-4 inline-flex items-center gap-2 bg-amber-500 px-4 py-2 text-sm font-semibold text-blue-900 shadow-md transition-colors hover:bg-amber-400"
-        >
-          <i className="fas fa-map-location-dot" aria-hidden />
-          {t("openInMaps")}
-        </a>
-      </section>
+    <div>
+      <PageIntro title={t("title")} stickers={["plane", "star"]} />
 
-      <div className="mx-auto max-w-3xl px-4 py-10 md:px-6 md:py-14">
-        <FadeIn>
-          <SectionHeading title={t("title")} icon="fa-address-book" />
-        </FadeIn>
-
-        <FadeIn delayMs={80}>
-          <ul className="mb-10 space-y-4">
-            <li className="flex items-center gap-3 text-slate-700">
-              <span
-                className="flex h-10 w-10 shrink-0 items-center justify-center rounded-full bg-amber-500 text-blue-900"
-                aria-hidden
-              >
-                <i className="fas fa-location-dot" />
-              </span>
-              <a
-                href={MAPS_URL}
-                target="_blank"
-                rel="noopener noreferrer"
-                className="leading-relaxed transition-colors hover:text-blue-800"
-              >
+      <div className="relative mx-auto -mt-10 grid max-w-6xl gap-8 px-4 md:-mt-14 md:grid-cols-12 md:px-8">
+        <Reveal className="flex flex-col gap-6 md:col-span-5">
+          <div className="sheet p-6 md:p-8">
+            <ul className="space-y-2">
+              <ContactRow href={MAPS_URL} icon="fas fa-location-dot" external>
                 {FULL_ADDRESS}
-              </a>
-            </li>
-            <li className="flex items-center gap-3 text-slate-700">
-              <span
-                className="flex h-10 w-10 shrink-0 items-center justify-center rounded-full bg-amber-500 text-blue-900"
-                aria-hidden
-              >
-                <i className="fas fa-phone" />
-              </span>
-              <a
-                href={`tel:${PHONE_NUMBER.replace(/\D/g, "")}`}
-                className="leading-relaxed transition-colors hover:text-blue-800"
-              >
+              </ContactRow>
+              <ContactRow href={`tel:+1${PHONE_NUMBER.replace(/\D/g, "")}`} icon="fas fa-phone">
                 {PHONE_NUMBER}
-              </a>
-            </li>
-            <li className="flex items-center gap-3 text-slate-700">
-              <span
-                className="flex h-10 w-10 shrink-0 items-center justify-center rounded-full bg-amber-500 text-blue-900"
-                aria-hidden
-              >
-                <i className="fas fa-envelope" />
-              </span>
-              <a
-                href={`mailto:${EMAIL_ADDRESS}`}
-                className="leading-relaxed transition-colors hover:text-blue-800"
-              >
+              </ContactRow>
+              <ContactRow href={`mailto:${EMAIL_ADDRESS}`} icon="fas fa-envelope">
                 {EMAIL_ADDRESS}
-              </a>
-            </li>
-          </ul>
-        </FadeIn>
-
-        <FadeIn delayMs={140}>
-          <form
-            onSubmit={onSubmit}
-            className="relative space-y-6 border border-amber-700/20 bg-[#fbf7f0] px-5 py-8 shadow-[0_18px_50px_-28px_rgba(30,58,138,0.45)] md:px-8 md:py-10"
-          >
-            <div
-              className="absolute inset-x-0 top-0 h-1.5 bg-amber-500"
-              aria-hidden
+              </ContactRow>
+            </ul>
+          </div>
+          <div className="relative overflow-hidden rounded-card shadow-sheet">
+            <iframe
+              title="Google Maps"
+              src={MAP_EMBED}
+              className="h-64 w-full border-0 md:h-80"
+              allowFullScreen={false}
+              loading="lazy"
+              referrerPolicy="no-referrer-when-downgrade"
             />
-            <h2 className="font-title text-xl font-bold text-blue-900 md:text-2xl">
+            <div className="absolute bottom-3 right-3">
+              <Button href={MAPS_URL} external variant="light" icon="fa-arrow-up-right-from-square">
+                {t("openInMaps")}
+              </Button>
+            </div>
+          </div>
+        </Reveal>
+
+        <Reveal delayMs={100} className="md:col-span-7">
+          <form onSubmit={onSubmit} className="sheet space-y-5 p-6 md:p-10">
+            <h2 className="font-display text-2xl font-extrabold text-blue-900 md:text-3xl">
               {t("formTitle")}
             </h2>
 
+            {fields.map((field) => (
+              <div key={field.id}>
+                <label htmlFor={field.id} className="field-label">
+                  {t(`form.${field.id}`)} <span className="text-red-600">*</span>
+                </label>
+                <input
+                  type={field.type}
+                  id={field.id}
+                  name={field.id}
+                  autoComplete={field.autoComplete}
+                  value={formData[field.id]}
+                  onChange={handleChange}
+                  required
+                  className="field"
+                />
+              </div>
+            ))}
             <div>
-              <label
-                htmlFor="name"
-                className="text-sm font-medium text-blue-900"
-              >
-                {t("form.name")} <span className="text-red-500">*</span>
-              </label>
-              <input
-                type="text"
-                id="name"
-                name="name"
-                value={formData.name}
-                onChange={handleChange}
-                required
-                className={fieldClass}
-              />
-            </div>
-            <div>
-              <label
-                htmlFor="phone"
-                className="text-sm font-medium text-blue-900"
-              >
-                {t("form.phone")} <span className="text-red-500">*</span>
-              </label>
-              <input
-                type="tel"
-                id="phone"
-                name="phone"
-                value={formData.phone}
-                onChange={handleChange}
-                required
-                className={fieldClass}
-              />
-            </div>
-            <div>
-              <label
-                htmlFor="subject"
-                className="text-sm font-medium text-blue-900"
-              >
-                {t("form.subject")} <span className="text-red-500">*</span>
-              </label>
-              <input
-                type="text"
-                id="subject"
-                name="subject"
-                value={formData.subject}
-                onChange={handleChange}
-                required
-                className={fieldClass}
-              />
-            </div>
-            <div>
-              <label
-                htmlFor="message"
-                className="text-sm font-medium text-blue-900"
-              >
-                {t("form.message")} <span className="text-red-500">*</span>
+              <label htmlFor="message" className="field-label">
+                {t("form.message")} <span className="text-red-600">*</span>
               </label>
               <textarea
                 id="message"
@@ -208,33 +150,19 @@ const ContactForm: React.FC = () => {
                 value={formData.message}
                 onChange={handleChange}
                 required
-                rows={4}
-                className={`${fieldClass} resize-y`}
+                rows={5}
+                className="field resize-y"
               />
             </div>
 
-            {submitStatus === "success" && (
-              <div className="text-center text-green-700">
-                {t("successMessage")}
-              </div>
-            )}
-            {submitStatus === "error" && (
-              <div className="text-center text-red-600">
-                {t("errorMessage")}
-              </div>
-            )}
+            {submitStatus === "success" && <SuccessNote>{t("successMessage")}</SuccessNote>}
+            {submitStatus === "error" && <ErrorNote>{t("errorMessage")}</ErrorNote>}
 
-            <button
-              type="submit"
-              className="w-full bg-amber-500 px-4 py-3 text-sm font-semibold tracking-wide text-blue-900 transition-colors hover:bg-amber-400 disabled:opacity-50 md:text-base"
-              disabled={isSubmitting}
-            >
-              {isSubmitting
-                ? t("submitting", { ns: "common" })
-                : t("submit", { ns: "common" })}
-            </button>
+            <Button type="submit" disabled={isSubmitting} className="w-full">
+              {isSubmitting ? t("submitting", { ns: "common" }) : t("submit", { ns: "common" })}
+            </Button>
           </form>
-        </FadeIn>
+        </Reveal>
       </div>
     </div>
   );
@@ -242,9 +170,7 @@ const ContactForm: React.FC = () => {
 
 const Contact: React.FC = () => {
   return (
-    <GoogleReCaptchaProvider
-      reCaptchaKey={import.meta.env.VITE_GOOGLE_RECAPTCHA_CLIENT}
-    >
+    <GoogleReCaptchaProvider reCaptchaKey={import.meta.env.VITE_GOOGLE_RECAPTCHA_CLIENT}>
       <ContactForm />
     </GoogleReCaptchaProvider>
   );

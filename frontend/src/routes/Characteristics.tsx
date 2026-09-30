@@ -1,7 +1,7 @@
 import React from "react";
 import { useTranslation } from "react-i18next";
-import SectionHeading from "../components/SectionHeading";
-import FadeIn from "../components/FadeIn";
+import PageIntro from "../components/PageIntro";
+import Reveal from "../components/Reveal";
 
 interface Characteristic {
   icon: string;
@@ -23,34 +23,27 @@ const Characteristics: React.FC = () => {
   const { t } = useTranslation("features");
 
   return (
-    <div className="bg-amber-500/10 px-4 py-10 md:px-8 md:py-14">
-      <FadeIn>
-        <SectionHeading
-          title={t("title")}
-          icon="fa-list-check"
-          className="mx-auto max-w-3xl"
-        />
-      </FadeIn>
-
-      <FadeIn delayMs={100}>
-        <article className="notebook-paper mx-auto max-w-3xl shadow-[0_18px_50px_-28px_rgba(30,58,138,0.4)]">
-          <ul className="notebook-paper__list">
-            {characteristics.map((item) => (
-              <li key={item.i18nKey} className="notebook-paper__item">
-                <div className="notebook-paper__title">
-                  <span className="notebook-paper__icon" aria-hidden>
-                    <i className={`fas ${item.icon}`} />
-                  </span>
-                  <h2>{t(`${item.i18nKey}.title`)}</h2>
-                </div>
-                <p className="notebook-paper__body">
-                  {t(`${item.i18nKey}.content`)}
-                </p>
-              </li>
-            ))}
-          </ul>
-        </article>
-      </FadeIn>
+    <div>
+      <PageIntro title={t("title")} stickers={["block", "star"]} />
+      <div className="relative -mt-8 px-4 md:-mt-12 md:px-8">
+        <Reveal>
+          <article className="notebook-paper mx-auto max-w-3xl shadow-lift">
+            <ul className="notebook-paper__list">
+              {characteristics.map((item) => (
+                <li key={item.i18nKey} className="notebook-paper__item">
+                  <div className="notebook-paper__title">
+                    <span className="notebook-paper__icon" aria-hidden>
+                      <i className={`fas ${item.icon}`} />
+                    </span>
+                    <h2>{t(`${item.i18nKey}.title`)}</h2>
+                  </div>
+                  <p className="notebook-paper__body">{t(`${item.i18nKey}.content`)}</p>
+                </li>
+              ))}
+            </ul>
+          </article>
+        </Reveal>
+      </div>
     </div>
   );
 };

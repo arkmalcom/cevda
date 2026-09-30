@@ -5,7 +5,9 @@ import { useTranslation } from "react-i18next";
 import { useSubmit } from "../hooks/useSubmit";
 import Input from "../components/Input";
 import InputGroup from "../components/InputGroup";
-import SectionHeading from "../components/SectionHeading";
+import PageIntro from "../components/PageIntro";
+import Button from "../components/ui/Button";
+import { ErrorNote, SuccessNote } from "../components/StarBurst";
 import AdmissionPrintForm from "../components/AdmissionPrintForm";
 
 import countryOptions from "../utils/Constants";
@@ -99,36 +101,24 @@ const AdmissionForm: React.FC = () => {
   const translatedCountryOptions = translateCountries(countryOptions);
 
   return (
-    <div className="admission-screen mx-auto max-w-4xl px-4 py-10 md:px-6 md:py-14">
-      <FadeInHeading title={t("title")} />
+    <div className="admission-screen">
+      <PageIntro title={t("title")} lead={t("content")} stickers={["crown", "pencil"]}>
+        <div className="mt-8 print:hidden">
+          <Button variant="light" icon="fa-print" onClick={() => window.print()}>
+            {t("print.button")}
+          </Button>
+        </div>
+      </PageIntro>
 
-      <div className="mb-8 space-y-3 text-center text-sm leading-relaxed text-slate-700 md:text-base">
-        <p>{t("content")}</p>
-      </div>
-
-      <div className="mb-6 flex flex-wrap items-center justify-center gap-3 print:hidden">
-        <button
-          type="button"
-          onClick={() => window.print()}
-          className="inline-flex items-center gap-2 border border-blue-800 px-4 py-2 text-sm font-medium text-blue-800 transition-colors hover:bg-blue-50"
-        >
-          <i className="fas fa-print" aria-hidden />
-          {t("print.button")}
-        </button>
-      </div>
-
+      <div className="relative mx-auto -mt-10 max-w-4xl px-4 md:-mt-14 md:px-6">
       <form
         onSubmit={onSubmit}
-        className="admission-digital-form relative mx-auto space-y-8 border border-amber-700/20 bg-[#fbf7f0] px-5 py-8 shadow-[0_18px_50px_-28px_rgba(30,58,138,0.45)] md:px-10 md:py-10"
+        className="admission-digital-form sheet relative mx-auto space-y-10 px-5 py-8 md:px-10 md:py-12"
       >
-        <div
-          className="pointer-events-none absolute inset-x-0 top-0 h-1.5 bg-amber-500"
-          aria-hidden
-        />
 
         <section>
-          <h2 className="mb-5 flex items-center gap-3 border-b border-blue-900/20 pb-2 font-title text-xl font-bold text-blue-900">
-            <span className="flex h-8 w-8 items-center justify-center rounded-full bg-amber-500 text-sm text-blue-900">
+          <h2 className="mb-6 flex items-center gap-3 border-b-2 border-dashed border-blue-900/15 pb-3 font-display text-2xl font-extrabold text-blue-900">
+            <span className="flex h-10 w-10 items-center justify-center rounded-full bg-amber-500 text-base text-blue-950">
               <i className="fas fa-child" aria-hidden />
             </span>
             {t("form.studentInfo.title")}
@@ -242,8 +232,8 @@ const AdmissionForm: React.FC = () => {
         </section>
 
         <section>
-          <h2 className="mb-5 flex items-center gap-3 border-b border-blue-900/20 pb-2 font-title text-xl font-bold text-blue-900">
-            <span className="flex h-8 w-8 items-center justify-center rounded-full bg-amber-500 text-sm text-blue-900">
+          <h2 className="mb-6 flex items-center gap-3 border-b-2 border-dashed border-blue-900/15 pb-3 font-display text-2xl font-extrabold text-blue-900">
+            <span className="flex h-10 w-10 items-center justify-center rounded-full bg-amber-500 text-base text-blue-950">
               <i className="fas fa-user-tie" aria-hidden />
             </span>
             {t("form.guardianInfo.title")}
@@ -386,38 +376,19 @@ const AdmissionForm: React.FC = () => {
           </div>
         </section>
 
-        {submitStatus === "success" && (
-          <div className="text-center text-green-700">
-            {t("form.successMessage")}
-          </div>
-        )}
-        {submitStatus === "error" && (
-          <div className="text-center text-red-600">
-            {t("form.errorMessage")}
-          </div>
-        )}
+        {submitStatus === "success" && <SuccessNote>{t("form.successMessage")}</SuccessNote>}
+        {submitStatus === "error" && <ErrorNote>{t("form.errorMessage")}</ErrorNote>}
 
-        <button
-          type="submit"
-          className="w-full bg-amber-500 px-4 py-3 text-sm font-semibold tracking-wide text-blue-900 transition-colors hover:bg-amber-400 disabled:opacity-50 md:text-base"
-          disabled={isSubmitting || disableField}
-        >
-          {isSubmitting
-            ? t("submitting", { ns: "common" })
-            : t("submit", { ns: "common" })}
-        </button>
+        <Button type="submit" disabled={isSubmitting || disableField} className="w-full">
+          {isSubmitting ? t("submitting", { ns: "common" }) : t("submit", { ns: "common" })}
+        </Button>
       </form>
+      </div>
 
       <AdmissionPrintForm />
     </div>
   );
 };
-
-const FadeInHeading: React.FC<{ title: string }> = ({ title }) => (
-  <div className="mb-6 print:hidden">
-    <SectionHeading title={title} icon="fa-file-pen" />
-  </div>
-);
 
 const Admission: React.FC = () => {
   return (

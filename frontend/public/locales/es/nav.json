@@ -3,5 +3,19 @@
   "admission": "Admisión",
   "features": "Características",
   "contact": "Contacto",
-  "careers": "Carreras"
+  "careers": "Carreras",
+  "mainNav": "Navegación principal",
+  "openMenu": "Abrir menú",
+  "closeMenu": "Cerrar menú",
+  "switchLanguage": "Change language to English",
+  "skipToContent": "Saltar al contenido",
+  "footer": {
+    "visit": "Visítanos",
+    "call": "Llámanos",
+    "write": "Escríbenos",
+    "whatsapp": "WhatsApp",
+    "instagram": "Síguenos en Instagram",
+    "pages": "Páginas",
+    "openInMaps": "Abrir en Google Maps"
+  }
 }

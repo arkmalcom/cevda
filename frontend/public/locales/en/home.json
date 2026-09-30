@@ -82,6 +82,12 @@
       "Primary school children must undergo an evaluation"
     ]
   },
+  "hero": {
+    "photoAlt": "Students of Centro Educativo Villa de Ángeles",
+    "nextPhoto": "Show the next photo",
+    "previousPhoto": "Show the previous photo",
+    "photoStatus": "Photo {{current}} of {{total}}"
+  },
   "welcome": {
     "header": "Welcome to Centro Educativo Villa de Ángeles, a space dedicated to the learning and comprehensive development of your children.",
     "content": "We are a school committed to educational excellence, offering services from the initial level to the primary level, complemented by extracurricular classes designed to enhance the skills of our students. In addition, we have a semi-internship system that guarantees a safe and enriching environment. Our intensive focus is on providing quality education and exceptional care, always prioritizing the well-being and growth of our students.",

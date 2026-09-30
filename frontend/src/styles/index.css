@@ -4,9 +4,22 @@
 @tailwind utilities;
 
 :root {
-  --brand-amber: #f59e0b;
-  --brand-blue: #1e3a8a;
-  --brand-ink: #0f172a;
+  --crest: #2b2f8f;
+  --crest-deep: #1c1f5e;
+  --crest-soft: #e0e2f7;
+  --sun: #f6b42c;
+  --sun-soft: #ffe08a;
+  --palm: #2f8f5b;
+  --coral: #f26b5b;
+  --paper: #f4f6fa;
+  --sheet: #fdfdff;
+  --ink: #1b1d3a;
+  --ink-soft: #464a78;
+  --ease-out: cubic-bezier(0.16, 1, 0.3, 1);
+  --ease-in-out: cubic-bezier(0.77, 0, 0.175, 1);
+  --ease: var(--ease-out);
+  --nav-h: 4rem;
+  color-scheme: light;
 }
 
 #root {
@@ -15,57 +28,352 @@
 
 html {
   scroll-behavior: smooth;
-  overflow-x: hidden;
+  scroll-padding-top: 6rem;
+  scroll-padding-bottom: 1.5rem;
+  overflow-x: clip;
+  scrollbar-color: var(--crest) var(--paper);
+  -webkit-tap-highlight-color: transparent;
+}
+
+a,
+button,
+label,
+summary {
+  touch-action: manipulation;
 }
 
 body {
-  font-family: "Source Sans 3", system-ui, sans-serif;
-  overflow-x: hidden;
+  background-color: var(--paper);
+  background-image: url("../assets/paper-grain.webp");
+  background-size: 384px 384px;
+  color: var(--ink);
+  font-family: "Source Sans 3 Variable", system-ui, sans-serif;
+  overflow-x: clip;
+  text-rendering: optimizeLegibility;
+  -webkit-font-smoothing: antialiased;
 }
 
-/* Explicit so brand face isn’t lost if Tailwind config HMR is stale */
+::selection {
+  background: var(--sun);
+  color: var(--crest-deep);
+}
+
+a,
+button {
+  text-underline-offset: 0.22em;
+}
+
+:focus-visible {
+  outline: 3px solid var(--crest);
+  outline-offset: 3px;
+  border-radius: 6px;
+}
+
+.surface-dark :focus-visible {
+  outline-color: var(--sun);
+}
+
+input,
+textarea,
+select {
+  caret-color: var(--crest);
+  accent-color: var(--crest);
+}
+
+h1,
+h2,
+h3 {
+  text-wrap: balance;
+}
+
+p {
+  text-wrap: pretty;
+}
+
 .font-brand {
   font-family: "Pirata One", Georgia, serif;
 }
 
+.font-display,
 .font-title {
-  font-family: "Source Serif 4", Georgia, serif;
+  font-family: "Bricolage Grotesque Variable", system-ui, sans-serif;
+  letter-spacing: -0.025em;
 }
 
-.font-welcome {
-  font-family: "Source Sans 3", system-ui, sans-serif;
+.font-hand {
+  font-family: "Shantell Sans Variable", "Comic Sans MS", cursive;
+  letter-spacing: 0;
 }
 
-.hero-text {
-  text-shadow:
-    0 1px 2px rgba(15, 23, 42, 0.85),
-    0 2px 12px rgba(15, 23, 42, 0.55),
-    0 0 1px rgba(15, 23, 42, 0.9);
+.tabular {
+  font-variant-numeric: tabular-nums;
 }
 
-/* Lined notebook sheet — rule spacing matches text line-height */
+@layer components {
+  .btn {
+    @apply relative isolate inline-flex min-h-12 select-none items-center justify-center gap-2 overflow-hidden whitespace-nowrap rounded-full px-6 py-3 text-base font-semibold;
+    transition:
+      transform 160ms var(--ease-out),
+      color 240ms ease,
+      background-color 240ms ease,
+      border-color 240ms ease;
+  }
+
+  .btn:active:not(:disabled) {
+    transform: scale(0.97);
+  }
+
+  .btn:disabled {
+    @apply cursor-not-allowed opacity-60;
+  }
+
+  .btn-primary {
+    --btn-fill: var(--crest);
+    --btn-fill-text: #fff;
+    background: var(--sun);
+    color: var(--crest-deep);
+  }
+
+  .btn-outline {
+    --btn-fill: var(--crest);
+    --btn-fill-text: #fff;
+    border: 2px solid var(--crest);
+    color: var(--crest);
+  }
+
+  .btn-light {
+    --btn-fill: var(--sun);
+    --btn-fill-text: var(--crest-deep);
+    background: var(--sheet);
+    color: var(--crest);
+  }
+
+  .btn-fill {
+    position: absolute;
+    inset: -2px;
+    z-index: -1;
+    background: var(--btn-fill);
+    clip-path: circle(0% at var(--fill-x, 50%) var(--fill-y, 50%));
+    transition: clip-path 260ms var(--ease-out);
+    pointer-events: none;
+  }
+
+  @media (hover: hover) and (pointer: fine) {
+    .btn:hover:not(:disabled) {
+      color: var(--btn-fill-text);
+    }
+
+    .btn:hover:not(:disabled) .btn-fill {
+      clip-path: circle(150% at var(--fill-x, 50%) var(--fill-y, 50%));
+      transition-duration: 480ms;
+    }
+  }
+
+  .btn:focus-visible .btn-fill {
+    clip-path: circle(150% at 50% 50%);
+  }
+
+  .btn:focus-visible {
+    color: var(--btn-fill-text);
+    border-radius: 9999px;
+  }
+
+  .sheet {
+    background: var(--sheet);
+    border-radius: 16px;
+    box-shadow: 0 18px 40px -24px rgba(28, 31, 94, 0.35);
+  }
+
+  .field {
+    @apply mt-1.5 block w-full rounded-xl border bg-white px-3.5 py-2.5 text-[15px] text-ink outline-none;
+    border-color: rgba(43, 47, 143, 0.22);
+    transition:
+      border-color 180ms ease,
+      box-shadow 180ms ease;
+  }
+
+  .field::placeholder {
+    color: #5b5e8f;
+  }
+
+  @media (hover: hover) and (pointer: fine) {
+    .field:hover:not(:disabled) {
+      border-color: rgba(43, 47, 143, 0.45);
+    }
+  }
+
+  .field:focus {
+    border-color: var(--crest);
+    box-shadow: 0 0 0 3px rgba(246, 180, 44, 0.55);
+  }
+
+  .field:disabled {
+    @apply cursor-not-allowed;
+    background: #eceef5;
+    color: #5b5e8f;
+  }
+
+  .field[aria-invalid="true"],
+  .field.is-invalid {
+    border-color: #c0392b;
+  }
+
+  .field-label {
+    @apply text-sm font-semibold text-blue-900;
+  }
+
+  .marker {
+    position: relative;
+    z-index: 0;
+    white-space: nowrap;
+  }
+
+  .marker::before {
+    content: "";
+    position: absolute;
+    inset: 52% -0.12em 6% -0.1em;
+    z-index: -1;
+    background: var(--sun);
+    border-radius: 0.3em 0.7em 0.4em 0.8em;
+    transform: rotate(-1.5deg);
+    clip-path: inset(0 0 0 0);
+  }
+
+  .sticker {
+    filter: drop-shadow(0 10px 12px rgba(28, 31, 94, 0.28));
+    user-select: none;
+    -webkit-user-drag: none;
+  }
+
+  .no-scrollbar {
+    scrollbar-width: none;
+  }
+
+  .no-scrollbar::-webkit-scrollbar {
+    display: none;
+  }
+}
+
+.menu-panel {
+  background: var(--crest);
+}
+
+@media (prefers-reduced-motion: no-preference) {
+  .marker-animate::before {
+    clip-path: inset(0 100% 0 0);
+    animation: marker-swipe 680ms var(--ease-out) 420ms forwards;
+  }
+
+  .sticker-bob {
+    animation: sticker-bob 6s ease-in-out infinite;
+    animation-play-state: var(--bob-state, running);
+  }
+
+  .check-draw path {
+    stroke-dasharray: 24;
+    stroke-dashoffset: 24;
+    transition: stroke-dashoffset 420ms var(--ease-out);
+    transition-delay: var(--delay, 0ms);
+  }
+
+  .is-drawn .check-draw path {
+    stroke-dashoffset: 0;
+  }
+}
+
+@keyframes marker-swipe {
+  to {
+    clip-path: inset(0 0 0 0);
+  }
+}
+
+@keyframes sticker-bob {
+  0%,
+  100% {
+    translate: 0 0;
+    rotate: 0deg;
+  }
+  50% {
+    translate: 0 -8px;
+    rotate: 4deg;
+  }
+}
+
+/* Page transitions: the old page lifts away over a crest-blue curtain, the new one wipes up. */
+::view-transition {
+  background:
+    url("../assets/cevda_logo_tr.png") center / 72px auto no-repeat,
+    radial-gradient(circle at center, #fff 0 56px, transparent 57px),
+    var(--crest);
+}
+
+::view-transition-old(root) {
+  animation: vt-old 320ms var(--ease-in-out) both;
+}
+
+::view-transition-new(root) {
+  animation: vt-new 560ms var(--ease-in-out) 140ms both;
+}
+
+@keyframes vt-old {
+  to {
+    opacity: 0;
+    transform: translateY(-3%) scale(0.98);
+  }
+}
+
+@keyframes vt-new {
+  from {
+    clip-path: inset(100% 0 0 0 round 2rem 2rem 0 0);
+  }
+  to {
+    clip-path: inset(0 0 0 0 round 0);
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  html {
+    scroll-behavior: auto;
+  }
+
+  ::view-transition-old(root),
+  ::view-transition-new(root) {
+    animation-duration: 160ms;
+    animation-delay: 0ms;
+    animation-name: vt-fade;
+  }
+}
+
+@keyframes vt-fade {
+  from {
+    opacity: 0;
+  }
+}
+
+/* Lined notebook sheet: rule spacing matches text line-height */
 .notebook-paper {
   --notebook-line: 1.75rem;
   --notebook-margin: 3rem;
-  background-color: #fbf7f0;
+  background-color: var(--sheet);
   background-image:
     linear-gradient(
       90deg,
       transparent calc(var(--notebook-margin) - 1px),
-      #f87171 calc(var(--notebook-margin) - 1px),
-      #f87171 var(--notebook-margin),
+      #7c80c9 calc(var(--notebook-margin) - 1px),
+      #7c80c9 var(--notebook-margin),
       transparent var(--notebook-margin)
     ),
     repeating-linear-gradient(
       to bottom,
       transparent 0,
       transparent calc(var(--notebook-line) - 1px),
-      #93c5fd calc(var(--notebook-line) - 1px),
-      #93c5fd var(--notebook-line)
+      #b9c6ea calc(var(--notebook-line) - 1px),
+      #b9c6ea var(--notebook-line)
     );
   background-attachment: local;
-  border: 1px solid rgba(180, 140, 80, 0.25);
-  color: #1e3a8a;
+  border-radius: 16px;
+  box-shadow: 0 18px 40px -24px rgba(28, 31, 94, 0.35);
+  color: var(--crest);
   line-height: var(--notebook-line);
   padding: var(--notebook-line) 1.25rem var(--notebook-line)
     calc(var(--notebook-margin) + 0.85rem);
@@ -95,18 +403,20 @@ body {
 }
 
 .notebook-paper__title h2 {
-  color: #1e3a8a;
-  font-size: 1.05rem;
+  color: var(--crest);
+  font-family: "Bricolage Grotesque Variable", system-ui, sans-serif;
+  font-size: 1.1rem;
   font-weight: 700;
+  letter-spacing: -0.01em;
   line-height: var(--notebook-line);
   margin: 0;
 }
 
 .notebook-paper__icon {
   align-items: center;
-  background: #f59e0b;
+  background: var(--sun);
   border-radius: 9999px;
-  color: #1e3a8a;
+  color: var(--crest);
   display: inline-flex;
   flex-shrink: 0;
   font-size: 0.85rem;
@@ -117,36 +427,11 @@ body {
 }
 
 .notebook-paper__body {
-  color: #334155;
+  color: var(--ink-soft);
   line-height: var(--notebook-line);
   margin: 0;
   text-align: left;
   white-space: pre-line;
-}
-
-/* Soft chalkboard panel for careers */
-.chalkboard {
-  background-color: #1f3d2d;
-  background-image:
-    radial-gradient(rgba(255, 255, 255, 0.04) 1px, transparent 1px),
-    linear-gradient(160deg, #243f31 0%, #1a3226 45%, #15281e 100%);
-  background-size:
-    4px 4px,
-    100% 100%;
-  border-bottom: 6px solid #c4a574;
-}
-
-.chalkboard-heading h2 {
-  color: #fef3c7 !important;
-}
-
-.chalkboard-heading .section-heading-icon {
-  background: #f59e0b;
-  color: #1e3a8a;
-}
-
-.chalkboard-heading .section-heading-line {
-  background-color: rgba(251, 191, 36, 0.55) !important;
 }
 
 @media (min-width: 768px) {
@@ -155,8 +440,30 @@ body {
   }
 
   .notebook-paper__title h2 {
-    font-size: 1.15rem;
+    font-size: 1.2rem;
   }
+}
+
+/* react-datepicker inherits the field look */
+.react-datepicker-wrapper {
+  display: block;
+  width: 100%;
+}
+
+.react-datepicker {
+  font-family: "Source Sans 3 Variable", system-ui, sans-serif !important;
+  border-radius: 12px !important;
+  border-color: rgba(43, 47, 143, 0.22) !important;
+}
+
+.react-datepicker__header {
+  background: var(--crest-soft) !important;
+}
+
+.react-datepicker__day--selected,
+.react-datepicker__day--keyboard-selected {
+  background: var(--crest) !important;
+  color: #fff !important;
 }
 
 @media print {

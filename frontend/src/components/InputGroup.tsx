@@ -30,10 +30,10 @@ const InputGroup: React.FC<InputGroupProps> = ({
   return (
     <div className={isPaper ? "mb-4" : "mb-6"}>
       {isPaper && label && (
-        <p className="mb-2 text-sm font-medium text-blue-900">
+        <p className="field-label mb-1">
           {label}
           {inputs.some((input) => input.required) && (
-            <span className="text-red-500"> *</span>
+            <span className="text-red-600"> *</span>
           )}
         </p>
       )}

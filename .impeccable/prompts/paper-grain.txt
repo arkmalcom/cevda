@@ -1,0 +1,1 @@
+A seamless, evenly lit, top-down macro photograph of plain uncoated white drawing paper texture, near-white neutral, very low contrast. Post-processed with ImageMagick: resized to 384px, grayscale auto-leveled then +level 96%,100%, mirror-tiled 2x2 into a seamless 768px WebP tile, multiplied onto #F9FAFD.

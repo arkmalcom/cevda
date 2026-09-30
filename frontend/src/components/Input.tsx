@@ -35,12 +35,10 @@ const Input: React.FC<InputProps> = ({
   const [dob, setDob] = useState<Date | null>(null);
 
   const commonClasses = isPaper
-    ? "mt-1 block w-full border-0 border-b border-blue-900/40 bg-transparent px-1 py-2 text-sm text-blue-950 shadow-none outline-none transition-colors focus:border-amber-500 focus:ring-0"
+    ? "field"
     : "mt-2 block w-26 rounded-sm border p-1 text-xs shadow-sm focus:border focus:ring lg:w-52";
 
-  const disabledClasses = isPaper
-    ? "cursor-not-allowed border-slate-300 text-slate-400"
-    : "cursor-not-allowed bg-gray-200 text-gray-500";
+  const disabledClasses = isPaper ? "" : "cursor-not-allowed bg-gray-200 text-gray-500";
 
   const enabledBorder = isPaper ? "" : "border-blue-800";
 
@@ -70,16 +68,10 @@ const Input: React.FC<InputProps> = ({
       {(label || !isPaper) && (
         <label
           htmlFor={id}
-          className={`block text-sm ${
-            label
-              ? isPaper
-                ? "font-medium text-blue-900"
-                : "text-blue-800"
-              : "invisible"
-          }`}
+          className={label ? "field-label" : "invisible block text-sm"}
         >
           {label || "Placeholder"}{" "}
-          {required && label && <span className="text-red-500">*</span>}
+          {required && label && <span className="text-red-600">*</span>}
         </label>
       )}
       {!label && isPaper && required && (
@@ -147,9 +139,7 @@ const Input: React.FC<InputProps> = ({
       )}
       {subtext && (
         <p
-          className={`text-xs ${
-            isPaper ? "mt-1 text-slate-500" : "text-gray-500"
-          }`}
+          className={isPaper ? "mt-1.5 text-[13px] text-[var(--ink-soft)]" : "text-xs text-ink"}
         >
           {subtext}
         </p>

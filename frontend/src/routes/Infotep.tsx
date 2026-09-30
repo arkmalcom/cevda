@@ -1,128 +1,86 @@
 import React from "react";
-import infotepLogo from "../assets/infotep_logo.jpg";
 import { useTranslation } from "react-i18next";
-import FadeIn from "../components/FadeIn";
-import { Link } from "react-router-dom";
+import infotepLogo from "../assets/infotep_logo.jpg";
+import PageIntro from "../components/PageIntro";
+import Reveal from "../components/Reveal";
+import { TransitionLink } from "../components/ui/TransitionLink";
+import { PHONE_NUMBER } from "../utils/Constants";
+
+const InfoRow: React.FC<{ icon: string; children: React.ReactNode }> = ({ icon, children }) => (
+  <li className="flex items-center gap-4 text-ink">
+    <span
+      className="flex h-11 w-11 shrink-0 items-center justify-center rounded-full bg-amber-500 text-blue-950"
+      aria-hidden
+    >
+      <i className={icon} />
+    </span>
+    <span className="text-[17px]">{children}</span>
+  </li>
+);
 
 const Infotep: React.FC = () => {
   const { t } = useTranslation("infotep");
-
-  const requirements =
-    (t("requirements.list", {
-      returnObjects: true,
-    }) as string[]) || [];
+  const requirements = t("requirements.list", { returnObjects: true });
+  const requirementList = Array.isArray(requirements) ? (requirements as string[]) : [];
 
   return (
-    <div className="pb-16">
-      <section className="relative overflow-hidden bg-gradient-to-br from-blue-900 via-blue-800 to-blue-950 px-4 pb-24 pt-10 md:pb-28 md:pt-14">
-        <div
-          className="pointer-events-none absolute -left-16 top-0 h-56 w-56 rounded-full bg-amber-400/20 blur-3xl"
-          aria-hidden
-        />
-        <div
-          className="pointer-events-none absolute -right-10 bottom-0 h-64 w-64 rounded-full bg-amber-500/10 blur-3xl"
-          aria-hidden
-        />
-        <FadeIn>
-          <p className="relative text-center text-sm font-medium uppercase tracking-[0.2em] text-amber-300/90">
-            {t("eyebrow")}
-          </p>
-        </FadeIn>
-      </section>
+    <div>
+      <PageIntro title={t("title")} lead={t("eyebrow")} stickers={["laurel", "pencil"]} />
 
-      <div className="relative z-10 mx-auto -mt-20 max-w-3xl px-4 md:-mt-24">
-        <FadeIn delayMs={80}>
-          <div className="mx-auto mb-10 flex h-40 w-40 items-center justify-center overflow-hidden rounded-full bg-white p-4 shadow-[0_18px_40px_-16px_rgba(30,58,138,0.55)] ring-4 ring-amber-500/80 md:h-52 md:w-52 md:p-5">
-            <img
-              src={infotepLogo}
-              alt="INFOTEP"
-              className="h-full w-full object-contain"
-            />
-          </div>
-        </FadeIn>
-
-        <FadeIn delayMs={120}>
-          <p className="mb-8 text-center text-base leading-relaxed text-slate-700 md:text-lg">
+      <div className="relative mx-auto -mt-10 grid max-w-5xl gap-6 px-4 md:-mt-14 md:grid-cols-12 md:px-8">
+        <Reveal className="sheet flex flex-col items-center gap-6 p-6 text-center md:col-span-7 md:flex-row md:items-start md:p-8 md:text-left">
+          <span className="flex h-28 w-28 shrink-0 items-center justify-center overflow-hidden rounded-full bg-white p-3 shadow-sheet ring-1 ring-blue-900/10 md:h-32 md:w-32">
+            <img src={infotepLogo} alt="INFOTEP" className="h-full w-full object-contain" />
+          </span>
+          <p className="max-w-[60ch] text-[17px] leading-relaxed text-ink md:text-lg">
             {t("description")}
           </p>
-        </FadeIn>
+        </Reveal>
 
-        <FadeIn delayMs={160}>
-          <h2 className="mb-4 font-title text-xl font-bold text-blue-800 md:text-2xl">
+        <Reveal delayMs={80} className="sheet p-6 md:col-span-5 md:p-8">
+          <h2 className="font-display text-2xl font-extrabold text-blue-900">
             {t("requirements.title")}
           </h2>
-          <ul className="mb-8 space-y-3">
-            {requirements.map((item, index) => (
-              <li
-                key={index}
-                className="flex items-center gap-3 text-slate-700"
-              >
-                <span
-                  className="flex h-7 w-7 shrink-0 items-center justify-center rounded-full bg-amber-500 text-blue-900"
-                  aria-hidden
-                >
-                  <i className="fas fa-check text-xs leading-none" />
-                </span>
-                <span className="leading-normal">{item}</span>
+          <ul className="mt-5 space-y-3">
+            {requirementList.map((item) => (
+              <li key={item} className="flex items-start gap-3 text-[17px] text-ink">
+                <i className="fas fa-circle-check mt-1 text-blue-900" aria-hidden />
+                <span>{item}</span>
               </li>
             ))}
           </ul>
-        </FadeIn>
+        </Reveal>
 
-        <FadeIn delayMs={200}>
-          <div className="mb-8 space-y-4 border border-amber-700/15 bg-amber-500/10 p-5 md:p-6">
-            <p className="leading-relaxed text-slate-700">
-              {t("moreInformation")}
-            </p>
-            <ul className="space-y-3">
-              <li className="flex items-center gap-3 text-slate-700">
-                <span
-                  className="flex h-10 w-10 shrink-0 items-center justify-center rounded-full bg-amber-500 text-blue-900"
-                  aria-hidden
-                >
-                  <i className="fab fa-whatsapp" />
-                </span>
+        <Reveal delayMs={120} className="rounded-card bg-blue-50 p-6 md:col-span-12 md:p-8">
+          <div className="grid gap-6 md:grid-cols-2 md:items-center">
+            <p className="text-lg leading-relaxed text-ink">{t("moreInformation")}</p>
+            <ul className="space-y-4">
+              <InfoRow icon="fab fa-whatsapp">
                 <a
                   href="https://wa.me/+18498868485"
                   target="_blank"
                   rel="noopener noreferrer"
-                  className="transition-colors hover:text-blue-800"
+                  className="font-semibold text-blue-900 underline decoration-amber-500 decoration-2 underline-offset-4"
                 >
-                  (849) 886-8485
+                  {PHONE_NUMBER}
                 </a>
-              </li>
-              <li className="flex items-center gap-3 text-slate-700">
-                <span
-                  className="flex h-10 w-10 shrink-0 items-center justify-center rounded-full bg-amber-500 text-blue-900"
-                  aria-hidden
-                >
-                  <i className="fas fa-clock" />
-                </span>
-                <span>{t("officeHours")}</span>
-              </li>
-              <li className="flex items-center gap-3 text-slate-700">
-                <span
-                  className="flex h-10 w-10 shrink-0 items-center justify-center rounded-full bg-amber-500 text-blue-900"
-                  aria-hidden
-                >
-                  <i className="fas fa-envelope" />
-                </span>
-                <Link
+              </InfoRow>
+              <InfoRow icon="fas fa-clock">{t("officeHours")}</InfoRow>
+              <InfoRow icon="fas fa-envelope">
+                <TransitionLink
                   to="/contacto"
-                  className="transition-colors hover:text-blue-800"
+                  className="font-semibold text-blue-900 underline decoration-amber-500 decoration-2 underline-offset-4"
                 >
                   {t("contactCta")}
-                </Link>
-              </li>
+                </TransitionLink>
+              </InfoRow>
             </ul>
           </div>
-        </FadeIn>
+        </Reveal>
 
-        <FadeIn delayMs={240}>
-          <p className="text-center font-welcome text-lg font-medium text-amber-600 md:text-xl">
-            {t("closing")}
-          </p>
-        </FadeIn>
+        <p className="-rotate-2 text-center font-hand text-2xl font-semibold text-amber-ink md:col-span-12 md:text-3xl">
+          {t("closing")}
+        </p>
       </div>
     </div>
   );

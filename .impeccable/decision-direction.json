@@ -1,0 +1,147 @@
+{
+  "title": "Choose the visual world for CEVDA",
+  "question": "The roll assigned the Boletín direction. Keep it, take the living schoolbook pick or an alternate, or re-roll.",
+  "options": [
+    {
+      "id": "assigned",
+      "label": "Boletín de calificaciones",
+      "kicker": "THE ROLL",
+      "lineage": "Dominican school report cards and stamped certificates",
+      "thesis": "The school introduces itself the way it reports on a child: a ruled, signed, stamped record of what each level gives.",
+      "palette": ["#2B2F8F", "#F6B42C", "#FBF8F2", "#1E2152"],
+      "materials": ["ruled card stock", "rubber stamps", "ink signatures"],
+      "viewport": "A full-width boletín sheet: crest seal top left, the school name as the header row, levels and ages as the first graded rows, Admisión as the stamped action.",
+      "risk": "Grades imply judgment; if the grid is set coldly, a warm school reads like a bureaucracy.",
+      "raised": [
+        { "from": "challenger-lineup", "raise": "Hierarchy is carried by type size alone; rows never need icons or boxes to rank." },
+        { "from": "challenger-sapeur", "raise": "Exactly three brand colors, committed to whole regions, never scattered." },
+        { "from": "challenger-sewing", "raise": "The chosen level renders solid while the others stay dashed, one state grammar sitewide." }
+      ],
+      "wireframe": { "cols": 12, "rows": 10, "regions": [
+        { "label": "crest seal", "x": 0, "y": 0, "w": 2, "h": 2, "accent": true },
+        { "label": "school name header row", "x": 2, "y": 0, "w": 10, "h": 2 },
+        { "label": "levels as graded rows", "x": 0, "y": 2, "w": 8, "h": 6 },
+        { "label": "stamp: Admisión", "x": 8, "y": 3, "w": 4, "h": 3, "accent": true },
+        { "label": "signature line", "x": 0, "y": 8, "w": 12, "h": 2 }
+      ] },
+      "comp": ".impeccable/mocks/decision/assigned.webp"
+    },
+    {
+      "id": "model-pick",
+      "label": "Living schoolbook",
+      "kicker": "IMPECCABLE’S PICK",
+      "lineage": "Notebooks, gold-star stickers, and highlighters from a Dominican classroom",
+      "thesis": "The site is a school notebook come alive: the crest's royal blue fills whole pages, and gold stars, pencils, and highlighter swipes move with a child's energy.",
+      "palette": ["#2B2F8F", "#F6B42C", "#FBF8F2", "#2F8F5B", "#F26B5B"],
+      "materials": ["notebook paper", "cutout stickers", "highlighter", "polaroid photos"],
+      "viewport": "Split hero: a two-line display headline with a highlighter swipe on one word, two pill CTAs, and a draggable polaroid stack of real school photos ringed by floating stickers.",
+      "risk": "The familiar school-stationery look; it needs full commitment to avoid reading as a kids' template.",
+      "wireframe": { "cols": 12, "rows": 10, "regions": [
+        { "label": "floating pill nav", "x": 1, "y": 0, "w": 10, "h": 1 },
+        { "label": "headline + highlighter", "x": 0, "y": 2, "w": 6, "h": 4 },
+        { "label": "pill CTAs", "x": 0, "y": 6, "w": 5, "h": 1, "accent": true },
+        { "label": "polaroid photo stack", "x": 7, "y": 1, "w": 5, "h": 7 },
+        { "label": "stickers", "x": 6, "y": 7, "w": 2, "h": 2, "accent": true }
+      ] },
+      "comp": ".impeccable/mocks/decision/model-pick.webp"
+    },
+    {
+      "id": "challenger-lineup",
+      "label": "Festival lineup sheet",
+      "verdict": "competitive",
+      "lineage": "Type-only festival lineup posters",
+      "thesis": "Everything the school offers billed like a festival lineup, where size alone says what matters.",
+      "palette": ["#2B2F8F", "#F6B42C"],
+      "materials": ["one condensed face", "flat ink ground"],
+      "viewport": "A blue sheet: the school name spans the width, the levels as headliners, extracurriculars packed into a justified block.",
+      "case": "Holds product clarity (offerings read instantly) but parents do not see their child's school in a gig poster.",
+      "risk": "No photos means no faces, and trust depends on the faces.",
+      "wireframe": { "cols": 12, "rows": 10, "regions": [
+        { "label": "school name full width", "x": 0, "y": 0, "w": 12, "h": 3, "accent": true },
+        { "label": "headliners: levels", "x": 0, "y": 3, "w": 12, "h": 3 },
+        { "label": "justified block: activities", "x": 0, "y": 6, "w": 12, "h": 4 }
+      ] },
+      "comp": ".impeccable/mocks/decision/challenger-lineup.webp",
+      "hero": "https://impeccable.style/worlds/cards/posters-covers-sleeves-festival-lineup-poster-hero.webp"
+    },
+    {
+      "id": "challenger-sapeur",
+      "label": "Sapeur portrait plate",
+      "verdict": "declined",
+      "lineage": "Congolese dandy portrait plates",
+      "thesis": "Each child in uniform as a captioned portrait plate.",
+      "palette": ["#2B2F8F", "#F6B42C", "#FBF8F2"],
+      "materials": ["painted backdrop", "ruled captions"],
+      "viewport": "A full-length portrait on a flat backdrop with a ruled caption.",
+      "case": "Loses both axes: posed portraits of minors are not what parents browse for.",
+      "risk": "Puts children on display.",
+      "kept": "Three-color total commitment.",
+      "hero": "https://impeccable.style/worlds/cards/pop-culture-shelf-sapeur-portrait-plate-hero.webp"
+    },
+    {
+      "id": "challenger-sewing",
+      "label": "Sewing pattern envelope",
+      "verdict": "declined",
+      "lineage": "Home sewing pattern envelopes",
+      "thesis": "Levels as lettered views on a pattern envelope.",
+      "palette": ["#E9DDBF", "#1B1B1B", "#C8322B"],
+      "materials": ["tissue paper", "dashed cut lines"],
+      "viewport": "An envelope front with views A and B for Inicial and Primario.",
+      "case": "Loses both axes: a craft metaphor with no link to schooling.",
+      "risk": "Reads as a craft shop.",
+      "kept": "Chosen option solid, the rest dashed."
+    },
+    {
+      "id": "challenger-plankton",
+      "label": "Bioluminescent wake",
+      "verdict": "declined",
+      "lineage": "Night sea plankton light",
+      "thesis": "Light that follows the visitor across a dark sea.",
+      "palette": ["#05070D", "#2F7BFF", "#6FF2FF"],
+      "materials": ["black water", "particle light"],
+      "viewport": "A dark field where the pointer draws glowing trails.",
+      "case": "Loses both axes: dark and abstract where parents want daylight and faces.",
+      "risk": "Heavy GPU work on mid-range phones.",
+      "kept": "Only the active element carries light."
+    },
+    {
+      "id": "challenger-cracktro",
+      "label": "Cracktro scroller",
+      "verdict": "declined",
+      "lineage": "Demo-scene title screens",
+      "thesis": "Rank as depth over a drifting void.",
+      "palette": ["#000000", "#EDE6D6", "#F6B42C"],
+      "materials": ["bitmap type", "star fields"],
+      "viewport": "One ivory line over drifting dust.",
+      "case": "Loses both axes: no cultural link to families or schools.",
+      "risk": "Unreadable for the audience.",
+      "kept": "One shared motion clock."
+    },
+    {
+      "id": "challenger-splitflap",
+      "label": "Split-flap board",
+      "verdict": "declined",
+      "lineage": "Rail concourse departure boards",
+      "thesis": "Schedules as a flipping departure board.",
+      "palette": ["#111111", "#FFFFFF", "#F6B42C"],
+      "materials": ["flap cells", "brushed steel"],
+      "viewport": "A departure board of class times.",
+      "case": "Loses both axes: the school is not a timetable.",
+      "risk": "Cold transit mood.",
+      "kept": "A fixed grid where only cells change."
+    }
+  ],
+  "reroll": { "registers": ["safer", "bolder"] },
+  "buildPath": { "value": "code", "toggle": true },
+  "canon": true,
+  "canonCard": {
+    "label": "The category standard",
+    "thesis": "A private school homepage done straight: photo hero, program cards, testimonials, contact.",
+    "palette": ["#FFFFFF", "#1E2152", "#2B2F8F", "#F6B42C"],
+    "materials": ["clean grid", "school photography"],
+    "viewport": "Full-width photo hero with the name and two buttons, then program cards.",
+    "risk": "Indistinguishable from every other school site by design.",
+    "comp": ".impeccable/mocks/decision/canon.webp"
+  },
+  "steer": true
+}

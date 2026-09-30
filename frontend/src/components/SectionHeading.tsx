@@ -1,39 +1,66 @@
 import React from "react";
+import { m } from "motion/react";
 
 interface SectionHeadingProps {
   title: string;
-  icon: string;
   className?: string;
+  align?: "left" | "center";
+  tone?: "light" | "dark";
+  as?: "h1" | "h2";
 }
+
+export const Underline: React.FC<{ className?: string; color?: string }> = ({
+  className = "",
+  color = "var(--sun)",
+}) => (
+  <m.svg
+    viewBox="0 0 220 18"
+    preserveAspectRatio="none"
+    className={className}
+    aria-hidden
+    initial="hidden"
+    whileInView="drawn"
+    viewport={{ once: true }}
+  >
+    <m.path
+      d="M4 12 C 50 4, 110 3, 216 9"
+      fill="none"
+      stroke={color}
+      strokeWidth="6"
+      strokeLinecap="round"
+      variants={{
+        hidden: { pathLength: 0.001 },
+        drawn: {
+          pathLength: 1,
+          transition: { duration: 0.7, ease: [0.16, 1, 0.3, 1], delay: 0.15 },
+        },
+      }}
+    />
+  </m.svg>
+);
 
 const SectionHeading: React.FC<SectionHeadingProps> = ({
   title,
-  icon,
   className = "",
+  align = "left",
+  tone = "dark",
+  as: Tag = "h2",
 }) => {
+  const centered = align === "center";
   return (
-    <div
-      className={`mb-10 grid w-full grid-cols-[1fr_auto_1fr] items-center gap-3 md:gap-4 ${className}`}
-    >
-      <div className="flex min-w-0 items-center gap-3 md:gap-4">
-        <span
-          className="section-heading-icon flex h-10 w-10 shrink-0 items-center justify-center rounded-full bg-amber-500 text-blue-900 shadow-sm md:h-12 md:w-12"
-          aria-hidden
-        >
-          <i className={`fas ${icon} text-sm md:text-base`} />
-        </span>
-        <div
-          className="section-heading-line h-px min-w-2 flex-1 bg-amber-500/70"
-          aria-hidden
-        />
-      </div>
-      <h2 className="max-w-[11rem] px-1 text-center font-title text-xl font-bold leading-tight text-blue-800 sm:max-w-xs md:max-w-none md:px-2 md:text-4xl">
+    <div className={`mb-10 md:mb-14 ${centered ? "text-center" : ""} ${className}`}>
+      <Tag
+        className={`relative inline-block font-display text-4xl font-extrabold leading-[1.02] md:text-6xl ${
+          tone === "light" ? "text-white" : "text-blue-900"
+        }`}
+      >
         {title}
-      </h2>
-      <div
-        className="section-heading-line h-px min-w-2 bg-amber-500/70"
-        aria-hidden
-      />
+        <Underline
+          className={`absolute -bottom-3 h-3 w-[min(100%,14rem)] md:-bottom-4 md:h-4 ${
+            centered ? "left-1/2 -translate-x-1/2" : "left-0"
+          }`}
+        />
+      </Tag>
     </div>
   );
 };

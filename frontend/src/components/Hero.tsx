@@ -1,85 +1,80 @@
-import React, { useEffect, useState } from "react";
-import { Link } from "react-router-dom";
+import React from "react";
+import { m } from "motion/react";
 import { useTranslation } from "react-i18next";
-import logo from "../assets/cevda_logo_tr.png";
+import Button from "./ui/Button";
+import Sticker from "./Sticker";
+import PhotoStack from "./home/PhotoStack";
 
 interface HeroProps {
   images: string[];
 }
 
+const EASE_OUT = [0.16, 1, 0.3, 1] as const;
+
+const rise = (delay: number) => ({
+  initial: { y: 22 },
+  animate: { y: 0 },
+  transition: { duration: 0.7, delay, ease: EASE_OUT },
+});
+
 const Hero: React.FC<HeroProps> = ({ images }) => {
-  const [currentIndex, setCurrentIndex] = useState(0);
-  const [contentVisible, setContentVisible] = useState(false);
   const { t } = useTranslation("home");
 
-  useEffect(() => {
-    const reveal = requestAnimationFrame(() => setContentVisible(true));
-    return () => cancelAnimationFrame(reveal);
-  }, []);
-
-  useEffect(() => {
-    if (images.length < 2) return;
-
-    const intervalId = setInterval(() => {
-      setCurrentIndex((prev) => (prev + 1) % images.length);
-    }, 5500);
-
-    return () => clearInterval(intervalId);
-  }, [images.length]);
-
   return (
-    <section className="relative h-[100dvh] w-full overflow-hidden">
-      {images.map((image, index) => (
-        <div
-          key={image}
-          className="absolute inset-0 bg-cover bg-center transition-opacity duration-[1600ms] ease-in-out"
-          style={{
-            backgroundImage: `url(${image})`,
-            backgroundPosition: "40% 30%",
-            opacity: index === currentIndex ? 1 : 0,
-          }}
-          aria-hidden={index !== currentIndex}
-        />
-      ))}
-
-      <div className="absolute inset-0 bg-gradient-to-b from-blue-950/60 via-blue-950/50 to-blue-950/80" />
-
-      <div
-        className={`relative z-10 flex h-full flex-col items-center justify-center px-6 text-center transition-all duration-1000 ease-out ${
-          contentVisible
-            ? "translate-y-0 opacity-100"
-            : "translate-y-6 opacity-0"
-        }`}
-      >
-        <div className="mb-5 flex h-28 w-28 items-center justify-center rounded-full bg-white/95 p-3 shadow-lg ring-1 ring-white/40 md:h-32 md:w-32">
-          <img src={logo} alt="" className="h-full w-full object-contain" />
-        </div>
-        <h1 className="hero-text font-brand text-4xl leading-tight text-white md:text-6xl lg:text-7xl">
-          Centro Educativo
-          <br />
-          Villa de Ángeles
-        </h1>
-        <p className="hero-text mt-5 max-w-2xl font-welcome text-base text-white md:text-lg">
-          {t("welcome.header")}
-        </p>
-        <div className="mt-8 flex flex-wrap items-center justify-center gap-4">
-          <Link
-            to="/admision"
-            className="bg-amber-500 px-6 py-3 text-sm font-semibold tracking-wide text-blue-900 transition-colors duration-300 hover:bg-amber-400 md:text-base"
+    <section className="relative flex items-center overflow-x-clip px-5 pb-16 pt-28 md:px-8 md:pb-20 md:pt-32 lg:min-h-[100dvh]">
+      <div className="mx-auto grid w-full max-w-6xl items-center gap-14 lg:grid-cols-12 lg:gap-8">
+        <div className="relative lg:col-span-7">
+          <m.h1
+            translate="no"
+            className="font-brand text-[clamp(2.9rem,11.5vw,4.25rem)] leading-[0.98] text-blue-900 lg:text-[clamp(4.25rem,6.4vw,5.9rem)]"
+            {...rise(0)}
           >
-            {t("admission", { ns: "nav" })}
-          </Link>
-          <Link
-            to="/contacto"
-            className="border border-white/70 px-6 py-3 text-sm font-semibold tracking-wide text-white transition-colors duration-300 hover:bg-white/10 md:text-base"
+            Centro Educativo
+            <br />
+            Villa de <span className="marker marker-animate">Ángeles</span>
+          </m.h1>
+          <m.p
+            className="mt-7 max-w-[44ch] text-lg leading-relaxed text-[var(--ink-soft)] md:text-xl"
+            {...rise(0.12)}
           >
-            {t("contact", { ns: "nav" })}
-          </Link>
+            {t("welcome.header")}
+          </m.p>
+          <m.div className="mt-9 flex flex-wrap items-center gap-3" {...rise(0.22)}>
+            <Button to="/admision" icon="fa-arrow-right" magnetic>
+              {t("admission", { ns: "nav" })}
+            </Button>
+            <Button to="/contacto" variant="outline">
+              {t("contact", { ns: "nav" })}
+            </Button>
+          </m.div>
         </div>
-      </div>
 
-      <div className="absolute bottom-8 left-1/2 z-10 -translate-x-1/2 animate-bounce text-white/70">
-        <i className="fas fa-chevron-down text-xl" aria-hidden />
+        <m.div
+          className="relative lg:col-span-5"
+          initial={{ y: 40, rotate: 4 }}
+          animate={{ y: 0, rotate: 0 }}
+          transition={{ duration: 0.8, delay: 0.18, ease: EASE_OUT }}
+        >
+          <Sticker
+            name="star"
+            rotate={-14}
+            parallax={36}
+            className="-left-2 -top-8 z-20 h-20 w-20 md:-left-6 md:h-24 md:w-24"
+          />
+          <Sticker
+            name="crown"
+            rotate={12}
+            parallax={22}
+            className="-right-1 top-10 z-20 h-16 w-16 md:-right-6 md:h-20 md:w-20"
+          />
+          <Sticker
+            name="pencil"
+            rotate={-28}
+            parallax={48}
+            className="-left-3 bottom-10 z-20 h-16 w-16 sm:bottom-24 sm:-left-4 sm:h-24 sm:w-24 md:-left-14"
+          />
+          <PhotoStack photos={images} />
+        </m.div>
       </div>
     </section>
   );

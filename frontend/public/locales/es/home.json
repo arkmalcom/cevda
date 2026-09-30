@@ -82,6 +82,12 @@
       "Los niños de primaria deben someterse a una evaluación"
     ]
   },
+  "hero": {
+    "photoAlt": "Estudiantes del Centro Educativo Villa de Ángeles",
+    "nextPhoto": "Ver la siguiente foto",
+    "previousPhoto": "Ver la foto anterior",
+    "photoStatus": "Foto {{current}} de {{total}}"
+  },
   "welcome": {
     "header": "Bienvenidos al Centro Educativo Villa de Ángeles, un espacio dedicado al aprendizaje y al desarrollo integral de sus hijos.",
     "content": "Somos un colegio comprometido con la excelencia educativa, ofreciendo servicios desde el nivel inicial hasta el nivel primario, complementados con clases extracurriculares diseñadas para potenciar las habilidades de nuestros estudiantes. Además, contamos con un sistema de seminternado que garantiza un ambiente seguro y enriquecedor. Nuestro enfoque intensivo está en brindar una educación de calidad y un cuidado excepcional, priorizando siempre el bienestar y el crecimiento de nuestros alumnos.",

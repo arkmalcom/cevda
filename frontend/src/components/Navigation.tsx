@@ -1,218 +1,289 @@
-import React, { useEffect, useState } from "react";
-import { Link, useLocation } from "react-router-dom";
-import logo from "../assets/cevda_logo_tr.png";
+import React, { useEffect, useRef, useState } from "react";
+import { useLocation } from "react-router-dom";
 import { useTranslation } from "react-i18next";
+import {
+  AnimatePresence,
+  m,
+  useMotionValueEvent,
+  useReducedMotion,
+  useScroll,
+} from "motion/react";
+import logo from "../assets/cevda_logo_tr.png";
+import { useNavItems } from "../hooks/useNavItems";
+import { TransitionLink, TransitionNavLink } from "./ui/TransitionLink";
+import { stickerArt } from "./stickerArt";
+
+const EASE_OUT = [0.16, 1, 0.3, 1] as const;
+const EASE_IN_OUT = [0.77, 0, 0.175, 1] as const;
+const HIDE_AFTER_PX = 140;
+const FOCUSABLE = 'a[href], button:not([disabled]), [tabindex]:not([tabindex="-1"])';
+
+const LanguageToggle: React.FC<{ tone?: "light" | "dark" }> = ({ tone = "dark" }) => {
+  const { t, i18n } = useTranslation("nav");
+  const isEnglish = i18n.language.startsWith("en");
+  return (
+    <button
+      type="button"
+      onClick={() => i18n.changeLanguage(isEnglish ? "es" : "en")}
+      aria-label={t("switchLanguage")}
+      className={`flex h-11 items-center gap-2 rounded-full px-3 text-sm font-bold transition-colors duration-200 ${
+        tone === "light"
+          ? "text-white hover-fine:bg-white/10"
+          : "text-blue-900 hover-fine:bg-blue-900/[0.06]"
+      }`}
+    >
+      <img
+        src={isEnglish ? "https://flagcdn.com/w40/do.png" : "https://flagcdn.com/w40/us.png"}
+        alt=""
+        width={24}
+        height={16}
+        className="h-4 w-6 rounded-[3px] object-cover"
+      />
+      <span>{isEnglish ? "ES" : "EN"}</span>
+    </button>
+  );
+};
 
 const Navigation: React.FC = () => {
-  const [isMenuOpen, setIsMenuOpen] = useState(false);
-  const [isScrolled, setIsScrolled] = useState(false);
-  const { t } = useTranslation();
+  const { t } = useTranslation("nav");
+  const navItems = useNavItems();
   const location = useLocation();
-  const isHome = location.pathname === "/";
-  const isTransparent = isHome && !isScrolled && !isMenuOpen;
+  const reduceMotion = useReducedMotion();
+  const [isMenuOpen, setIsMenuOpen] = useState(false);
+  const [isHidden, setIsHidden] = useState(false);
+  const menuButtonRef = useRef<HTMLButtonElement>(null);
+  const panelRef = useRef<HTMLDivElement>(null);
+  const wasOpenRef = useRef(false);
+  const { scrollY } = useScroll();
 
-  const toggleMenu = () => setIsMenuOpen(!isMenuOpen);
-
-  const navItems = [
-    { to: "/", label: t("home", { ns: "nav" }), icon: "fa-house" },
-    {
-      to: "/admision",
-      label: t("admission", { ns: "nav" }),
-      icon: "fa-file-pen",
-    },
-    {
-      to: "/caracteristicas",
-      label: t("features", { ns: "nav" }),
-      icon: "fa-list-check",
-    },
-    { to: "/infotep", label: "Infotep", icon: "fa-certificate" },
-    {
-      to: "/carreras",
-      label: t("careers", { ns: "nav" }),
-      icon: "fa-briefcase",
-    },
-    {
-      to: "/contacto",
-      label: t("contact", { ns: "nav" }),
-      icon: "fa-address-book",
-    },
-  ];
+  useMotionValueEvent(scrollY, "change", (current) => {
+    const previous = scrollY.getPrevious() ?? 0;
+    const scrollingDown = current > previous;
+    setIsHidden(scrollingDown && current > HIDE_AFTER_PX);
+  });
 
   useEffect(() => {
     setIsMenuOpen(false);
+    setIsHidden(false);
   }, [location.pathname]);
 
   useEffect(() => {
     document.body.style.overflow = isMenuOpen ? "hidden" : "";
+    if (isMenuOpen) {
+      wasOpenRef.current = true;
+    } else if (wasOpenRef.current) {
+      wasOpenRef.current = false;
+      menuButtonRef.current?.focus();
+    }
     return () => {
       document.body.style.overflow = "";
     };
   }, [isMenuOpen]);
 
   useEffect(() => {
-    if (!isHome) {
-      setIsScrolled(true);
-      return;
-    }
-
-    const onScroll = () => {
-      setIsScrolled(window.scrollY > 48);
+    if (!isMenuOpen) return;
+    const onKey = (event: KeyboardEvent) => {
+      if (event.key === "Escape") {
+        setIsMenuOpen(false);
+        return;
+      }
+      if (event.key !== "Tab" || !panelRef.current) return;
+      const focusables = Array.from(
+        panelRef.current.querySelectorAll<HTMLElement>(FOCUSABLE),
+      );
+      if (focusables.length === 0) return;
+      const first = focusables[0];
+      const last = focusables[focusables.length - 1];
+      if (event.shiftKey && document.activeElement === first) {
+        event.preventDefault();
+        last.focus();
+      } else if (!event.shiftKey && document.activeElement === last) {
+        event.preventDefault();
+        first.focus();
+      }
     };
+    window.addEventListener("keydown", onKey);
+    return () => window.removeEventListener("keydown", onKey);
+  }, [isMenuOpen]);
 
-    onScroll();
-    window.addEventListener("scroll", onScroll, { passive: true });
-    return () => window.removeEventListener("scroll", onScroll);
-  }, [isHome]);
-
-  const linkClass = `text-lg transition-colors duration-300 ${
-    isTransparent
-      ? "text-white/95 hover:text-amber-300"
-      : "text-white hover:text-blue-900"
-  }`;
+  const panelMotion = reduceMotion
+    ? {
+        initial: { opacity: 0 },
+        animate: { opacity: 1, transition: { duration: 0.18 } },
+        exit: { opacity: 0, transition: { duration: 0.12 } },
+      }
+    : {
+        initial: { clipPath: "circle(0% at calc(100% - 2.75rem) 2.75rem)" },
+        animate: {
+          clipPath: "circle(150% at calc(100% - 2.75rem) 2.75rem)",
+          transition: { duration: 0.55, ease: EASE_OUT },
+        },
+        exit: {
+          clipPath: "circle(0% at calc(100% - 2.75rem) 2.75rem)",
+          transition: { duration: 0.3, ease: EASE_IN_OUT },
+        },
+      };
 
   return (
-    <nav
-      className={`fixed top-0 left-0 z-50 w-full transition-all duration-500 ${
-        isTransparent ? "bg-transparent shadow-none" : "bg-amber-500 shadow-md"
-      }`}
-    >
-      <div className="flex h-16 w-full min-w-0 flex-row items-center gap-3 p-4">
-        <Link
-          to="/"
-          className="flex min-w-0 flex-1 items-center gap-2 lg:flex-none"
-        >
-          <img
-            src={logo}
-            alt="nav-logo"
-            className={`inline-block h-12 w-12 shrink-0 transition-[filter] duration-500 ${
-              isTransparent ? "brightness-0 invert drop-shadow-md" : ""
-            }`}
-          />
-          <h1
-            className={`font-brand leading-tight transition-colors duration-500 ${
-              isTransparent ? "text-white" : "text-blue-800"
-            }`}
-          >
-            <span className="text-base sm:hidden">CEVDA</span>
-            <span className="hidden whitespace-nowrap text-base sm:inline md:text-lg lg:text-xl">
-              Centro Educativo Villa de Ángeles
-            </span>
-          </h1>
-        </Link>
-        <div className="ml-auto flex shrink-0 items-center justify-end">
-          <button
-            className="text-2xl text-white lg:hidden"
-            onClick={toggleMenu}
-            aria-label="Toggle menu"
-            aria-expanded={isMenuOpen}
-          >
-            <i className="fas fa-bars"></i>
-          </button>
-          <div className="hidden items-center gap-3 lg:flex xl:gap-4">
-            {navItems.map((item) => (
-              <Link key={item.to} to={item.to} className={linkClass}>
-                {item.label}
-              </Link>
-            ))}
-          </div>
-        </div>
-      </div>
-
-      <div
-        className={`fixed inset-0 z-50 flex h-[100dvh] w-full flex-col overflow-hidden bg-gradient-to-br from-blue-950 via-blue-900 to-blue-800 transition-all duration-300 ease-out lg:hidden ${
-          isMenuOpen
-            ? "pointer-events-auto translate-y-0 opacity-100"
-            : "pointer-events-none -translate-y-4 opacity-0"
-        }`}
+    <>
+      <a
+        href="#main"
+        className="btn btn-primary fixed left-4 top-4 z-[70] -translate-y-24 focus-visible:translate-y-0"
       >
-        <div
-          className="pointer-events-none absolute -left-20 top-24 h-64 w-64 rounded-full bg-amber-400/20 blur-3xl"
-          aria-hidden
-        />
-        <div
-          className="pointer-events-none absolute -right-16 bottom-32 h-72 w-72 rounded-full bg-amber-500/10 blur-3xl"
-          aria-hidden
-        />
+        {t("skipToContent")}
+      </a>
 
-        <div className="relative flex items-center justify-between px-5 pt-5">
-          <div className="flex items-center gap-3">
-            <div className="flex h-14 w-14 items-center justify-center overflow-hidden rounded-full bg-white p-1.5 shadow-lg ring-2 ring-amber-400/80">
-              <img
-                src={logo}
-                alt=""
-                className="h-full w-full object-contain"
-              />
-            </div>
-            <div>
-              <p className="font-brand text-lg leading-tight text-white">
-                CEVDA
-              </p>
-              <p className="text-xs uppercase tracking-[0.18em] text-amber-300/90">
-                Villa de Ángeles
-              </p>
-            </div>
-          </div>
-          <button
-            className="flex h-11 w-11 items-center justify-center rounded-full bg-white/10 text-xl text-white transition-colors hover:bg-white/20"
-            onClick={toggleMenu}
-            aria-label="Close menu"
+      <m.header
+        className="fixed inset-x-3 top-3 z-50 mx-auto max-w-6xl md:inset-x-5"
+        initial={false}
+        animate={{ y: isHidden && !isMenuOpen ? -96 : 0 }}
+        transition={{ duration: isHidden ? 0.25 : 0.4, ease: EASE_OUT }}
+      >
+        <nav
+          aria-label={t("mainNav")}
+          className="flex h-16 items-center gap-2 rounded-full bg-sheet/90 pl-2 pr-2 shadow-sheet ring-1 ring-blue-900/[0.07] backdrop-blur-md"
+        >
+          <TransitionLink
+            to="/"
+            className="flex min-w-0 items-center gap-2 rounded-full py-1 pl-1 pr-3"
           >
-            <i className="fas fa-times"></i>
-          </button>
-        </div>
+            <img src={logo} alt="" width={48} height={48} className="h-12 w-12 shrink-0" />
+            <span translate="no" className="font-brand text-xl leading-none text-blue-900">
+              <span className="xl:hidden">CEVDA</span>
+              <span className="hidden whitespace-nowrap xl:inline">
+                Centro Educativo Villa de Ángeles
+              </span>
+            </span>
+          </TransitionLink>
 
-        <nav className="relative flex flex-1 flex-col justify-center gap-2 px-6 py-8">
-          {navItems.map((item, index) => {
-            const isActive = location.pathname === item.to;
-
-            return (
-              <Link
-                key={item.to}
-                to={item.to}
-                onClick={toggleMenu}
-                style={{
-                  transitionDelay: isMenuOpen ? `${80 + index * 40}ms` : "0ms",
-                }}
-                className={`group flex items-center gap-4 rounded-xl px-4 py-3.5 transition-all duration-300 ${
-                  isMenuOpen
-                    ? "translate-x-0 opacity-100"
-                    : "translate-x-4 opacity-0"
-                } ${
-                  isActive
-                    ? "bg-amber-500 text-blue-950 shadow-lg shadow-amber-500/20"
-                    : "text-white hover:bg-white/10"
-                }`}
-              >
-                <span
-                  className={`flex h-10 w-10 items-center justify-center rounded-full transition-colors ${
-                    isActive
-                      ? "bg-blue-900 text-amber-300"
-                      : "bg-white/10 text-amber-300 group-hover:bg-white/15"
-                  }`}
+          <ul className="ml-auto hidden items-center gap-0.5 lg:flex">
+            {navItems.map((item) => (
+              <li key={item.to}>
+                <TransitionNavLink
+                  to={item.to}
+                  end={item.to === "/"}
+                  className="relative flex h-11 items-center rounded-full px-3.5 text-[15px] font-semibold text-blue-900 transition-colors duration-200 hover-fine:text-blue-700"
                 >
-                  <i className={`fas ${item.icon}`} aria-hidden />
-                </span>
-                <span className="font-title text-xl font-semibold tracking-wide">
-                  {item.label}
-                </span>
-                <i
-                  className={`fas fa-chevron-right ml-auto text-sm transition-transform group-hover:translate-x-1 ${
-                    isActive ? "text-blue-900/50" : "text-white/30"
-                  }`}
-                  aria-hidden
-                />
-              </Link>
-            );
-          })}
-        </nav>
+                  {({ isActive }) => (
+                    <>
+                      {isActive && (
+                        <m.span
+                          layoutId="nav-highlight"
+                          className="absolute inset-x-0 inset-y-1.5 -z-10 rounded-full bg-amber-300"
+                          transition={{ duration: 0.4, ease: EASE_OUT }}
+                        />
+                      )}
+                      {item.label}
+                    </>
+                  )}
+                </TransitionNavLink>
+              </li>
+            ))}
+          </ul>
 
-        <div className="relative border-t border-white/10 px-6 py-5">
-          <p className="text-center text-xs text-white/50">
-            Centro Educativo Villa de Ángeles
-          </p>
-        </div>
-      </div>
-    </nav>
+          <div className="ml-auto flex items-center gap-1 lg:ml-1">
+            <LanguageToggle />
+            <button
+              ref={menuButtonRef}
+              type="button"
+              className="flex h-12 w-12 items-center justify-center rounded-full bg-blue-900 text-lg text-white transition-transform duration-150 active:scale-[0.97] lg:hidden"
+              onClick={() => setIsMenuOpen(true)}
+              aria-label={t("openMenu")}
+              aria-expanded={isMenuOpen}
+              aria-controls="mobile-menu"
+            >
+              <i className="fas fa-bars" aria-hidden />
+            </button>
+          </div>
+        </nav>
+      </m.header>
+
+      <AnimatePresence>
+        {isMenuOpen && (
+          <m.div
+            key="menu"
+            id="mobile-menu"
+            ref={panelRef}
+            role="dialog"
+            aria-modal="true"
+            aria-label={t("mainNav")}
+            className="menu-panel surface-dark fixed inset-0 z-[60] flex min-h-[100dvh] flex-col overflow-y-auto overscroll-contain text-white lg:hidden"
+            {...panelMotion}
+          >
+            <div className="flex items-center justify-between px-5 pt-5">
+              <div className="flex items-center gap-3">
+                <span className="flex h-14 w-14 items-center justify-center rounded-full bg-white p-1.5">
+                  <img src={logo} alt="" className="h-full w-full object-contain" />
+                </span>
+                <span className="font-brand text-2xl leading-none">CEVDA</span>
+              </div>
+              <button
+                type="button"
+                autoFocus
+                className="flex h-12 w-12 items-center justify-center rounded-full bg-amber-500 text-lg text-blue-950 transition-transform duration-150 active:scale-[0.97]"
+                onClick={() => setIsMenuOpen(false)}
+                aria-label={t("closeMenu")}
+              >
+                <i className="fas fa-times" aria-hidden />
+              </button>
+            </div>
+
+            <m.ul
+              className="flex flex-1 flex-col justify-center gap-1 px-6 py-10"
+              initial="hidden"
+              animate="shown"
+              variants={{
+                hidden: {},
+                shown: { transition: { staggerChildren: 0.05, delayChildren: 0.12 } },
+              }}
+            >
+              {navItems.map((item) => (
+                <m.li
+                  key={item.to}
+                  variants={{
+                    hidden: { opacity: 0, y: 28 },
+                    shown: { opacity: 1, y: 0, transition: { duration: 0.5, ease: EASE_OUT } },
+                  }}
+                >
+                  <TransitionNavLink
+                    to={item.to}
+                    end={item.to === "/"}
+                    onClick={() => setIsMenuOpen(false)}
+                    className={({ isActive }) =>
+                      `group flex min-h-14 items-center gap-3 font-display text-[2.1rem] font-extrabold leading-tight tracking-tight ${
+                        isActive ? "text-amber-400" : "text-white"
+                      }`
+                    }
+                  >
+                    {({ isActive }) => (
+                      <>
+                        {item.label}
+                        {isActive && (
+                          <img src={stickerArt.star} alt="" aria-hidden className="h-8 w-8" />
+                        )}
+                      </>
+                    )}
+                  </TransitionNavLink>
+                </m.li>
+              ))}
+            </m.ul>
+
+            <div className="flex items-center justify-between border-t border-white/15 px-5 py-4">
+              <LanguageToggle tone="light" />
+              <a
+                href="https://wa.me/+18498868485"
+                target="_blank"
+                rel="noopener noreferrer"
+                className="flex h-11 items-center gap-2 rounded-full px-3 text-sm font-bold text-white"
+              >
+                <i className="fab fa-whatsapp text-lg" aria-hidden />
+                {t("footer.whatsapp")}
+              </a>
+            </div>
+          </m.div>
+        )}
+      </AnimatePresence>
+    </>
   );
 };
 

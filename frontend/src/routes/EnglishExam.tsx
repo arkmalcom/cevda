@@ -1,8 +1,9 @@
 import { useEffect, useRef, useState } from "react";
 import { useTranslation } from "react-i18next";
 import { PublicAssessmentQuestion } from "../utils/Types";
-import SectionHeading from "../components/SectionHeading";
-import FadeIn from "../components/FadeIn";
+import PageIntro from "../components/PageIntro";
+import Reveal from "../components/Reveal";
+import Button from "../components/ui/Button";
 
 enum ExamPhase {
   EnterEmail,
@@ -36,8 +37,7 @@ type GradeResult = {
   results: QuestionResult[];
 };
 
-const fieldClass =
-  "mt-1 block w-full border-0 border-b border-blue-900/40 bg-transparent px-1 py-2 text-sm text-blue-950 outline-none transition-colors focus:border-amber-500";
+const fieldClass = "field";
 
 const EnglishExam = () => {
   const [phase, setPhase] = useState<ExamPhase>(ExamPhase.EnterEmail);
@@ -277,35 +277,24 @@ const EnglishExam = () => {
 
   if (phase === ExamPhase.EnterEmail) {
     return (
-      <div className="bg-amber-500/10 px-4 py-10 pb-28 md:px-8 md:py-14 md:pb-32">
-        <FadeIn>
-          <SectionHeading
-            title={t("start.title")}
-            icon="fa-language"
-            className="mx-auto max-w-xl"
-          />
-        </FadeIn>
+      <div>
+        <PageIntro title={t("start.title")} lead={t("start.content")} stickers={["plane", "star"]} />
 
-        <FadeIn delayMs={80}>
+        <Reveal delayMs={80} className="relative -mt-10 px-4 md:-mt-14">
           <form
             onSubmit={(e) => {
               e.preventDefault();
               startAttempt();
             }}
-            className="relative mx-auto max-w-xl space-y-5 border border-amber-700/20 bg-[#fbf7f0] px-5 py-8 shadow-[0_18px_50px_-28px_rgba(30,58,138,0.45)] md:px-8 md:py-10"
+            className="sheet relative mx-auto max-w-xl space-y-5 px-5 py-8 md:px-8 md:py-10"
           >
-            <div
-              className="absolute inset-x-0 top-0 h-1.5 bg-amber-500"
-              aria-hidden
-            />
-            <p className="leading-relaxed text-slate-700">{t("start.content")}</p>
 
             <div>
               <label
                 htmlFor="name"
-                className="text-sm font-medium text-blue-900"
+                className="field-label"
               >
-                {t("fieldLabels.name")} <span className="text-red-500">*</span>
+                {t("fieldLabels.name")} <span className="text-red-600">*</span>
               </label>
               <input
                 id="name"
@@ -319,7 +308,7 @@ const EnglishExam = () => {
                   });
                 }}
                 placeholder={t("start.namePlaceholder")}
-                className={`${fieldClass} ${errors["name"] ? "border-red-500" : ""}`}
+                className={`${fieldClass} ${errors["name"] ? "is-invalid" : ""}`}
               />
               {errors.name && (
                 <p className="mt-1 text-sm text-red-600">
@@ -331,9 +320,9 @@ const EnglishExam = () => {
             <div>
               <label
                 htmlFor="phone"
-                className="text-sm font-medium text-blue-900"
+                className="field-label"
               >
-                {t("fieldLabels.phone")} <span className="text-red-500">*</span>
+                {t("fieldLabels.phone")} <span className="text-red-600">*</span>
               </label>
               <input
                 id="phone"
@@ -347,7 +336,7 @@ const EnglishExam = () => {
                   });
                 }}
                 placeholder={t("start.phonePlaceholder")}
-                className={`${fieldClass} ${errors["phone"] ? "border-red-500" : ""}`}
+                className={`${fieldClass} ${errors["phone"] ? "is-invalid" : ""}`}
               />
               {errors.phone && (
                 <p className="mt-1 text-sm text-red-600">
@@ -359,9 +348,9 @@ const EnglishExam = () => {
             <div>
               <label
                 htmlFor="email"
-                className="text-sm font-medium text-blue-900"
+                className="field-label"
               >
-                {t("fieldLabels.email")} <span className="text-red-500">*</span>
+                {t("fieldLabels.email")} <span className="text-red-600">*</span>
               </label>
               <input
                 id="email"
@@ -375,7 +364,7 @@ const EnglishExam = () => {
                   });
                 }}
                 placeholder={t("start.emailPlaceholder")}
-                className={`${fieldClass} ${errors["email"] ? "border-red-500" : ""}`}
+                className={`${fieldClass} ${errors["email"] ? "is-invalid" : ""}`}
               />
               {errors.email && (
                 <p className="mt-1 text-sm text-red-600">
@@ -390,14 +379,11 @@ const EnglishExam = () => {
               </div>
             )}
 
-            <button
-              type="submit"
-              className="w-full bg-amber-500 px-4 py-3 text-sm font-semibold tracking-wide text-blue-900 transition-colors hover:bg-amber-400 md:text-base"
-            >
+            <Button type="submit" icon="fa-arrow-right" className="w-full">
               {t("start.startButton")}
-            </button>
+            </Button>
           </form>
-        </FadeIn>
+        </Reveal>
       </div>
     );
   }
@@ -408,66 +394,56 @@ const EnglishExam = () => {
     ).length;
 
     return (
-      <div className="bg-amber-500/10 px-4 py-10 pb-28 md:px-8 md:py-14 md:pb-32">
+      <div>
         <div
-          className={`fixed bottom-20 right-4 z-30 flex items-center gap-2 rounded-full px-4 py-2 text-sm font-semibold shadow-lg md:bottom-24 md:right-10 ${
-            timeLeft < 60
-              ? "bg-red-600 text-white"
-              : "bg-blue-900 text-amber-300"
+          className={`tabular fixed bottom-20 right-4 z-30 flex h-12 items-center gap-2 rounded-full px-5 text-base font-bold shadow-lift md:bottom-24 md:right-6 ${
+            timeLeft < 60 ? "bg-red-600 text-white" : "bg-blue-900 text-amber-300"
           }`}
         >
           <i className="fas fa-clock" aria-hidden />
           {formatTime(timeLeft)}
         </div>
 
-        <FadeIn>
-          <SectionHeading
-            title={t("inProgress.title")}
-            icon="fa-language"
-            className="mx-auto max-w-3xl"
-          />
-        </FadeIn>
-
-        <FadeIn delayMs={60}>
-          <p className="mx-auto mb-8 max-w-3xl text-center text-sm text-slate-600">
-            {t("inProgress.progress", {
-              answered: answeredCount,
-              total: questions.length,
-              defaultValue: `${answeredCount} / ${questions.length}`,
-            })}
-          </p>
-        </FadeIn>
+        <PageIntro
+          title={t("inProgress.title")}
+          lead={t("inProgress.progress", {
+            answered: answeredCount,
+            total: questions.length,
+            defaultValue: `${answeredCount} / ${questions.length}`,
+          })}
+          stickers={["pencil", "block"]}
+        />
 
         <form
           onSubmit={(e) => {
             e.preventDefault();
             submitAttempt();
           }}
-          className="mx-auto max-w-3xl space-y-5"
+          className="relative mx-auto -mt-10 max-w-3xl space-y-5 px-4 md:-mt-14"
         >
           {questions.map((q, idx) => (
-            <FadeIn key={q.QuestionID} delayMs={Math.min(idx * 40, 200)}>
+            <Reveal key={q.QuestionID} delayMs={Math.min(idx * 40, 200)}>
               <fieldset
-                className={`border border-amber-700/15 bg-[#fbf7f0] px-5 py-5 shadow-sm md:px-6 ${
-                  errors[q.QuestionID] ? "ring-2 ring-red-400" : ""
+                className={`sheet px-5 py-5 md:px-7 md:py-6 ${
+                  errors[q.QuestionID] ? "ring-2 ring-red-500" : ""
                 }`}
               >
-                <legend className="mb-3 font-semibold text-blue-900">
-                  <span className="mr-2 inline-flex h-7 w-7 items-center justify-center rounded-full bg-amber-500 text-xs text-blue-900">
+                <legend className="float-left mb-4 w-full text-[17px] font-semibold text-blue-900">
+                  <span className="tabular mr-2 inline-flex h-8 w-8 items-center justify-center rounded-full bg-amber-500 text-sm text-blue-950">
                     {idx + 1}
                   </span>
                   {q.Prompt}
                 </legend>
-                <div className="space-y-2">
+                <div className="clear-left space-y-2">
                   {q.Choices.map((choice, cIdx) => {
                     const selected = answers[q.QuestionID] === cIdx;
                     return (
                       <label
                         key={cIdx}
-                        className={`flex cursor-pointer items-center gap-3 border px-3 py-2.5 transition-colors ${
+                        className={`flex min-h-12 cursor-pointer items-center gap-3 rounded-xl border-2 px-4 py-2.5 transition-colors duration-150 ${
                           selected
-                            ? "border-amber-500 bg-amber-500/15 text-blue-900"
-                            : "border-transparent bg-white/60 hover:border-amber-300"
+                            ? "border-blue-900 bg-amber-100 text-blue-950"
+                            : "border-blue-900/10 bg-white hover-fine:border-blue-900/35"
                         }`}
                       >
                         <input
@@ -481,9 +457,9 @@ const EnglishExam = () => {
                               [q.QuestionID]: cIdx,
                             }))
                           }
-                          className="accent-amber-500"
+                          className="h-5 w-5 shrink-0 accent-blue-900"
                         />
-                        <span className="text-sm md:text-base">{choice}</span>
+                        <span className="text-[15px] md:text-base">{choice}</span>
                       </label>
                     );
                   })}
@@ -494,15 +470,12 @@ const EnglishExam = () => {
                   </p>
                 )}
               </fieldset>
-            </FadeIn>
+            </Reveal>
           ))}
 
-          <button
-            type="submit"
-            className="w-full bg-amber-500 px-4 py-3 text-sm font-semibold tracking-wide text-blue-900 transition-colors hover:bg-amber-400 md:text-base"
-          >
+          <Button type="submit" className="w-full">
             {t("inProgress.submitButton")}
-          </button>
+          </Button>
         </form>
       </div>
     );
@@ -510,45 +483,39 @@ const EnglishExam = () => {
 
   if (phase === ExamPhase.Completed) {
     return (
-      <div className="bg-amber-500/10 px-4 py-10 pb-28 md:px-8 md:py-14 md:pb-32">
-        <FadeIn>
-          <SectionHeading
-            title={t("completed.title")}
-            icon="fa-clipboard-check"
-            className="mx-auto max-w-3xl"
-          />
-        </FadeIn>
+      <div>
+        <PageIntro title={t("completed.title")} stickers={["laurel", "star"]} />
 
-        <FadeIn delayMs={80}>
-          <div className="mx-auto mb-10 max-w-xl border border-amber-700/20 bg-[#fbf7f0] px-6 py-8 text-center shadow-[0_18px_50px_-28px_rgba(30,58,138,0.45)]">
+        <Reveal delayMs={80} className="relative -mt-10 px-4 md:-mt-14">
+          <div className="sheet mx-auto mb-10 max-w-xl px-6 py-8 text-center" role="status">
             <div
-              className="mx-auto mb-4 flex h-16 w-16 items-center justify-center rounded-full bg-amber-500 text-blue-900"
+              className="mx-auto mb-4 flex h-16 w-16 items-center justify-center rounded-full bg-amber-500 text-blue-950"
               aria-hidden
             >
-              <i className="fas fa-graduation-cap text-2xl" />
+              <i className={`fas ${isExpired ? "fa-hourglass-end" : "fa-graduation-cap"} text-2xl`} />
             </div>
             {isExpired ? (
-              <p className="mb-3 text-red-600">{t("completed.expiredText")}</p>
+              <p className="mb-3 text-red-700">{t("completed.expiredText")}</p>
             ) : (
-              <p className="mb-3 text-slate-700">{t("completed.content")}</p>
+              <p className="mb-3 text-ink">{t("completed.content")}</p>
             )}
-            <p className="font-title text-3xl font-bold text-blue-900">
+            <p className="tabular font-display text-4xl font-extrabold text-blue-900">
               {t("completed.score", { score: gradeResult?.score })}
             </p>
           </div>
-        </FadeIn>
+        </Reveal>
 
-        <div className="mx-auto max-w-3xl space-y-4">
+        <div className="mx-auto max-w-3xl space-y-4 px-4">
           {questions.map((q, idx) => {
             const result = resultMap[q.QuestionID];
             const wasAnswered = result?.answered;
             const wasCorrect = result?.correct;
 
             return (
-              <FadeIn key={q.QuestionID} delayMs={Math.min(idx * 40, 200)}>
-                <div className="border border-amber-700/15 bg-[#fbf7f0] px-5 py-5 md:px-6">
-                  <p className="mb-3 font-semibold text-blue-900">
-                    <span className="mr-2 inline-flex h-7 w-7 items-center justify-center rounded-full bg-amber-500 text-xs text-blue-900">
+              <Reveal key={q.QuestionID} delayMs={Math.min(idx * 40, 200)}>
+                <div className="sheet px-5 py-5 md:px-7 md:py-6">
+                  <p className="mb-3 text-[17px] font-semibold text-blue-900">
+                    <span className="tabular mr-2 inline-flex h-8 w-8 items-center justify-center rounded-full bg-amber-500 text-sm text-blue-950">
                       {idx + 1}
                     </span>
                     {q.Prompt}
@@ -594,7 +561,7 @@ const EnglishExam = () => {
                     </p>
                   )}
                 </div>
-              </FadeIn>
+              </Reveal>
             );
           })}
         </div>

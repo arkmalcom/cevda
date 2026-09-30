@@ -1,0 +1,4 @@
+{
+  "prompt": "A seamless, evenly lit, top-down macro photograph of plain uncoated white drawing paper texture, near-white neutral, very low contrast. Post-processed with ImageMagick: resized to 384px, grayscale, contrast remapped around the source mean (0.985 + (u - 0.9723) * 3.8; luminance sd about 0.02 native, 0.01 when rendered at 384 CSS px on 1x screens), mirror-tiled 2x2 into a seamless 768px WebP tile at quality 80, multiplied onto #F9FAFD.\n",
+  "createdAt": "2026-09-29T23:26:55.098Z"
+}
