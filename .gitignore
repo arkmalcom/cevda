@@ -31,3 +31,5 @@ packages
 .env
 
 dynamodb_data/
+.wrangler/
+.dev.vars

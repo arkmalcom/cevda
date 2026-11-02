@@ -10,7 +10,6 @@ import { ErrorNote, SuccessNote } from "../components/StarBurst";
 
 const CareerForm: React.FC = () => {
   const { t } = useTranslation("careers");
-  const STAGE = import.meta.env.VITE_STAGE;
   const [isSubmitting, setIsSubmitting] = useState(false);
   const [submitStatus, setSubmitStatus] = useState<"success" | "error" | null>(
     null,
@@ -58,7 +57,7 @@ const CareerForm: React.FC = () => {
         }
 
         const response = await fetch(
-          `${import.meta.env.VITE_BASE_EMAIL_ENDPOINT}/${STAGE}/email-handler-${STAGE}`,
+          `${import.meta.env.VITE_BASE_API_ENDPOINT_URI}/email`,
           {
             method: "POST",
             headers: {

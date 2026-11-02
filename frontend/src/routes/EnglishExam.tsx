@@ -189,7 +189,6 @@ const EnglishExam = () => {
       return;
     }
 
-    const STAGE = import.meta.env.VITE_STAGE;
 
     const data = await res.json();
 
@@ -206,7 +205,7 @@ const EnglishExam = () => {
     setPhase(ExamPhase.Completed);
 
     await fetch(
-      `${import.meta.env.VITE_BASE_EMAIL_ENDPOINT}/${STAGE}/email-handler-${STAGE}`,
+      `${import.meta.env.VITE_BASE_API_ENDPOINT_URI}/email`,
       {
         method: "POST",
         headers: { "Content-Type": "application/json" },

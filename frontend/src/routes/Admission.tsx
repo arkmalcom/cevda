@@ -65,7 +65,6 @@ const AdmissionForm: React.FC = () => {
 
   const { handleSubmit, isSubmitting, submitStatus } =
     useSubmit<AdmissionFormData>();
-  const STAGE = import.meta.env.VITE_STAGE;
 
   const handleChange = (
     e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>,
@@ -80,7 +79,7 @@ const AdmissionForm: React.FC = () => {
   const onSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
     await handleSubmit({
-      url: `${import.meta.env.VITE_BASE_EMAIL_ENDPOINT}/${STAGE}/email-handler-${STAGE}`,
+      url: `${import.meta.env.VITE_BASE_API_ENDPOINT_URI}/email`,
       formData,
       formSource: "admisión",
       onSuccess: () => {

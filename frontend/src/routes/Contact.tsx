@@ -58,7 +58,6 @@ const ContactRow: React.FC<{ href: string; icon: string; children: React.ReactNo
 const ContactForm: React.FC = () => {
   const [formData, setFormData] = useState<FormData>(emptyForm);
   const { handleSubmit, isSubmitting, submitStatus } = useSubmit<FormData>();
-  const STAGE = import.meta.env.VITE_STAGE;
   const { t } = useTranslation("contact");
 
   const handleChange = (e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) => {
@@ -72,7 +71,7 @@ const ContactForm: React.FC = () => {
   const onSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
     await handleSubmit({
-      url: `${import.meta.env.VITE_BASE_EMAIL_ENDPOINT}/${STAGE}/email-handler-${STAGE}`,
+      url: `${import.meta.env.VITE_BASE_API_ENDPOINT_URI}/email`,
       formData,
       formSource: "contacto",
       onSuccess: () => {
