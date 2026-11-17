@@ -4,6 +4,7 @@ import { useTranslation } from "react-i18next";
 import Navigation from "./Navigation";
 import Footer from "./Footer";
 import MotionProvider from "./motion/MotionProvider";
+import { getPageMeta } from "../seo";
 
 const Layout = () => {
   const { i18n } = useTranslation();
@@ -23,6 +24,12 @@ const Layout = () => {
   useEffect(() => {
     document.documentElement.lang = i18n.language.startsWith("en") ? "en" : "es";
   }, [i18n.language]);
+
+  useEffect(() => {
+    const meta = getPageMeta(location.pathname, i18n.language.startsWith("en") ? "en" : "es");
+    document.title = meta.title;
+    document.querySelector('meta[name="description"]')?.setAttribute("content", meta.description);
+  }, [location.pathname, i18n.language]);
 
   return (
     <MotionProvider>

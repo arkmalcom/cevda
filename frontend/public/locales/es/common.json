@@ -3,5 +3,10 @@
   "email": "Correo",
   "contact": "Contacto",
   "submit": "Enviar",
-  "submitting": "Enviando…"
+  "submitting": "Enviando…",
+  "notFound": {
+    "title": "Página no encontrada",
+    "lead": "La página que busca no existe o fue movida.",
+    "cta": "Volver al inicio"
+  }
 }

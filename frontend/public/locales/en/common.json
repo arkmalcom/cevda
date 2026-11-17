@@ -3,5 +3,10 @@
   "email": "Email",
   "contact": "Contact",
   "submit": "Submit",
-  "submitting": "Submitting…"
+  "submitting": "Submitting…",
+  "notFound": {
+    "title": "Page not found",
+    "lead": "The page you're looking for doesn't exist or has moved.",
+    "cta": "Back to home"
+  }
 }
