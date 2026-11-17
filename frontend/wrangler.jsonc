@@ -3,6 +3,10 @@
   "name": "cevda-web",
   "main": "worker/index.ts",
   "compatibility_date": "2026-10-01",
+  "routes": [
+    { "pattern": "cevda.com.do", "custom_domain": true },
+    { "pattern": "www.cevda.com.do", "custom_domain": true }
+  ],
   "assets": {
     "directory": "./dist",
     "binding": "ASSETS",
