@@ -28,7 +28,7 @@ jobs:
         run: pnpm build
         env:
           VITE_BASE_API_ENDPOINT_URI: ${{ vars.VITE_BASE_API_ENDPOINT_URI }}
-          VITE_GOOGLE_RECAPTCHA_CLIENT: ${{ vars.VITE_GOOGLE_RECAPTCHA_CLIENT }}
+          VITE_TURNSTILE_SITE_KEY: ${{ vars.VITE_TURNSTILE_SITE_KEY }}
       - name: Deploy static assets Worker
         run: pnpm exec wrangler deploy
         env:

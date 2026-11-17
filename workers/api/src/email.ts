@@ -4,20 +4,17 @@ import type { Env } from "./env";
 import { json } from "./http";
 import { attachmentContentType, careersEmail, examEmail, formEmail, type OutgoingEmail } from "./email-content";
 
-const RECAPTCHA_VERIFY_URL = "https://www.google.com/recaptcha/api/siteverify";
-const RECAPTCHA_MIN_SCORE = 0.5;
+const TURNSTILE_VERIFY_URL = "https://challenges.cloudflare.com/turnstile/v0/siteverify";
 
-async function isValidRecaptcha(token: string, secret: string): Promise<boolean> {
+async function isValidTurnstile(token: string, secret: string, ip: string | null): Promise<boolean> {
   try {
-    const res = await fetch(RECAPTCHA_VERIFY_URL, {
-      method: "POST",
-      headers: { "Content-Type": "application/x-www-form-urlencoded" },
-      body: new URLSearchParams({ secret, response: token }),
-    });
-    const data = (await res.json()) as { success?: boolean; score?: number };
-    return Boolean(data.success) && (data.score ?? 0) >= RECAPTCHA_MIN_SCORE;
+    const body = new URLSearchParams({ secret, response: token });
+    if (ip) body.set("remoteip", ip);
+    const res = await fetch(TURNSTILE_VERIFY_URL, { method: "POST", body });
+    const data = (await res.json()) as { success?: boolean };
+    return Boolean(data.success);
   } catch (err) {
-    console.error("reCAPTCHA verification failed", err);
+    console.error("Turnstile verification failed", err);
     return false;
   }
 }
@@ -63,8 +60,8 @@ export async function handleEmail(req: Request, env: Env): Promise<Response> {
   if (typeof captchaToken !== "string" || !captchaToken) {
     return json({ message: "CAPTCHA Token is missing. Bad request." }, 400);
   }
-  if (!(await isValidRecaptcha(captchaToken, env.RECAPTCHA_SECRET_KEY))) {
-    return json({ message: "Invalid reCAPTCHA token" }, 400);
+  if (!(await isValidTurnstile(captchaToken, env.TURNSTILE_SECRET_KEY, req.headers.get("CF-Connecting-IP")))) {
+    return json({ message: "Invalid CAPTCHA token" }, 400);
   }
 
   if (source === "carreras") {

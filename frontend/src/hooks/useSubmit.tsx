@@ -1,5 +1,5 @@
 import { useState } from "react";
-import useRecaptcha from "./useRecaptcha";
+import useTurnstile from "./useTurnstile";
 
 export interface SubmitOptions<T> {
   url: string;
@@ -14,7 +14,7 @@ export function useSubmit<T>() {
   const [submitStatus, setSubmitStatus] = useState<"success" | "error" | null>(
     null,
   );
-  const { verifyRecaptcha } = useRecaptcha();
+  const { turnstileRef, getToken } = useTurnstile();
 
   const handleSubmit = async ({
     url,
@@ -27,11 +27,7 @@ export function useSubmit<T>() {
     setSubmitStatus(null);
 
     try {
-      const captchaToken = await verifyRecaptcha();
-
-      if (!captchaToken) {
-        throw new Error("reCAPTCHA verification failed");
-      }
+      const captchaToken = await getToken();
 
       const response = await fetch(url, {
         method: "POST",
@@ -57,5 +53,5 @@ export function useSubmit<T>() {
     }
   };
 
-  return { handleSubmit, isSubmitting, submitStatus };
+  return { handleSubmit, isSubmitting, submitStatus, turnstileRef };
 }

@@ -1,6 +1,5 @@
 import React, { useState } from "react";
 import { useTranslation } from "react-i18next";
-import { GoogleReCaptchaProvider } from "react-google-recaptcha-v3";
 import { useSubmit } from "../hooks/useSubmit";
 import { EMAIL_ADDRESS, FULL_ADDRESS, PHONE_NUMBER } from "../utils/Constants";
 import PageIntro from "../components/PageIntro";
@@ -57,7 +56,7 @@ const ContactRow: React.FC<{ href: string; icon: string; children: React.ReactNo
 
 const ContactForm: React.FC = () => {
   const [formData, setFormData] = useState<FormData>(emptyForm);
-  const { handleSubmit, isSubmitting, submitStatus } = useSubmit<FormData>();
+  const { handleSubmit, isSubmitting, submitStatus, turnstileRef } = useSubmit<FormData>();
   const { t } = useTranslation("contact");
 
   const handleChange = (e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) => {
@@ -157,6 +156,8 @@ const ContactForm: React.FC = () => {
             {submitStatus === "success" && <SuccessNote>{t("successMessage")}</SuccessNote>}
             {submitStatus === "error" && <ErrorNote>{t("errorMessage")}</ErrorNote>}
 
+            <div ref={turnstileRef} className="flex justify-center empty:hidden" />
+
             <Button type="submit" disabled={isSubmitting} className="w-full">
               {isSubmitting ? t("submitting", { ns: "common" }) : t("submit", { ns: "common" })}
             </Button>
@@ -168,11 +169,7 @@ const ContactForm: React.FC = () => {
 };
 
 const Contact: React.FC = () => {
-  return (
-    <GoogleReCaptchaProvider reCaptchaKey={import.meta.env.VITE_GOOGLE_RECAPTCHA_CLIENT}>
-      <ContactForm />
-    </GoogleReCaptchaProvider>
-  );
+  return <ContactForm />;
 };
 
 export default Contact;

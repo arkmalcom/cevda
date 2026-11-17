@@ -1,5 +1,4 @@
 import React, { useState } from "react";
-import { GoogleReCaptchaProvider } from "react-google-recaptcha-v3";
 import { useTranslation } from "react-i18next";
 
 import { useSubmit } from "../hooks/useSubmit";
@@ -63,7 +62,7 @@ const emptyForm: AdmissionFormData = {
 const AdmissionForm: React.FC = () => {
   const [formData, setFormData] = useState<AdmissionFormData>(emptyForm);
 
-  const { handleSubmit, isSubmitting, submitStatus } =
+  const { handleSubmit, isSubmitting, submitStatus, turnstileRef } =
     useSubmit<AdmissionFormData>();
 
   const handleChange = (
@@ -378,6 +377,8 @@ const AdmissionForm: React.FC = () => {
         {submitStatus === "success" && <SuccessNote>{t("form.successMessage")}</SuccessNote>}
         {submitStatus === "error" && <ErrorNote>{t("form.errorMessage")}</ErrorNote>}
 
+        <div ref={turnstileRef} className="flex justify-center empty:hidden" />
+
         <Button type="submit" disabled={isSubmitting || disableField} className="w-full">
           {isSubmitting ? t("submitting", { ns: "common" }) : t("submit", { ns: "common" })}
         </Button>
@@ -390,13 +391,7 @@ const AdmissionForm: React.FC = () => {
 };
 
 const Admission: React.FC = () => {
-  return (
-    <GoogleReCaptchaProvider
-      reCaptchaKey={import.meta.env.VITE_GOOGLE_RECAPTCHA_CLIENT}
-    >
-      <AdmissionForm />
-    </GoogleReCaptchaProvider>
-  );
+  return <AdmissionForm />;
 };
 
 export default Admission;

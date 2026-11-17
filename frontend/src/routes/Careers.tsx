@@ -1,8 +1,7 @@
 import { useTranslation } from "react-i18next";
 import React, { useState } from "react";
-import { GoogleReCaptchaProvider } from "react-google-recaptcha-v3";
 
-import useRecaptcha from "../hooks/useRecaptcha";
+import useTurnstile from "../hooks/useTurnstile";
 import PageIntro from "../components/PageIntro";
 import Reveal from "../components/Reveal";
 import Button from "../components/ui/Button";
@@ -14,7 +13,7 @@ const CareerForm: React.FC = () => {
   const [submitStatus, setSubmitStatus] = useState<"success" | "error" | null>(
     null,
   );
-  const { verifyRecaptcha } = useRecaptcha();
+  const { turnstileRef, getToken } = useTurnstile();
 
   const [selectedFile, setSelectedFile] = useState<File | null>(null);
 
@@ -50,11 +49,7 @@ const CareerForm: React.FC = () => {
       const base64File = (reader.result as string).split(",")[1];
 
       try {
-        const captchaToken = await verifyRecaptcha();
-
-        if (!captchaToken) {
-          throw new Error("reCAPTCHA verification failed");
-        }
+        const captchaToken = await getToken();
 
         const response = await fetch(
           `${import.meta.env.VITE_BASE_API_ENDPOINT_URI}/email`,
@@ -122,6 +117,8 @@ const CareerForm: React.FC = () => {
       {submitStatus === "success" && <SuccessNote>{t("form.successMessage")}</SuccessNote>}
       {submitStatus === "error" && <ErrorNote>{t("form.errorMessage")}</ErrorNote>}
 
+      <div ref={turnstileRef} className="flex justify-center empty:hidden" />
+
       <Button type="submit" disabled={isSubmitting} className="w-full">
         {isSubmitting ? t("submitting", { ns: "common" }) : t("submit", { ns: "common" })}
       </Button>
@@ -148,9 +145,7 @@ const Careers: React.FC = () => {
             {t("form.sectionTitle")}
           </h2>
           <p className="mb-6 mt-2 text-[15px] text-[var(--ink-soft)]">{t("form.sectionSubtitle")}</p>
-          <GoogleReCaptchaProvider reCaptchaKey={import.meta.env.VITE_GOOGLE_RECAPTCHA_CLIENT}>
-            <CareerForm />
-          </GoogleReCaptchaProvider>
+          <CareerForm />
         </Reveal>
       </div>
     </div>

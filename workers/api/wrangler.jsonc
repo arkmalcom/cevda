@@ -25,5 +25,5 @@
     "ATTEMPT_EXPIRATION_SECONDS": "900",
     "QUESTIONS_CATEGORY_COUNT": "5"
   }
-  // Secrets (set with `wrangler secret put`): RECAPTCHA_SECRET_KEY
+  // Secrets (set with `wrangler secret put`): TURNSTILE_SECRET_KEY
 }
