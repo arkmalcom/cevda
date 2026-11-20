@@ -22,6 +22,7 @@ export const i18nReady = i18n
       "contact",
       "careers",
       "english-exam",
+      "calendar",
     ],
     defaultNS: "common",
     backend: {

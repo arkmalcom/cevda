@@ -58,6 +58,18 @@ export const PAGE_META: Record<string, PageMeta> = {
         "Free weekend courses for adults certified by INFOTEP in Santo Domingo Este, including Pharmacy Assistant and Medical Sales Representative.",
     },
   },
+  "/calendario": {
+    es: {
+      title: `Calendario escolar y avisos | ${NAME}`,
+      description:
+        "Calendario escolar, días sin clases, reuniones de padres y avisos del Centro Educativo Villa de Ángeles. Suscríbase desde su teléfono por curso.",
+    },
+    en: {
+      title: `School calendar and notices | ${NAME}`,
+      description:
+        "School calendar, days off, parent meetings and notices from Centro Educativo Villa de Ángeles. Subscribe from your phone by grade.",
+    },
+  },
   "/carreras": {
     es: {
       title: `Oportunidades de empleo | ${NAME}`,

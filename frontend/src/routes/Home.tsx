@@ -8,6 +8,7 @@ import ValuesSection from "../components/home/ValuesSection";
 import LevelsSection from "../components/home/LevelsSection";
 import ServicesStrips, { type Service } from "../components/home/ServicesStrips";
 import RequirementsClipboard from "../components/home/RequirementsClipboard";
+import NoticesStrip from "../components/home/NoticesStrip";
 
 import photo1 from "../assets/web/photo1.webp";
 import photo2 from "../assets/web/photo2.webp";
@@ -73,6 +74,8 @@ const Home = () => {
           </div>
         </Reveal>
       </section>
+
+      <NoticesStrip />
 
       <MissionVision mission={statements[0]} vision={statements[1]} />
 

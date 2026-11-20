@@ -1,0 +1,42 @@
+{
+  "title": "Calendario",
+  "lead": "Avisos, actividades, reuniones de padres y días sin clases del colegio.",
+  "retry": "Intentar de nuevo",
+  "filter": {
+    "label": "Ver el calendario de",
+    "everyone": "Todo el colegio",
+    "hint": "Al elegir un curso verá lo de ese curso y lo de todo el colegio."
+  },
+  "notices": {
+    "title": "Avisos",
+    "pinned": "Fijado",
+    "published": "Publicado el {{date}}",
+    "empty": "No hay avisos por ahora.",
+    "error": "No pudimos cargar los avisos. Intente de nuevo en unos minutos."
+  },
+  "events": {
+    "title": "Próximas fechas",
+    "allDay": "Todo el día",
+    "range": "{{from}} – {{to}}",
+    "until": "hasta",
+    "cost": "Costo",
+    "paymentDue": "Fecha límite de pago: {{date}}",
+    "empty": "No hay fechas programadas por ahora.",
+    "error": "No pudimos cargar el calendario. Intente de nuevo en unos minutos."
+  },
+  "subscribe": {
+    "title": "Llévelo en su teléfono",
+    "lead": "Suscríbase y las fechas del colegio aparecerán en su calendario, y se actualizarán solas.",
+    "leadGrade": "Suscríbase y las fechas de {{grade}} y de todo el colegio aparecerán en su calendario, y se actualizarán solas.",
+    "apple": "iPhone, iPad o Mac",
+    "google": "Google Calendar (Android)",
+    "other": "¿Otra aplicación? Agregue esta dirección como calendario:",
+    "urlLabel": "Dirección del calendario",
+    "copy": "Copiar",
+    "copied": "Copiado",
+    "note": "Los cambios pueden tardar unas horas en verse en su calendario."
+  },
+  "home": {
+    "cta": "Ver el calendario"
+  }
+}

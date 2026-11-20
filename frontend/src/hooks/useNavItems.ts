@@ -11,6 +11,7 @@ export function useNavItems(): NavItem[] {
     { to: "/", label: t("home") },
     { to: "/admision", label: t("admission") },
     { to: "/caracteristicas", label: t("features") },
+    { to: "/calendario", label: t("calendar") },
     { to: "/infotep", label: "Infotep" },
     { to: "/carreras", label: t("careers") },
     { to: "/contacto", label: t("contact") },

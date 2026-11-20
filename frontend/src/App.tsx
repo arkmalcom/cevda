@@ -3,6 +3,7 @@ import { Routes, Route } from "react-router-dom";
 import Layout from "./components/Layout";
 
 import Admission from "./routes/Admission";
+import Calendar from "./routes/Calendar";
 import Careers from "./routes/Careers";
 import Characteristics from "./routes/Characteristics";
 import Contact from "./routes/Contact";
@@ -22,6 +23,7 @@ function App() {
         <Route path="/contacto" element={<Contact />} />
         <Route path="/infotep" element={<Infotep />} />
         <Route path="/caracteristicas" element={<Characteristics />} />
+        <Route path="/calendario" element={<Calendar />} />
         <Route path="/carreras" element={<Careers />} />
         <Route path="/examen-ingles" element={<EnglishExam />} />
         <Route path="*" element={<NotFound />} />

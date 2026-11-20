@@ -1,0 +1,42 @@
+{
+  "title": "Calendar",
+  "lead": "Notices, activities, parent meetings and days off at the school. Posts are in Spanish.",
+  "retry": "Try again",
+  "filter": {
+    "label": "Show the calendar for",
+    "everyone": "The whole school",
+    "hint": "Choosing a grade shows that grade's dates plus whole-school ones."
+  },
+  "notices": {
+    "title": "Notices",
+    "pinned": "Pinned",
+    "published": "Posted {{date}}",
+    "empty": "No notices right now.",
+    "error": "We couldn't load the notices. Please try again in a few minutes."
+  },
+  "events": {
+    "title": "Upcoming dates",
+    "allDay": "All day",
+    "range": "{{from}} – {{to}}",
+    "until": "until",
+    "cost": "Cost",
+    "paymentDue": "Pay by {{date}}",
+    "empty": "No dates scheduled right now.",
+    "error": "We couldn't load the calendar. Please try again in a few minutes."
+  },
+  "subscribe": {
+    "title": "Get it on your phone",
+    "lead": "Subscribe and the school's dates will appear in your calendar and stay up to date.",
+    "leadGrade": "Subscribe and the dates for {{grade}} and the whole school will appear in your calendar and stay up to date.",
+    "apple": "iPhone, iPad or Mac",
+    "google": "Google Calendar (Android)",
+    "other": "Another app? Add this address as a calendar:",
+    "urlLabel": "Calendar address",
+    "copy": "Copy",
+    "copied": "Copied",
+    "note": "Changes can take a few hours to show up in your calendar."
+  },
+  "home": {
+    "cta": "See the calendar"
+  }
+}
