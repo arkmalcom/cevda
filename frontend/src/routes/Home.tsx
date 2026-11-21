@@ -9,6 +9,7 @@ import LevelsSection from "../components/home/LevelsSection";
 import ServicesStrips, { type Service } from "../components/home/ServicesStrips";
 import RequirementsClipboard from "../components/home/RequirementsClipboard";
 import NoticesStrip from "../components/home/NoticesStrip";
+import { CALENDAR_ENABLED } from "../features";
 
 import photo1 from "../assets/web/photo1.webp";
 import photo2 from "../assets/web/photo2.webp";
@@ -75,7 +76,7 @@ const Home = () => {
         </Reveal>
       </section>
 
-      <NoticesStrip />
+      {CALENDAR_ENABLED && <NoticesStrip />}
 
       <MissionVision mission={statements[0]} vision={statements[1]} />
 

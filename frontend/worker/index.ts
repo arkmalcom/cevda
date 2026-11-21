@@ -1,5 +1,7 @@
 // Redirects www.cevda.com.do to the apex, proxies the school calendar feed from Tiza,
 // and serves everything else from static assets.
+import { CALENDAR_ENABLED } from "../src/features";
+
 interface Env {
   ASSETS: { fetch(request: Request): Promise<Response> };
 }
@@ -170,7 +172,7 @@ export default {
       return Response.redirect(url.toString(), 301);
     }
     const route = FEED_ROUTES[url.pathname];
-    if (route) return proxyFeed(request, url, route, ctx);
+    if (route && CALENDAR_ENABLED) return proxyFeed(request, url, route, ctx);
     return env.ASSETS.fetch(request);
   },
 };

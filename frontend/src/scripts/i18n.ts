@@ -3,6 +3,8 @@ import { initReactI18next } from "react-i18next";
 import HttpBackend from "i18next-http-backend";
 import LanguageDetector from "i18next-browser-languagedetector";
 
+import { CALENDAR_ENABLED } from "../features";
+
 export const i18nReady = i18n
   .use(HttpBackend)
   .use(LanguageDetector)
@@ -22,7 +24,7 @@ export const i18nReady = i18n
       "contact",
       "careers",
       "english-exam",
-      "calendar",
+      ...(CALENDAR_ENABLED ? ["calendar"] : []),
     ],
     defaultNS: "common",
     backend: {
